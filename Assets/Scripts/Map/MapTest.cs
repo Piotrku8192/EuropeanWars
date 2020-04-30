@@ -2,12 +2,11 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEngine;
 
 namespace EuropeanWars.Map {
     public class MapTest : MonoBehaviour {
-        public string provincesPath;
-        public string bordersPath;
         public Material material;
         public Material borderMaterial;
         public List<GameObject> meshes = new List<GameObject>();
@@ -18,7 +17,12 @@ namespace EuropeanWars.Map {
 
         public float scale = 0.25f;
 
+        private string provincesPath;
+        private string bordersPath;
         public void Start() {
+            provincesPath = Application.dataPath + "\\Data\\Map\\provinces.json";
+            bordersPath = Application.dataPath + "\\Data\\Map\\borders.json";
+
             provinces = JsonConvert.DeserializeObject<Dictionary<string, Province>>(File.ReadAllText(provincesPath));
             borders = JsonConvert.DeserializeObject<List<Border>>(File.ReadAllText(bordersPath));
 
