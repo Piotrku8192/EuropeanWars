@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
-namespace EuropeanWars
-{
+namespace EuropeanWars {
     public class Controller : MonoBehaviour
     {
         public static Controller Singleton { get; private set; }
@@ -39,27 +36,6 @@ namespace EuropeanWars
             //    transform.rotation = Quaternion.Euler(new Vector3(isPerspectiveView ? 0 : -30, 0, 0));
             //    isPerspectiveView = !isPerspectiveView;
             //}
-        }
-
-        private bool IsPointerOverUIObject()
-        {
-            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current)
-            {
-                position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
-            };
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-
-            bool b = false;
-            foreach (RaycastResult item in results)
-            {
-                if (item.gameObject.layer != 11)
-                {
-                    b = true;
-                }
-            }
-
-            return results.Count > 0 && b;
         }
     }
 

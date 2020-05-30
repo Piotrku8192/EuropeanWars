@@ -1,8 +1,8 @@
-﻿using MapBuilder;
+﻿using EuropeanWars.GameMap;
+using EuropeanWars.GameMap.Data;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using UnityEngine;
 
 namespace EuropeanWars.Map {
@@ -12,8 +12,8 @@ namespace EuropeanWars.Map {
         public List<GameObject> meshes = new List<GameObject>();
         public List<LineRenderer> borderRenderers = new List<LineRenderer>();
 
-        public Dictionary<string, Province> provinces = new Dictionary<string, Province>();
-        public List<Border> borders = new List<Border>();
+        public Dictionary<string, MapProvinceData> provinces = new Dictionary<string, MapProvinceData>();
+        public List<BorderData> borders = new List<BorderData>();
 
         public float scale = 0.25f;
 
@@ -23,8 +23,8 @@ namespace EuropeanWars.Map {
             provincesPath = Application.dataPath + "\\Data\\Map\\provinces.json";
             bordersPath = Application.dataPath + "\\Data\\Map\\borders.json";
 
-            provinces = JsonConvert.DeserializeObject<Dictionary<string, Province>>(File.ReadAllText(provincesPath));
-            borders = JsonConvert.DeserializeObject<List<Border>>(File.ReadAllText(bordersPath));
+            provinces = JsonConvert.DeserializeObject<Dictionary<string, MapProvinceData>>(File.ReadAllText(provincesPath));
+            borders = JsonConvert.DeserializeObject<List<BorderData>>(File.ReadAllText(bordersPath));
 
             foreach (var item in provinces) {
                 UnityEngine.Mesh mesh = new UnityEngine.Mesh();
