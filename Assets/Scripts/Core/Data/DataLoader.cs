@@ -36,7 +36,7 @@ namespace EuropeanWars.Core.Data {
 
             path = Application.dataPath + "\\Content";
 #if UNITY_EDITOR
-            path = "C:\\Dev\\EuropeanWars\\EuropeanWars\\Tests\\Content";
+            path = Directory.GetCurrentDirectory() + "\\Tests\\Content";
 #endif
 
             //BuildingD[] b = JsonConvert.DeserializeObject<BuildingD[]>(File.ReadAllText(path + "\\buildings.json"));
