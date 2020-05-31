@@ -146,7 +146,7 @@ namespace EuropeanWars.Core.Country {
             if (monthsToEndBanktruptcy > 0) {
                 monthsToEndBanktruptcy--;
             }
-            else {
+            else if (isBankruptcy) {
                 isBankruptcy = false;
                 taxationIncomeModifier += 0.2f;
                 buildingsIncomeModifier += 0.2f;
