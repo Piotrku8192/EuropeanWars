@@ -1,11 +1,16 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Building;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
+using EuropeanWars.UI.Windows;
 using Lidgren.Network;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using UnityEngine.UI;
 
 namespace EuropeanWars.Network {
     public static class ClientCommands {
@@ -76,6 +81,7 @@ namespace EuropeanWars.Network {
 
         #endregion
 
+        #region Economy (512-1023)
         [Command(512)]
         public static void BuildBuilding(NetIncomingMessage message) {
             int building = message.ReadInt32();
@@ -121,5 +127,64 @@ namespace EuropeanWars.Network {
             int country = message.ReadInt32();
             GameInfo.countries[country].Bankruptcy();
         }
+        #endregion
+
+        #region Diplomacy (1024-2048)
+
+        #region Alliance
+        [Command(1024)]
+        public static void AllianceRequest(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            Alliance.AllianceRequestClient(GameInfo.countries[sender], GameInfo.countries[receiver]);
+        }
+
+        [Command(1025)]
+        public static void AcceptAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            Alliance alliance = new Alliance();
+            alliance.countries.Add(GameInfo.countries[sender]);
+            alliance.countries.Add(GameInfo.countries[receiver]);
+
+            Alliance.CreateAllianceClient(alliance);
+        }
+
+        [Command(1026)]
+        public static void DeliceAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            //TODO: Implement translation
+            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() { 
+                countries = new List<Core.Country.CountryInfo>() { 
+                    GameInfo.countries[sender],
+                    GameInfo.countries[receiver]
+                }
+            }, true);
+            win.title.text = "Odrzucono sojusz";
+            win.description.text = "Państwo, któremu zaproponowaliśmy sojusz odrzuciło naszą propozycję!";
+            win.acceptText.text = "Ok";
+            win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
+
+            Alliance.messageSent = false;
+        }
+
+        [Command(1027)]
+        public static void DeleteAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int s = message.ReadInt32();
+
+            Alliance alliance = DiplomacyManager.alliances.Where(t => t.countries.Contains(GameInfo.countries[sender])
+            && t.countries.Contains(GameInfo.countries[receiver])).FirstOrDefault();
+
+            Alliance.DeleteAllianceClient(alliance, s);
+        }
+        #endregion
+
+        #endregion
     }
 }

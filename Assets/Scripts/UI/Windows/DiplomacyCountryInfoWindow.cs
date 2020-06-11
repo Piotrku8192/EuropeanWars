@@ -1,4 +1,7 @@
-﻿using EuropeanWars.Core.Country;
+﻿using Boo.Lang;
+using EuropeanWars.Core;
+using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +12,8 @@ namespace EuropeanWars.UI.Windows {
         public Image king;
         public Text countryName;
 
+        public DipActionButton[] dipActionButtons;
+
         public CountryInfo country;
 
         public void UpdateWindow(CountryInfo country) {
@@ -17,6 +22,47 @@ namespace EuropeanWars.UI.Windows {
             religion.sprite = country.religion.image;
             //king.sprite = country.king.image; TODO: uncomment this.
             countryName.text = country.name;
+
+            UpdateDipActions();
+        }
+
+        public void UpdateDipActions() {
+            if (country == null) {
+                return;
+            }
+
+            foreach (var item in dipActionButtons) {
+                Button button = item.GetComponent<Button>();
+                if (country == GameInfo.PlayerCountry) {
+                    button.interactable = false;
+                    continue;
+                }
+
+                switch (item.action) {
+                    case DiplomacyAction.CreateAlliance:
+                        button.interactable = Alliance.CanCreate(GameInfo.PlayerCountry, country);
+                        break;
+                    case DiplomacyAction.DeleteAlliance:
+                        button.interactable = Alliance.CanDelete(GameInfo.PlayerCountry, country);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public void PlayAction(DiplomacyAction action) {
+            switch (action) {
+                case DiplomacyAction.CreateAlliance:
+                    Alliance.AllianceRequest(GameInfo.PlayerCountry, country);
+                    break;
+                case DiplomacyAction.DeleteAlliance:
+                    Alliance.DeleteAlliance(GameInfo.PlayerCountry.alliances[country]);
+                    break;
+                default:
+                    break;
+            }
+            UpdateDipActions();
         }
     }
 }

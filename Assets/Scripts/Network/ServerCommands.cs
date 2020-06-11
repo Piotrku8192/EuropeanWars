@@ -6,7 +6,6 @@ using Lidgren.Network;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 
 namespace EuropeanWars.Network {
     public static class ServerCommands {
@@ -101,6 +100,7 @@ namespace EuropeanWars.Network {
 
         #endregion
 
+        #region Economy (512-1023)
         [Command(512)]
         public static void BuildBuildingRequest(NetIncomingMessage message) {
             int building = message.ReadInt32();
@@ -178,5 +178,67 @@ namespace EuropeanWars.Network {
             msg.Write(country);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+        #endregion
+
+        #region Diplomacy (1024-2048)
+
+        #region Alliance
+        [Command(1024)]
+        public static void AllianceRequest(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1024);
+            msg.Write(sender);
+            msg.Write(receiver);
+            if (Server.Singleton.clients.Where(t => t.Value.countryId == receiver).Any()) {
+                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        [Command(1025)]
+        public static void AcceptAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1025);
+            msg.Write(sender);
+            msg.Write(receiver);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1026)]
+        public static void DeliceAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1026);
+            msg.Write(sender);
+            msg.Write(receiver);
+
+            if (Server.Singleton.clients.Where(t => t.Value.countryId == sender).Any()) {
+                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == sender).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        [Command(1027)]
+        public static void DeleteAlliance(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int s = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1027);
+            msg.Write(sender);
+            msg.Write(receiver);
+            msg.Write(s);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+        #endregion
+
+        #endregion
     }
 }

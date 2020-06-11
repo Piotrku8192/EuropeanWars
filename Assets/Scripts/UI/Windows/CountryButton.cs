@@ -14,8 +14,7 @@ namespace EuropeanWars.UI.Windows {
 
         public void OnClick() {
             UIManager.Singleton.CloseAllWindows();
-            DiplomacyWindow.Singleton.window.SetActive(true);
-            DiplomacyWindow.Singleton.countryWindow.UpdateWindow(country);
+            DiplomacyWindow.Singleton.UpdateWindow(country);
         }
     }
 }

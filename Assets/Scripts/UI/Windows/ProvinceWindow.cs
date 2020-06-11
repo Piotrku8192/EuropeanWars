@@ -14,7 +14,7 @@ namespace EuropeanWars.UI.Windows {
         public GameObject provinceWindow;
 
         public Text provinceName;
-        public Image countryCrest;
+        public CountryButton countryCrest;
         public Image religion;
         public Image terrainImage;
 
@@ -44,7 +44,7 @@ namespace EuropeanWars.UI.Windows {
             provinceWindow.SetActive(true);
             this.province = province;
             provinceName.text = province.name;
-            countryCrest.sprite = province.Country.crest;
+            countryCrest.SetCountry(province.Country);
             religion.sprite = province.religion.image;
             //terrainImage = ...
             tax.text = province.taxation.ToString();
