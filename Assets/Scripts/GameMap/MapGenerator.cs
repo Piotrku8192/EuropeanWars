@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Province;
 using EuropeanWars.GameMap.Data;
 using System.Collections.Generic;

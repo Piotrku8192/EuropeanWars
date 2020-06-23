@@ -180,7 +180,7 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
-        #region Diplomacy (1024-2048)
+        #region Diplomacy (1024-2047)
 
         #region Alliance
         [Command(1024)]
@@ -239,6 +239,24 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #endregion
+
+        #region Army (2048-3071)
+        [Command(2048)]
+        public static void RecruitUnit(NetIncomingMessage message) {
+            int unitInfo = message.ReadInt32();
+            int country = message.ReadInt32();
+            int province = message.ReadInt32();
+            int count = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2048);
+            msg.Write(unitInfo);
+            msg.Write(country);
+            msg.Write(province);
+            msg.Write(count);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Building;
+﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Language;
@@ -31,34 +32,17 @@ namespace EuropeanWars.Core.Data {
         public int steps;
 
         public void Start() {
-            //gameData = DataConverter.FromString<GameData>(File.ReadAllText(path + "\\data"));
-            //File.WriteAllText(path + "\\countries", DataConverter.ToString(gameData.countries));
-
             path = Application.dataPath + "\\Content";
 #if UNITY_EDITOR
             path = Directory.GetCurrentDirectory() + "\\Tests\\Content";
 #endif
 
-            //BuildingD[] b = JsonConvert.DeserializeObject<BuildingD[]>(File.ReadAllText(path + "\\buildings.json"));
-            //gameData.buildings = new BuildingData[b.Length];
-            //for (int i = 0; i < b.Length; i++) {
-            //    gameData.buildings[i] = BuildingD.BuildingDataToBuilding(b[i]);
-            //}
-            //File.WriteAllText(path + "\\buildings", DataConverter.ToString(gameData.buildings));
-
-            //ReligionD[] r = JsonConvert.DeserializeObject<ReligionD[]>(File.ReadAllText(path + "\\religions.json"));
-            //gameData.religions = new ReligionData[r.Length];
-            //for (int i = 0; i < r.Length; i++) {
-            //    gameData.religions[i] = ReligionD.RelitionDataToReligion(r[i]);
-            //}
-            //File.WriteAllText(path + "\\religions", DataConverter.ToString(gameData.religions));
-
-            //CultureD[] c = JsonConvert.DeserializeObject<CultureD[]>(File.ReadAllText(path + "\\cultures.json"));
-            //gameData.cultures = new CultureData[c.Length];
-            //for (int i = 0; i < c.Length; i++) {
-            //    gameData.cultures[i] = CultureD.CultureDataToCulture(c[i]);
-            //}
-            //File.WriteAllText(path + "\\cultures", DataConverter.ToString(gameData.cultures));
+            UnitData[] u = JsonConvert.DeserializeObject<UnitData[]>(File.ReadAllText(path + "\\units.json"));
+            gameData.units = new UnitData[u.Length];
+            for (int i = 0; i < u.Length; i++) {
+                gameData.units[i] = u[i];
+            }
+            File.WriteAllText(path + "\\units", DataConverter.ToString(gameData.units));
 
             //LanguageDictionary.languages = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(File.ReadAllText(path + "\\language.json"));
             //File.WriteAllText(path + "\\language", DataConverter.ToString(LanguageDictionary.languages));
@@ -129,6 +113,14 @@ namespace EuropeanWars.Core.Data {
             //File.WriteAllText(path + "\\provinces", DataConverter.ToString(gameData.provinces));
             //////////////////////////////////////////////////////////////////////////////////////
 
+            UpdateProgressBar(6, "Wczytywanie jednostek wojskowych...");
+            yield return new WaitForEndOfFrame();
+            gameData.units = DataConverter.FromString<UnitData[]>(File.ReadAllText(path + "\\units"));
+            foreach (var item in gameData.units) {
+                GameInfo.units.Add(item.id, new UnitInfo(item));
+            }
+            //////////////////////////////////////////////////////////////////////////////////////
+            
             UpdateProgressBar(7, "Wczytywanie mapy...");
             yield return new WaitForEndOfFrame();
             map = DataConverter.FromJson<MapData>(File.ReadAllText(path + "\\map"));

@@ -1,5 +1,7 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Province;
+using EuropeanWars.UI;
+using System.Linq;
 using UnityEngine;
 
 namespace EuropeanWars.GameMap {
@@ -8,7 +10,8 @@ namespace EuropeanWars.GameMap {
         Religions,
         Cultures,
         Trade,
-        Terrain
+        Terrain,
+        Recrutation
     }
 
     public static class MapPainter {
@@ -48,6 +51,9 @@ namespace EuropeanWars.GameMap {
                     color = province.isTradeCity ? Color.blue : Color.gray;
                     break;
                 case MapMode.Terrain:
+                    break;
+                case MapMode.Recrutation:
+                    color = province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding) ? Color.green : province.Country == GameInfo.PlayerCountry ? Color.white : Color.gray;
                     break;
                 default:
                     break;

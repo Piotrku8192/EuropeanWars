@@ -1,5 +1,7 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
+using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
@@ -129,7 +131,7 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
-        #region Diplomacy (1024-2048)
+        #region Diplomacy (1024-2047)
 
         #region Alliance
         [Command(1024)]
@@ -158,8 +160,8 @@ namespace EuropeanWars.Network {
             int receiver = message.ReadInt32();
 
             //TODO: Implement translation
-            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() { 
-                countries = new List<Core.Country.CountryInfo>() { 
+            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
+                countries = new List<Core.Country.CountryInfo>() {
                     GameInfo.countries[sender],
                     GameInfo.countries[receiver]
                 }
@@ -185,6 +187,18 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #endregion
+
+        #region Army (2048-3071)
+        [Command(2048)]
+        public static void RecruitUnit(NetIncomingMessage message) {
+            UnitInfo unitInfo = GameInfo.units[message.ReadInt32()];
+            CountryInfo country = GameInfo.countries[message.ReadInt32()];
+            ProvinceInfo province = GameInfo.provinces[message.ReadInt32()];
+            int count = message.ReadInt32();
+
+            country.EnqueueUnitToRecruite(unitInfo, province, count);
+        }
         #endregion
     }
 }

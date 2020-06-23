@@ -53,6 +53,7 @@ namespace EuropeanWars.UI.Windows {
 
             loans.text = GameInfo.PlayerCountry.loans.ToString();
             balance.text = GameInfo.PlayerCountry.balance.ToString();
+            balance.color = GameInfo.PlayerCountry.balance < 0 ? Color.red : Color.green;
         }
 
         public void TakeLoan() {

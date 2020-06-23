@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Building;
+﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Data;
@@ -37,6 +38,8 @@ namespace EuropeanWars.Core.Province {
         public bool isTradeCity;
         public bool isTradeRoute;
         public BuildingInfo[] buildings = new BuildingInfo[10];
+
+        public List<ArmyInfo> armies = new List<ArmyInfo>();
 
         public ProvinceInfo(ProvinceData d) {
             this.data = d;

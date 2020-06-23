@@ -211,7 +211,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d87a3e00d175aeb4ab4197522807ce4d, type: 3}
   - {fileID: 21300000, guid: fba28f51186d3884ab2ef46e49640000, type: 3}
   - {fileID: 21300000, guid: fd123f9b257ecd44a852f3a8801d0d4b, type: 3}
-  bgTime: 30
+  bgTime: 20
   changeTime: 3
   background: {fileID: 1226763543}
 --- !u!1 &50439146

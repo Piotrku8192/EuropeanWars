@@ -1,6 +1,9 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Province;
 using EuropeanWars.GameMap.Data;
+using EuropeanWars.Network;
+using EuropeanWars.UI;
+using Lidgren.Network;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +21,10 @@ namespace EuropeanWars.GameMap {
 
         public void OnMouseDown() {
             if (!GameInfo.IsPointerOverUIObject()) {
+                if (MapPainter.mapMode == MapMode.Recrutation) {
+                    RecruitRegularArmy();
+                    return;
+                }
                 GameInfo.SelectProvince(provinceInfo);
             }
         }
@@ -113,6 +120,16 @@ namespace EuropeanWars.GameMap {
                 i++;
                 yield return new WaitForFixedUpdate();
             }
+        }
+
+        public void RecruitRegularArmy() {
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2048);
+            msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedUnit.id);
+            msg.Write(GameInfo.PlayerCountry.id);
+            msg.Write(provinceInfo.id);
+            msg.Write(1);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }

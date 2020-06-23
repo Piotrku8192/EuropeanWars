@@ -8,5 +8,6 @@ namespace EuropeanWars.Core.Data {
         public ReligionData[] religions;
         public CultureData[] cultures;
         public BuildingData[] buildings;
+        public UnitData[] units;
     }
 }

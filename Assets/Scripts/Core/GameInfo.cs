@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Building;
+﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Province;
@@ -20,6 +21,7 @@ namespace EuropeanWars.Core {
         public static Dictionary<int, ReligionInfo> religions = new Dictionary<int, ReligionInfo>();
         public static Dictionary<int, CultureInfo> cultures = new Dictionary<int, CultureInfo>();
         public static Dictionary<int, CountryInfo> countries = new Dictionary<int, CountryInfo>();
+        public static Dictionary<int, UnitInfo> units = new Dictionary<int, UnitInfo>();
 
         public static ProvinceInfo SelectedProvince { get; private set; }
         public static CountryInfo PlayerCountry { get; private set; }
@@ -39,6 +41,9 @@ namespace EuropeanWars.Core {
                 item.Value.Initialize();
             }
             foreach (var item in countries) {
+                item.Value.Initialize();
+            }
+            foreach (var item in units) {
                 item.Value.Initialize();
             }
         }
