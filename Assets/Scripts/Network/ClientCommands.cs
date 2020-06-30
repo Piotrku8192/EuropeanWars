@@ -60,6 +60,9 @@ namespace EuropeanWars.Network {
             UIManager.Singleton.ui.SetActive(true);
             UIManager.Singleton.playerCountryCrest.sprite = GameInfo.PlayerCountry.crest;
             GameInfo.gameStarted = true;
+            foreach (var item in GameInfo.provinces) {
+                item.Value.RefreshFogOfWar();
+            }
         }
 
         #endregion
@@ -198,6 +201,14 @@ namespace EuropeanWars.Network {
             int count = message.ReadInt32();
 
             country.EnqueueUnitToRecruite(unitInfo, province, count);
+        }
+
+        [Command(2049)]
+        public static void GenerateArmyRoute(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+            int target = message.ReadInt32();
+
+            GameInfo.armies[id].GenerateRoute(GameInfo.provinces[target]);
         }
         #endregion
     }

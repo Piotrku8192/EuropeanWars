@@ -53,7 +53,9 @@ namespace EuropeanWars.GameMap {
                 case MapMode.Terrain:
                     break;
                 case MapMode.Recrutation:
-                    color = province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding) ? Color.green : province.Country == GameInfo.PlayerCountry ? Color.white : Color.gray;
+                    color = province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding) 
+                        && province.Country == GameInfo.PlayerCountry ? Color.green
+                        : province.Country == GameInfo.PlayerCountry ? Color.gray : Color.black;
                     break;
                 default:
                     break;

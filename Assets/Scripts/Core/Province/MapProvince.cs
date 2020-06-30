@@ -29,7 +29,7 @@ namespace EuropeanWars.Province {
                 }
                 GameInfo.SelectProvince(provinceInfo);
                 foreach (var item in ArmyInfo.selectedArmies) {
-                    item.FindRoute(provinceInfo);
+                    item.GenerateRouteRequest(provinceInfo);
                 }
             }
         }
@@ -128,13 +128,13 @@ namespace EuropeanWars.Province {
         }
 
         public void RecruitRegularArmy() {
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
             msg.Write((ushort)2048);
             msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedUnit.id);
             msg.Write(GameInfo.PlayerCountry.id);
             msg.Write(provinceInfo.id);
             msg.Write(1);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }

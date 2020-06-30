@@ -42,14 +42,18 @@ namespace EuropeanWars.Core.Pathfinding {
             if (curDistance <= 0)
                 curDistance = 1;
 
-            if (curDistance > Controller.Singleton.armiesDistance || army.Province.fogOfWar)
+            if (curDistance > Controller.Singleton.armiesDistance || army.Province.fogOfWar) {
                 gui.SetActive(false);
-            else
+                lineRenderer.enabled = false;
+            }
+            else {
                 gui.SetActive(true);
+                lineRenderer.enabled = true;
+            }
             transform.localScale = new Vector3(1, 1, 1) * scale * curDistance / Controller.Singleton.minScope;
         }
 
-        public void DrawRoute(ProvinceInfo target, ProvinceInfo[] route) {
+        public void DrawRoute(ProvinceInfo[] route) {
             lineRenderer.positionCount = route.Length;
             lineRenderer.SetPosition(0, transform.position);
 
@@ -76,7 +80,7 @@ namespace EuropeanWars.Core.Pathfinding {
                 if (x == y) {
                     army.route.Dequeue();
                     if (army.Country == GameInfo.PlayerCountry) {
-                        DrawRoute(army.route.Last(), army.route.ToArray());
+                        DrawRoute(army.route.ToArray());
                     }
                 }
 

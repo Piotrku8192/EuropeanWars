@@ -2,6 +2,8 @@ using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
+using EuropeanWars.Network;
+using Lidgren.Network;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Linq;
 namespace EuropeanWars.Core.Pathfinding {
     public class ArmyInfo {
         public static List<ArmyInfo> selectedArmies = new List<ArmyInfo>();
+        public readonly int id;
 
         public Dictionary<UnitInfo, int> units = new Dictionary<UnitInfo, int>();
         public Dictionary<UnitInfo, int> maxUnits = new Dictionary<UnitInfo, int>();
@@ -32,6 +35,8 @@ namespace EuropeanWars.Core.Pathfinding {
             Province = unit.province;
             Country.armies.Add(this);
             Province.armies.Add(this);
+            id = GameInfo.armies.Count;
+            GameInfo.armies.Add(GameInfo.armies.Count, this);
 
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += ArmyObject.CountMovement;
@@ -70,7 +75,24 @@ namespace EuropeanWars.Core.Pathfinding {
             ArmyObject.selectionOutline.gameObject.SetActive(false);
         }
 
-        public void FindRoute(ProvinceInfo target) {
+        /// <summary>
+        /// Only for player
+        /// </summary>
+        /// <param name="target"></param>
+        public void GenerateRouteRequest(ProvinceInfo target) {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2049);
+            msg.Write(id);
+            msg.Write(target.id);
+
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        /// <summary>
+        /// Only for bots and NetworkClient
+        /// </summary>
+        /// <param name="target"></param>
+        public void GenerateRoute(ProvinceInfo target) {
             LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
             ProvinceInfo[] r = pathfinder.FindPath(target);
             if (r != null) {
@@ -78,7 +100,9 @@ namespace EuropeanWars.Core.Pathfinding {
                 foreach (var item in r) {
                     route.Enqueue(item);
                 }
-                ArmyObject.DrawRoute(route.Last(), route.ToArray());
+                if (Country == GameInfo.PlayerCountry) {
+                    ArmyObject.DrawRoute(route.ToArray());
+                }
             }
         }
 

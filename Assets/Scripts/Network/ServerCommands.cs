@@ -257,6 +257,18 @@ namespace EuropeanWars.Network {
             msg.Write(count);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(2049)]
+        public static void GenerateArmyRoute(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+            int target = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2049);
+            msg.Write(id);
+            msg.Write(target);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
     }
 }

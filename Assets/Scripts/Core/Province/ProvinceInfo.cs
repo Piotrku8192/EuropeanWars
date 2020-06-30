@@ -97,6 +97,9 @@ namespace EuropeanWars.Core.Province {
                 mapProvince.material.color = country.color;
                 mapProvince.UpdateBorders();
                 MapPainter.PaintProvince(this);
+                if (GameInfo.gameStarted) {
+                    RefreshFogOfWar();
+                }
             }
         }
 
@@ -146,7 +149,7 @@ namespace EuropeanWars.Core.Province {
 
         public void RefreshFogOfWar() {
             foreach (var item in neighbours) {
-                if (!item.IsFow()) {
+                if (item.Country == GameInfo.PlayerCountry) {
                     SetFogOfWar(false);
                     return;
                 }
@@ -155,7 +158,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public bool IsFow() {
-            return !(Country == GameInfo.PlayerCountry 
+            return !(Country == GameInfo.PlayerCountry
                 || GameInfo.PlayerCountry.alliances.ContainsKey(Country)
                 || armies.Where(t => t.Country == GameInfo.PlayerCountry 
                 || GameInfo.PlayerCountry.alliances.ContainsKey(t.Country)).Any());

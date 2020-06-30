@@ -23,6 +23,8 @@ namespace EuropeanWars.Core {
         public static Dictionary<int, CountryInfo> countries = new Dictionary<int, CountryInfo>();
         public static Dictionary<int, UnitInfo> units = new Dictionary<int, UnitInfo>();
 
+        public static Dictionary<int, ArmyInfo> armies = new Dictionary<int, ArmyInfo>();
+
         public static ProvinceInfo SelectedProvince { get; private set; }
         public static CountryInfo PlayerCountry { get; private set; }
         public static bool gameStarted;

@@ -220,7 +220,9 @@ namespace EuropeanWars.Core.Country {
                 }
                 else {
                     toRecruit.Add(unit);
-                    ArmyWindow.Singleton.recrutationWindow.AddRecruitingUnit(unit);
+                    if (GameInfo.PlayerCountry == this) {
+                        ArmyWindow.Singleton.recrutationWindow.AddRecruitingUnit(unit);
+                    }
                 }
 
                 manpower -= info.recruitSize * count;

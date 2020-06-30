@@ -57,7 +57,8 @@ namespace EuropeanWars.Core.Pathfinding {
                 };
                 var p = GetPath((pth.ToArray(), path.Item2 + item.Item1), end, hops - 1);
                 if (p.Item1?.LastOrDefault() == end) {
-                    paths.Add((p.Item1, p.Item2));
+                    //paths.Add((p.Item1, p.Item2));
+                    return (p.Item1, p.Item2);
                 }
             }
 
