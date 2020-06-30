@@ -1,5 +1,5 @@
 ﻿using Boo.Lang;
-using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Pathfinding;
 using System;
 using UnityEngine;
 

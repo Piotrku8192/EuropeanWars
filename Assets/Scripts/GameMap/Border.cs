@@ -53,7 +53,7 @@ namespace EuropeanWars.GameMap {
                     positions.Add(new Vector3(vert.X, -vert.Y, 0));
                 }
 
-                line.sortingOrder = 10;
+                line.sortingOrder = 5;
                 line.positionCount = verts.Count;
                 line.SetPositions(positions.ToArray());
                 line.material = MapGenerator.Singleton.provinceBorderMaterial;

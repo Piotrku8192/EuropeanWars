@@ -16542,7 +16542,7 @@ MonoBehaviour:
   scaleSpeed: 50
   minScope: 10
   maxScope: 100000
-  armiesDistance: 0
+  armiesDistance: 1671.22
   fogOfWarDistance: 0
 --- !u!81 &1521131837
 AudioListener:
@@ -17510,7 +17510,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 11
   m_TargetDisplay: 0
 --- !u!224 &1558245145
 RectTransform:

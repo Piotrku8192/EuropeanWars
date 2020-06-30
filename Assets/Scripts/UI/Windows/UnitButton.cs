@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;

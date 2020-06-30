@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Province;
 using System.Collections;

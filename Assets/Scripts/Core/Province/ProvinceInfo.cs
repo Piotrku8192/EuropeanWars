@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
@@ -8,6 +8,8 @@ using EuropeanWars.Core.Religion;
 using EuropeanWars.GameMap;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
+using System.Linq;
+using EuropeanWars.Province;
 
 namespace EuropeanWars.Core.Province {
     public class ProvinceInfo {
@@ -27,6 +29,8 @@ namespace EuropeanWars.Core.Province {
         public int tradeIncome;
         public bool isInteractive;
         public bool isActive;
+
+        public bool fogOfWar;
 
         public List<ProvinceInfo> neighbours = new List<ProvinceInfo>();
         public CountryInfo Country { get; private set; }
@@ -61,12 +65,14 @@ namespace EuropeanWars.Core.Province {
 
         public void Initialize() {
             SetCountry(GameInfo.countries[data.country]);
-            if (data.neighbours != null) {
-                neighbours = new List<ProvinceInfo>();
-                for (int i = 0; i < data.neighbours.Length; i++) {
-                    neighbours.Add(GameInfo.provinces[data.neighbours[i]]);
-                }
-            }
+
+            //TODO: Uncomment this.
+            //if (data.neighbours != null) {
+            //    neighbours = new List<ProvinceInfo>();
+            //    for (int i = 0; i < data.neighbours.Length; i++) {
+            //        neighbours.Add(GameInfo.provinces[data.neighbours[i]]);
+            //    }
+            //}
             for (int i = 0; i < 10; i++) {
                 buildings[i] = GameInfo.buildings[data.buildings[i]];
             }
@@ -129,5 +135,43 @@ namespace EuropeanWars.Core.Province {
                 }
             }
         }
+
+        #region Fow
+        public void RefreshFogOfWarInRegion() {
+            RefreshFogOfWar();
+            foreach (var item in neighbours) {
+                item.RefreshFogOfWar();
+            }
+        }
+
+        public void RefreshFogOfWar() {
+            foreach (var item in neighbours) {
+                if (!item.IsFow()) {
+                    SetFogOfWar(false);
+                    return;
+                }
+            }
+            SetFogOfWar(IsFow());
+        }
+
+        public bool IsFow() {
+            return !(Country == GameInfo.PlayerCountry 
+                || GameInfo.PlayerCountry.alliances.ContainsKey(Country)
+                || armies.Where(t => t.Country == GameInfo.PlayerCountry 
+                || GameInfo.PlayerCountry.alliances.ContainsKey(t.Country)).Any());
+        }
+
+        public void SerFogOfWarInRegion(bool b) {
+            SetFogOfWar(b);
+            foreach (var item in neighbours) {
+                item.SetFogOfWar(b);
+            }
+        }
+
+        public void SetFogOfWar(bool b) {
+            fogOfWar = b;
+            //TODO: Set FogOfWar on map
+        }
+        #endregion
     }
 }

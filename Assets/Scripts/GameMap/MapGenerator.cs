@@ -1,7 +1,7 @@
 ﻿using EuropeanWars.Core;
-using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Province;
 using EuropeanWars.GameMap.Data;
+using EuropeanWars.Province;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -48,6 +48,11 @@ namespace EuropeanWars.GameMap {
                 ProvinceInfo province = GameInfo.provinces.Where(t => t.Value.color == item.color).FirstOrDefault().Value;
                 p.GenerateProvince(item.mesh, province.isLand ? new Material(provinceMaterial) : waterMaterial, province);
                 province.mapProvince = p;
+
+                //TODO: Delete this temporary code plz!
+                foreach (var b in p.borders) {
+                    province.neighbours.Add(b.province1 == province ? b.province2 : b.province1);
+                }
             }
         }
     }

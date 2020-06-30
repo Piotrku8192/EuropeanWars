@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace EuropeanWars.Core.Army {
+namespace EuropeanWars.Core.Pathfinding {
     public class ArmySpawner : MonoBehaviour {
         public static ArmySpawner Singleton { get; private set; }
 

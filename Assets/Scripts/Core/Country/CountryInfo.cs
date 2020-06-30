@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
@@ -56,6 +56,7 @@ namespace EuropeanWars.Core.Country {
         public CountryInfo[] enemies;
         public Dictionary<CountryInfo, int> relations = new Dictionary<CountryInfo, int>();
         public Dictionary<CountryInfo, Alliance> alliances = new Dictionary<CountryInfo, Alliance>();
+        public Dictionary<CountryInfo, Alliance> militaryAccesses= new Dictionary<CountryInfo, Alliance>(); //TODO: Change value type
 
         //Technology and stuff
         public List<BuildingInfo> buildings = new List<BuildingInfo>();
