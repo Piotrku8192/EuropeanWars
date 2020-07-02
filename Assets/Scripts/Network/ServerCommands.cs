@@ -239,6 +239,63 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #region MilitaryAccess
+        [Command(1028)]
+        public static void AccessRequest(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1028);
+            msg.Write(sender);
+            msg.Write(receiver);
+            if (Server.Singleton.clients.Where(t => t.Value.countryId == receiver).Any()) {
+                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        [Command(1029)]
+        public static void AcceptAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1029);
+            msg.Write(sender);
+            msg.Write(receiver);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1030)]
+        public static void DeliceAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1030);
+            msg.Write(sender);
+            msg.Write(receiver);
+
+            if (Server.Singleton.clients.Where(t => t.Value.countryId == sender).Any()) {
+                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == sender).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        [Command(1031)]
+        public static void DeleteAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int s = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1031);
+            msg.Write(sender);
+            msg.Write(receiver);
+            msg.Write(s);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+        #endregion
+
         #endregion
 
         #region Army (2048-3071)

@@ -190,6 +190,60 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #region MilitaryAccess
+        [Command(1028)]
+        public static void AccessRequest(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            MilitaryAccess.AccessRequestClient(GameInfo.countries[sender], GameInfo.countries[receiver]);
+        }
+
+        [Command(1029)]
+        public static void AcceptAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            MilitaryAccess access = new MilitaryAccess();
+            access.countries.Add(GameInfo.countries[sender]);
+            access.countries.Add(GameInfo.countries[receiver]);
+
+            MilitaryAccess.CreateAccessClient(access);
+        }
+
+        [Command(1030)]
+        public static void DeliceAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            //TODO: Implement translation
+            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
+                countries = new List<Core.Country.CountryInfo>() {
+                    GameInfo.countries[sender],
+                    GameInfo.countries[receiver]
+                }
+            }, true);
+            win.title.text = "Odrzucono prawo przemarszu";
+            win.description.text = "Państwo, któremu zaproponowaliśmy prawo przemarszu odrzuciło naszą propozycję!";
+            win.acceptText.text = "Ok";
+            win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
+
+            MilitaryAccess.messageSent = false;
+        }
+
+        [Command(1031)]
+        public static void DeleteAccess(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int s = message.ReadInt32();
+
+            MilitaryAccess access = DiplomacyManager.militaryAccesses.Where(t => t.countries.Contains(GameInfo.countries[sender])
+            && t.countries.Contains(GameInfo.countries[receiver])).FirstOrDefault();
+
+            MilitaryAccess.DeleteAccessClient(access, s);
+        }
+        #endregion
+
         #endregion
 
         #region Army (2048-3071)

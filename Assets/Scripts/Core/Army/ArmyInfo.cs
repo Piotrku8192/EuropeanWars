@@ -112,7 +112,7 @@ namespace EuropeanWars.Core.Pathfinding {
 
             if (Country == GameInfo.PlayerCountry || GameInfo.PlayerCountry.alliances.ContainsKey(Country)) {
                 Province.RefreshFogOfWarInRegion();
-                newProvince.SetFogOfWar(false);
+                newProvince.SetFogOfWarInRegion(false);
             }
 
             Province = newProvince;

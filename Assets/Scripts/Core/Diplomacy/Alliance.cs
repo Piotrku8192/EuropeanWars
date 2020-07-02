@@ -102,6 +102,14 @@ namespace EuropeanWars.Core.Diplomacy {
                 alliance.countries[0].alliances.Add(alliance.countries[1], alliance);
                 alliance.countries[1].alliances.Add(alliance.countries[0], alliance);
 
+                if (alliance.countries.Contains(GameInfo.PlayerCountry)) {
+                    foreach (var item in alliance.countries) {
+                        foreach (var p in item.provinces) {
+                            p.RefreshFogOfWar();
+                        }
+                    }
+                }
+
                 if (alliance.countries[0] == GameInfo.PlayerCountry) {
                     //TODO: Implement translation
                     var win = DiplomacyWindow.Singleton.SpawnRequest(alliance, true);
@@ -140,6 +148,15 @@ namespace EuropeanWars.Core.Diplomacy {
             foreach (var item in alliance.countries) {
                 item.alliances.Remove(item.alliances.Where(t => t.Value == alliance).FirstOrDefault().Key);
             }
+
+            if (alliance.countries.Contains(GameInfo.PlayerCountry)) {
+                foreach (var item in alliance.countries) {
+                    foreach (var p in item.provinces) {
+                        p.RefreshFogOfWar();
+                    }
+                }
+            }
+
             DiplomacyManager.alliances.Remove(alliance);
 
             DiplomacyWindow.Singleton.countryWindow.UpdateDipActions();

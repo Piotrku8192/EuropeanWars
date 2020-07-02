@@ -45,6 +45,12 @@ namespace EuropeanWars.UI.Windows {
                     case DiplomacyAction.DeleteAlliance:
                         button.interactable = Alliance.CanDelete(GameInfo.PlayerCountry, country);
                         break;
+                    case DiplomacyAction.CreateMilitaryAccess:
+                        button.interactable = MilitaryAccess.CanCreate(GameInfo.PlayerCountry, country);
+                        break;
+                    case DiplomacyAction.DeleteMilitaryAccess:
+                        button.interactable = MilitaryAccess.CanDelete(GameInfo.PlayerCountry, country);
+                        break;
                     default:
                         break;
                 }
@@ -58,6 +64,12 @@ namespace EuropeanWars.UI.Windows {
                     break;
                 case DiplomacyAction.DeleteAlliance:
                     Alliance.DeleteAlliance(GameInfo.PlayerCountry.alliances[country]);
+                    break;
+                case DiplomacyAction.CreateMilitaryAccess:
+                    MilitaryAccess.AccessRequest(GameInfo.PlayerCountry, country);
+                    break;
+                case DiplomacyAction.DeleteMilitaryAccess:
+                    MilitaryAccess.DeleteAccess(GameInfo.PlayerCountry.militaryAccesses[country]);
                     break;
                 default:
                     break;

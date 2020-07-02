@@ -164,7 +164,7 @@ namespace EuropeanWars.Core.Province {
                 || GameInfo.PlayerCountry.alliances.ContainsKey(t.Country)).Any());
         }
 
-        public void SerFogOfWarInRegion(bool b) {
+        public void SetFogOfWarInRegion(bool b) {
             SetFogOfWar(b);
             foreach (var item in neighbours) {
                 item.SetFogOfWar(b);

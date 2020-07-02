@@ -56,7 +56,7 @@ namespace EuropeanWars.Core.Country {
         public CountryInfo[] enemies;
         public Dictionary<CountryInfo, int> relations = new Dictionary<CountryInfo, int>();
         public Dictionary<CountryInfo, Alliance> alliances = new Dictionary<CountryInfo, Alliance>();
-        public Dictionary<CountryInfo, Alliance> militaryAccesses= new Dictionary<CountryInfo, Alliance>(); //TODO: Change value type
+        public Dictionary<CountryInfo, MilitaryAccess> militaryAccesses= new Dictionary<CountryInfo, MilitaryAccess>();
 
         //Technology and stuff
         public List<BuildingInfo> buildings = new List<BuildingInfo>();
