@@ -43,6 +43,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FogOfWarTex:
+        m_Texture: {fileID: 2800000, guid: 3ae611a7c5b382e49b0584029ff74f0b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GradientTex:
         m_Texture: {fileID: 2800000, guid: bab1f2b84cb985f4a947666636338bc3, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -102,6 +106,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableExternalAlpha: 0
+    - _FogOfWar: 0
+    - _FogOfWarAlpha: 0.4
+    - _FogOfWarRepeat: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1
@@ -136,6 +143,7 @@ Material:
     - _Color: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _FogOfWarVelocity: {r: 0.02, g: 0.02, b: 0.02, a: 0.02}
     - _Light: {r: 0, g: -1, b: -1, a: 0}
     - _LightVector: {r: 0, g: -1, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}

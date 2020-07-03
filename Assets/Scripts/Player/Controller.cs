@@ -28,14 +28,8 @@ namespace EuropeanWars {
             transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
 
             Vector3 pos = playerCam.transform.localPosition;
-            pos += new Vector3(0, 0, Input.mouseScrollDelta.y * scaleSpeed);
-            playerCam.transform.localPosition = new Vector3(pos.x, pos.y, -Mathf.Clamp(-pos.z, minScope, maxScope));
-
-            //if (Input.GetKeyDown(KeyCode.P))
-            //{
-            //    transform.rotation = Quaternion.Euler(new Vector3(isPerspectiveView ? 0 : -30, 0, 0));
-            //    isPerspectiveView = !isPerspectiveView;
-            //}
+            playerCam.orthographicSize = Mathf.Clamp(playerCam.orthographicSize - Input.mouseScrollDelta.y * scaleSpeed, minScope, maxScope);
+            playerCam.transform.localPosition = new Vector3(pos.x, pos.y, -10);
         }
     }
 

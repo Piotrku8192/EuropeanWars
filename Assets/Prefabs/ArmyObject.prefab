@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6365865095454004538}
   - component: {fileID: 907471993391790050}
   - component: {fileID: 5278115160602991646}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SelectionOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4134528067180519445}
   - component: {fileID: 355255942779091720}
   - component: {fileID: 850422873114538134}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: gui
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 5317940650478899532}
   - component: {fileID: 5317940650478899534}
   - component: {fileID: 5317940650478899533}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 5317940651171112866}
   - component: {fileID: 5317940651171112865}
   - component: {fileID: 2967329220650058882}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ArmyObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ MonoBehaviour:
   crest: {fileID: 5317940651197679935}
   size: {fileID: 5317940650478899533}
   sizeBackground: {fileID: 5317940651704982654}
-  scale: 0.0015
+  scale: 0.06
 --- !u!120 &2967329220650058882
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 5317940651197679928}
   - component: {fileID: 5317940651197679935}
   - component: {fileID: 5317940651197679929}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Crest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 5317940651568775233}
   - component: {fileID: 5317940651568775235}
   - component: {fileID: 5317940651568775234}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 5317940651704982655}
   - component: {fileID: 5317940651704982654}
   - component: {fileID: 5317940651704982653}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Size
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 5317940652162626973}
   - component: {fileID: 5317940652162626972}
   - component: {fileID: 5317940652162626963}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Artillery
   m_TagString: Untagged
   m_Icon: {fileID: 0}

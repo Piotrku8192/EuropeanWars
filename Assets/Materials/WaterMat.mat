@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterMat
   m_Shader: {fileID: 4800000, guid: cfd26bea86086c04f898ec62292edaa2, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -47,8 +47,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: bab1f2b84cb985f4a947666636338bc3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GrassTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _GroundTex:
         m_Texture: {fileID: 2800000, guid: ff2862ae8651016419e1ff8cdb464a1a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HeightMapTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeightTex:
@@ -60,6 +68,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMapTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -75,6 +87,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RocksTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SnowTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
     - _BumpScale: 1
@@ -85,15 +105,29 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 1
     - _GlossyReflections: 1
+    - _GrassIntensity: 0.3
+    - _GrassRepeat: 1
     - _GroundIntensity: 0.1
+    - _GroundRepeat: 0.1
     - _GroundTiling: 1
     - _HeightIntensity: 0.1
+    - _LightAdd: 0
+    - _LightMin: 0.4
     - _Metallic: 0
     - _Mode: 0
+    - _MountEndHeight: 0.9
+    - _MountStartHeight: 0.75
     - _OcclusionStrength: 1
     - _OutlineRange: 0
     - _Parallax: 0.02
+    - _RocksIntensity: 0.6
+    - _RocksRepeat: 1
+    - _Scale: 0.5
     - _SmoothnessTextureChannel: 0
+    - _SnowEndHeight: 0.95
+    - _SnowIntensity: 0.8
+    - _SnowRepeat: 1
+    - _SnowStartHeight: 0.85
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
@@ -102,6 +136,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _Light: {r: 0, g: -1, b: -1, a: 0}
     - _LightVector: {r: 0, g: -1, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineSelectedColor: {r: 1, g: 1, b: 1, a: 1}

@@ -1,4 +1,5 @@
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace EuropeanWars.Core.Pathfinding {
+namespace EuropeanWars.Core.Army {
     public class ArmyInfo {
         public static List<ArmyInfo> selectedArmies = new List<ArmyInfo>();
         public readonly int id;
@@ -42,6 +43,12 @@ namespace EuropeanWars.Core.Pathfinding {
             TimeManager.onDayElapsed += ArmyObject.CountMovement;
         }
 
+        public static void UnselectAll() {
+            foreach (var item in new List<ArmyInfo>(selectedArmies)) {
+                item.UnselectArmy();
+            }
+        }
+
         public void Delete() {
             Country.armies.Remove(this);
             Province.armies.Remove(this);
@@ -57,11 +64,12 @@ namespace EuropeanWars.Core.Pathfinding {
         }
 
         public void SelectArmy(bool unselectOthers = true) {
+            if (selectedArmies.Contains(this)) {
+                return;
+            }
             if (Country == GameInfo.PlayerCountry) {
                 if (unselectOthers) {
-                    foreach (var item in selectedArmies) {
-                        item.UnselectArmy();
-                    }
+                    UnselectAll();
                 }
                 selectedArmies.Add(this);
                 IsSelected = true;

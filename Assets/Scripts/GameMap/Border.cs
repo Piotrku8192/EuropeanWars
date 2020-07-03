@@ -22,7 +22,7 @@ namespace EuropeanWars.GameMap {
         public void Update() {
             if (isGenerated) {
                 if (style == BorderStyle.BetweenProvinces) {
-                    if (Camera.main.transform.position.z < -1200) {
+                    if (Controller.Singleton.playerCam.orthographicSize > 400) {
                         foreach (var item in lines) {
                             item.enabled = false;
                         }

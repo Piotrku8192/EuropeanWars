@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.UI {
     public class RecruitingUnitProgressWindow : MonoBehaviour

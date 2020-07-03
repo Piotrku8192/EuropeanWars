@@ -10,6 +10,7 @@ using EuropeanWars.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.Core.Country {
     public class CountryInfo {

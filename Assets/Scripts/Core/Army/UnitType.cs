@@ -1,4 +1,4 @@
-﻿namespace EuropeanWars.Core.Pathfinding {
+﻿namespace EuropeanWars.Core.Army {
     public enum UnitType {
         Infantry,
         Cavalry,

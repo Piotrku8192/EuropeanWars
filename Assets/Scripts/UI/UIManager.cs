@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core;
+﻿using EuropeanWars.Core.Army;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +19,7 @@ namespace EuropeanWars.UI {
         public void Update() {
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 CloseAllWindows();
+                ArmyInfo.UnselectAll();
             }
         }
 

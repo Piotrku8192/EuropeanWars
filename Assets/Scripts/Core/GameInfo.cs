@@ -9,6 +9,7 @@ using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.Core {
     public static class GameInfo {

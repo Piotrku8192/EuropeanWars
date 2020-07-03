@@ -2,7 +2,7 @@
 using EuropeanWars.Core.Data;
 using UnityEngine;
 
-namespace EuropeanWars.Core.Pathfinding {
+namespace EuropeanWars.Core.Army {
     public class UnitInfo {
         private readonly UnitData data;
 

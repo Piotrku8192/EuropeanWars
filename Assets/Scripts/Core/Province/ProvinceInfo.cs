@@ -10,6 +10,7 @@ using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using EuropeanWars.Province;
+using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.Core.Province {
     public class ProvinceInfo {
@@ -173,7 +174,9 @@ namespace EuropeanWars.Core.Province {
 
         public void SetFogOfWar(bool b) {
             fogOfWar = b;
-            //TODO: Set FogOfWar on map
+            if (mapProvince) {
+                mapProvince.material.SetFloat("_FogOfWar", b ? 1 : 0);
+            }
         }
         #endregion
     }

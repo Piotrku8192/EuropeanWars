@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.GameMap;

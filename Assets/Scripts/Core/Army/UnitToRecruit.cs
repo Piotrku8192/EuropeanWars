@@ -3,7 +3,7 @@ using EuropeanWars.Core.Province;
 using System;
 using UnityEngine;
 
-namespace EuropeanWars.Core.Pathfinding {
+namespace EuropeanWars.Core.Army {
     public class UnitToRecruit {
         public UnitInfo unitInfo;
         public ProvinceInfo province;

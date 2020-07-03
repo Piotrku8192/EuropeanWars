@@ -1,5 +1,6 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.GameMap;
 using System.Linq;

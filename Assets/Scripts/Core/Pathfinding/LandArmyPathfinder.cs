@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Country;
+﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
 using System.Collections.Generic;
 using System.Linq;

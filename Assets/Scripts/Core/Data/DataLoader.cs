@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.Core.Data {
     public class DataLoader : MonoBehaviour

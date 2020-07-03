@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EuropeanWars.Core.Pathfinding {
+namespace EuropeanWars.Core.Army {
     public class ArmyObject : MonoBehaviour {
         public ArmyInfo army;
         public LineRenderer lineRenderer;
@@ -33,14 +33,12 @@ namespace EuropeanWars.Core.Pathfinding {
                 army.UnselectArmy();
             }
             else {
-                army.SelectArmy();
+                army.SelectArmy(!Input.GetKey(KeyCode.LeftShift));
             }
         }
 
         public void UpdateScale() {
-            float curDistance = -Controller.Singleton.playerCam.transform.position.z - transform.position.z;
-            if (curDistance <= 0)
-                curDistance = 1;
+            float curDistance = Controller.Singleton.playerCam.orthographicSize;
 
             if (curDistance > Controller.Singleton.armiesDistance || army.Province.fogOfWar) {
                 gui.SetActive(false);
