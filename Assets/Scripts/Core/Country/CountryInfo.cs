@@ -27,6 +27,11 @@ namespace EuropeanWars.Core.Country {
         public int king; //TODO: Change type when persons added
         public ReligionInfo religion;
         public List<ProvinceInfo> provinces = new List<ProvinceInfo>();
+        public List<ProvinceInfo> nationalProvinces = new List<ProvinceInfo>();
+
+        public int maxClaimsAtOneTime = 3;
+        public Dictionary<ProvinceInfo, int> toClaim = new Dictionary<ProvinceInfo, int>();
+        public List<ProvinceInfo> claimedProvinces = new List<ProvinceInfo>();
 
         //Economy
         public int gold;
@@ -84,21 +89,19 @@ namespace EuropeanWars.Core.Country {
             gold = 4000;
             units.AddRange(GameInfo.units.Values); //TODO: Remove this
         }
-
         public void UpdateLanguage() {
             name = LanguageDictionary.language["CountryName-" + id.ToString()];
         }
 
         public void OnDayElapsed() {
             TryRecruitUnits();
+            TryFabricateClaim();
         }
-
         public void OnMonthElapsed() {
             CalculateEconomy();
             EndBankruptcy();
             CalculateManpower();
         }
-
         public void OnYearElapsed() {
             CalculatePrestige();
         }
@@ -131,7 +134,6 @@ namespace EuropeanWars.Core.Country {
             }
             balance = gold - lastGold;
         }
-
         public void CalculateManpower() {
             //TODO: Update this function after create new system
             maxManpower = taxationIncome * 1000;
@@ -141,21 +143,43 @@ namespace EuropeanWars.Core.Country {
                 manpower += Mathf.FloorToInt(manpowerIncrease * manpowerModifier);
             }
         }
-
         public void CalculatePrestige() {
             //TODO: Yes, this is definetly bad way to do that.
             prestige += 1;
         }
 
-        #region Loans
+        public void EnqueFabricateClaim(ProvinceInfo province) {
+            if (!claimedProvinces.Contains(province) && !toClaim.ContainsKey(province)
+                && province.neighbours.Where(t => t.NationalCountry == this).Any()) {
+                toClaim.Add(province, province.taxation * 10);
+            }
+        }
+        private void TryFabricateClaim() {
+            for (int i = 0; i < maxClaimsAtOneTime; i++) {
+                if (toClaim.Count > 0) {
+                    ProvinceInfo key = toClaim.Keys.ToArray()[i];
+                    toClaim[key]--;
+                }
+                else {
+                    break;
+                }
+            }
 
+            foreach (var item in new Dictionary<ProvinceInfo, int>(toClaim)) {
+                if (item.Value <= 0) {
+                    item.Key.FabricateClaim(this);
+                    toClaim.Remove(item.Key);
+                }
+            }
+        }
+
+        #region Loans
         public void TakeLoans(int count = 1) {
             for (int i = 0; i < count; i++) {
                 gold += 300;
                 loans++;
             }
         }
-
         public void PayOffLoans(int count = 1) {
             for (int i = 0; i < count; i++) {
                 if (loans == 0 || gold < 300) {
@@ -166,7 +190,6 @@ namespace EuropeanWars.Core.Country {
                 loans--;
             }
         }
-
         public void Bankruptcy() {
             monthsToEndBanktruptcy = 120;
             loans = 0;
@@ -175,8 +198,7 @@ namespace EuropeanWars.Core.Country {
             buildingsIncomeModifier -= 0.2f;
             tradeIncomeModifier -= 0.2f;
         }
-
-        public void EndBankruptcy() {
+        private void EndBankruptcy() {
             if (monthsToEndBanktruptcy > 0) {
                 monthsToEndBanktruptcy--;
             }
@@ -187,19 +209,6 @@ namespace EuropeanWars.Core.Country {
                 tradeIncomeModifier += 0.2f;
             }
         }
-
-        #endregion
-
-        #region Diplomacy
-
-        //TODO: Move this function to DiplomacyManager.
-        public void SetRelationsWithCountry(CountryInfo country, int v) {
-            if (relations.ContainsKey(country) && country.relations.ContainsKey(this)) {
-                relations[country] = v;
-                country.relations[this] = v;
-            }
-        }
-
         #endregion
 
         #region Recrutation
@@ -230,7 +239,7 @@ namespace EuropeanWars.Core.Country {
                 gold -= info.recruitCost * count;
             }
         }
-        public void TryRecruitUnits() {
+        private void TryRecruitUnits() {
             List<UnitToRecruit> tr = new List<UnitToRecruit>(toRecruit);
             foreach (UnitToRecruit unit in tr) {
                 unit.days -= 1;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using EuropeanWars.Core.Country;
+using System.Collections.Generic;
 
 namespace EuropeanWars.Core.Diplomacy {
     public static class DiplomacyManager {
@@ -27,6 +28,13 @@ namespace EuropeanWars.Core.Diplomacy {
             }
             else if (relation.GetType() == typeof(MilitaryAccess)) {
                 MilitaryAccess.DeleteAccess((MilitaryAccess)relation);
+            }
+        }
+
+        public static void SetRelationsWithCountry(CountryInfo country, CountryInfo _country, int v) {
+            if (country.relations.ContainsKey(_country) && _country.relations.ContainsKey(country)) {
+                _country.relations[country] = v;
+                country.relations[_country] = v;
             }
         }
     }

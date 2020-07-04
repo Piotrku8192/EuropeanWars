@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Pathfinding;
+﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
@@ -6,11 +6,10 @@ using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.GameMap;
+using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
-using EuropeanWars.Province;
-using EuropeanWars.Core.Army;
 
 namespace EuropeanWars.Core.Province {
     public class ProvinceInfo {
@@ -35,6 +34,9 @@ namespace EuropeanWars.Core.Province {
 
         public List<ProvinceInfo> neighbours = new List<ProvinceInfo>();
         public CountryInfo Country { get; private set; }
+        public CountryInfo NationalCountry { get; private set; }
+        public List<CountryInfo> claimators = new List<CountryInfo>();
+
         public ReligionInfo religion;
         public int[] religionFollowers;
         public CultureInfo culture;
@@ -65,7 +67,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void Initialize() {
-            SetCountry(GameInfo.countries[data.country]);
+            SetCountry(GameInfo.countries[data.country], true);
 
             //TODO: Uncomment this.
             //if (data.neighbours != null) {
@@ -88,12 +90,20 @@ namespace EuropeanWars.Core.Province {
             }
         }
 
-        public void SetCountry(CountryInfo country) {
+        public void SetCountry(CountryInfo country, bool nationalCountry = false) {
             if (Country != null) {
                 Country.provinces.Remove(this);
+                if (nationalCountry) {
+                    Country.nationalProvinces.Remove(this);
+                }
             }
             Country = country;
             Country.provinces.Add(this);
+            if (nationalCountry) {
+                NationalCountry = country;
+                Country.nationalProvinces.Add(this);
+                FabricateClaim(Country);
+            }
             if (mapProvince != null && isLand) {
                 mapProvince.material.color = country.color;
                 mapProvince.UpdateBorders();
@@ -101,6 +111,13 @@ namespace EuropeanWars.Core.Province {
                 if (GameInfo.gameStarted) {
                     RefreshFogOfWar();
                 }
+            }
+        }
+
+        public void FabricateClaim(CountryInfo country) {
+            if (!claimators.Contains(Country)) {
+                claimators.Add(country);
+                country.claimedProvinces.Add(this);
             }
         }
 
