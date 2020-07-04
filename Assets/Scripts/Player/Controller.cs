@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using EuropeanWars.GameMap;
+using UnityEngine;
 
 namespace EuropeanWars {
     public class Controller : MonoBehaviour
@@ -25,7 +26,8 @@ namespace EuropeanWars {
 
         private void Update()
         {
-            transform.position += new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed;
+            Vector3 p = transform.position + (new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
+            transform.position = new Vector3(Mathf.Clamp(p.x, 0, 2400), Mathf.Clamp(p.y, -2400, 0), p.z);
 
             Vector3 pos = playerCam.transform.localPosition;
             playerCam.orthographicSize = Mathf.Clamp(playerCam.orthographicSize - Input.mouseScrollDelta.y * scaleSpeed, minScope, maxScope);

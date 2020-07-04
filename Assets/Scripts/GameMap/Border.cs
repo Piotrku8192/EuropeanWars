@@ -90,7 +90,7 @@ namespace EuropeanWars.GameMap {
                         }
                     }
                     SetMaterial(MapGenerator.Singleton.countryBorderMaterial);
-                    SetWidth(1.4f);
+                    SetWidth(2);//1.4f);
                     break;
                 case BorderStyle.SelectedProvince:
                     foreach (var item in lines) {

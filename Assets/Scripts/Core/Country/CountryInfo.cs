@@ -29,7 +29,7 @@ namespace EuropeanWars.Core.Country {
         public List<ProvinceInfo> provinces = new List<ProvinceInfo>();
         public List<ProvinceInfo> nationalProvinces = new List<ProvinceInfo>();
 
-        public int maxClaimsAtOneTime = 3;
+        public int maxClaimsAtOneTime = 2;
         public Dictionary<ProvinceInfo, int> toClaim = new Dictionary<ProvinceInfo, int>();
         public List<ProvinceInfo> claimedProvinces = new List<ProvinceInfo>();
 
@@ -136,7 +136,7 @@ namespace EuropeanWars.Core.Country {
         }
         public void CalculateManpower() {
             //TODO: Update this function after create new system
-            maxManpower = taxationIncome * 1000;
+            maxManpower = nationalProvinces.Count * 5000;
             manpowerIncrease = taxationIncome;
             manpowerModifier = 1.0f;
             if (manpower + manpowerIncrease <= maxManpower) {
