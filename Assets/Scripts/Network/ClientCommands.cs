@@ -245,6 +245,16 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #region Claims
+        [Command(1032)]
+        public static void FabricateClaim(NetIncomingMessage message) {
+            int province = message.ReadInt32();
+            int country = message.ReadInt32();
+
+            GameInfo.countries[country].EnqueFabricateClaim(GameInfo.provinces[province]);
+        }
+        #endregion
+
         #endregion
 
         #region Army (2048-3071)

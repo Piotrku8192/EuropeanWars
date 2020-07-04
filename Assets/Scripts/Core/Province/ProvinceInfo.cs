@@ -115,7 +115,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void FabricateClaim(CountryInfo country) {
-            if (!claimators.Contains(Country)) {
+            if (!claimators.Contains(country)) {
                 claimators.Add(country);
                 country.claimedProvinces.Add(this);
             }

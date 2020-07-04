@@ -12,8 +12,6 @@ namespace EuropeanWars {
         public float armiesDistance;
         public float fogOfWarDistance;
 
-        //private bool isPerspectiveView = false;
-
         private void Awake()
         {
             Singleton = this;

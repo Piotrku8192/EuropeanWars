@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using EuropeanWars.Core.Army;
+using EuropeanWars.UI.Windows;
 
 namespace EuropeanWars.Core.Country {
     public class CountryInfo {
@@ -152,11 +153,15 @@ namespace EuropeanWars.Core.Country {
             if (!claimedProvinces.Contains(province) && !toClaim.ContainsKey(province)
                 && province.neighbours.Where(t => t.NationalCountry == this).Any()) {
                 toClaim.Add(province, province.taxation * 10);
+
+                if (ProvinceWindow.Singleton.province == province) {
+                    ProvinceWindow.Singleton.UpdateWindow(province);
+                }
             }
         }
         private void TryFabricateClaim() {
             for (int i = 0; i < maxClaimsAtOneTime; i++) {
-                if (toClaim.Count > 0) {
+                if (toClaim.Count > i) {
                     ProvinceInfo key = toClaim.Keys.ToArray()[i];
                     toClaim[key]--;
                 }
@@ -169,6 +174,9 @@ namespace EuropeanWars.Core.Country {
                 if (item.Value <= 0) {
                     item.Key.FabricateClaim(this);
                     toClaim.Remove(item.Key);
+                    if (ProvinceWindow.Singleton.province == item.Key) {
+                        ProvinceWindow.Singleton.UpdateWindow(item.Key);
+                    }
                 }
             }
         }

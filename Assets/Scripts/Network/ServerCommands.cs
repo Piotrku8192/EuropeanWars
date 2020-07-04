@@ -296,6 +296,20 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        #region Claims
+        [Command(1032)]
+        public static void FabricateClaim(NetIncomingMessage message) {
+            int province = message.ReadInt32();
+            int country = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1032);
+            msg.Write(province);
+            msg.Write(country);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+        #endregion
+
         #endregion
 
         #region Army (2048-3071)
