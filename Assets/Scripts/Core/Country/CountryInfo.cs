@@ -8,6 +8,7 @@ using EuropeanWars.Core.Religion;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -256,6 +257,16 @@ namespace EuropeanWars.Core.Country {
                     toRecruit.Remove(unit);
                 }
             }
+        }
+        #endregion
+
+        #region
+        public bool IsInWarAgainstCountry(CountryInfo country) {
+            throw new NotImplementedException();
+        }
+
+        public bool IsInWarWithCountry(CountryInfo country) {
+            throw new NotImplementedException();
         }
         #endregion
     }
