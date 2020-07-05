@@ -9,6 +9,10 @@ namespace EuropeanWars.Core.War {
             this.war = war;
         }
 
+        public void InviteFriends() {
+
+        }
+
         private CountryInfo[] GetCountryFriends(CountryInfo country) {
             List<CountryInfo> result = new List<CountryInfo>();
             foreach (var item in country.alliances) {
