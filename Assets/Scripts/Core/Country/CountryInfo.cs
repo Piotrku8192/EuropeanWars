@@ -6,6 +6,7 @@ using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Core.Time;
+using EuropeanWars.Core.War;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Windows;
 using System;
@@ -62,6 +63,7 @@ namespace EuropeanWars.Core.Country {
         public CountryInfo[] friends;
         public CountryInfo[] enemies;
         public Dictionary<CountryInfo, int> relations = new Dictionary<CountryInfo, int>();
+        public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
         public Dictionary<CountryInfo, Alliance> alliances = new Dictionary<CountryInfo, Alliance>();
         public Dictionary<CountryInfo, MilitaryAccess> militaryAccesses= new Dictionary<CountryInfo, MilitaryAccess>();
 
@@ -260,7 +262,7 @@ namespace EuropeanWars.Core.Country {
         }
         #endregion
 
-        #region
+        #region War
         public bool IsInWarAgainstCountry(CountryInfo country) {
             throw new NotImplementedException();
         }

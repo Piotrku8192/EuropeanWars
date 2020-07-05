@@ -5,5 +5,10 @@ namespace EuropeanWars.Core.War {
         public readonly CountryInfo country;
         public readonly WarParty party;
         public WarScore WarScore { get; private set; }
+
+        public WarCountryInfo(CountryInfo country, WarParty party) {
+            this.country = country;
+            this.party = party;
+        }
     }
 }

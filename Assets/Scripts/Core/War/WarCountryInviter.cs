@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using System;
 using System.Collections.Generic;
 
 namespace EuropeanWars.Core.War {
@@ -10,7 +11,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void InviteFriends() {
-
+            throw new NotImplementedException();
         }
 
         private CountryInfo[] GetCountryFriends(CountryInfo country) {
