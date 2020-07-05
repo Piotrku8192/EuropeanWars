@@ -77,7 +77,7 @@ namespace EuropeanWars.UI.Windows {
             bool b = GameInfo.PlayerCountry == province.Country;
             upgradeButton.interactable = b;
             devastateButton.interactable = b;
-            fabricateClaimButton.interactable = !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
+            fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
                 && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
         }
 

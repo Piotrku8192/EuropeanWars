@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Pathfinding;
+﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
@@ -7,11 +7,10 @@ using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI;
+using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using EuropeanWars.Core.Army;
-using EuropeanWars.UI.Windows;
 
 namespace EuropeanWars.Core.Country {
     public class CountryInfo {
@@ -151,7 +150,7 @@ namespace EuropeanWars.Core.Country {
 
         public void EnqueFabricateClaim(ProvinceInfo province) {
             if (!claimedProvinces.Contains(province) && !toClaim.ContainsKey(province)
-                && province.neighbours.Where(t => t.NationalCountry == this).Any()) {
+                && province.neighbours.Where(t => t.NationalCountry == this).Any() && province.isInteractive) {
                 toClaim.Add(province, province.taxation * 10);
 
                 if (ProvinceWindow.Singleton.province == province) {
@@ -224,7 +223,8 @@ namespace EuropeanWars.Core.Country {
             if (province.Country == this 
                 && manpower >= info.recruitSize * count
                 && gold >= info.recruitCost * count
-                && province.buildings.Contains(info.recruitBuilding)) {
+                && province.buildings.Contains(info.recruitBuilding)
+                && claimedProvinces.Contains(province)) {
                 UnitToRecruit unit = new UnitToRecruit();
                 unit.unitInfo = info;
                 unit.province = province;
