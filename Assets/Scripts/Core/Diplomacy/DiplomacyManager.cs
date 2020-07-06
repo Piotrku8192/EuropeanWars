@@ -1,8 +1,10 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.War;
 using System.Collections.Generic;
 
 namespace EuropeanWars.Core.Diplomacy {
     public static class DiplomacyManager {
+        public static List<WarInfo> wars = new List<WarInfo>();
         public static List<MilitaryAccess> militaryAccesses = new List<MilitaryAccess>();
         public static List<Alliance> alliances = new List<Alliance>();
 

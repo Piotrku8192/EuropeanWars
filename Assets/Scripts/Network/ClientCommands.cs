@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine.UI;
 using EuropeanWars.Core.Army;
+using EuropeanWars.Core.War;
 
 namespace EuropeanWars.Network {
     public static class ClientCommands {
@@ -252,6 +253,25 @@ namespace EuropeanWars.Network {
             int country = message.ReadInt32();
 
             GameInfo.countries[country].EnqueFabricateClaim(GameInfo.provinces[province]);
+        }
+        #endregion
+
+        #region War
+        [Command(1033)]
+        public static void AcceptWarInvitation(NetIncomingMessage message) {
+            int war = message.ReadInt32();
+            int country = message.ReadInt32();
+            bool isAttacker = message.ReadBoolean();
+
+            DiplomacyManager.wars.Single(t => t.id == war).JoinWar(GameInfo.countries[country], isAttacker);
+        }
+
+        [Command(1034)]
+        public static void DeliceWarInvitation(NetIncomingMessage message) {
+            int inviter = message.ReadInt32();
+            int country = message.ReadInt32();
+
+            //TODO: Do effects of deliceing war invitation
         }
         #endregion
 

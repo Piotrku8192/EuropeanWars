@@ -2,6 +2,7 @@
 using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.War;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace EuropeanWars.UI.Windows {
         public CountryButton countryButtonPrefab;
 
         public DipRequestWindow dipRequestWindowPrefab;
+        public WarInvitationWindow warInvitationWindowPrefab;
         public DiplomacyCountryInfoWindow countryWindow;
 
         private Dictionary<CountryInfo, CountryButton> countries = new Dictionary<CountryInfo, CountryButton>();
@@ -58,6 +60,12 @@ namespace EuropeanWars.UI.Windows {
             DipRequestWindow go = Instantiate(dipRequestWindowPrefab, UIManager.Singleton.ui.transform);
             go.relation = relation;
             go.Init(isNotification);
+            return go;
+        }
+
+        public WarInvitationWindow SpawnWarInvitation(WarInfo war, CountryInfo inviter, bool isAttacker) {
+            WarInvitationWindow go = Instantiate(warInvitationWindowPrefab, UIManager.Singleton.ui.transform);
+            go.Init(war, inviter, isAttacker);
             return go;
         }
     }
