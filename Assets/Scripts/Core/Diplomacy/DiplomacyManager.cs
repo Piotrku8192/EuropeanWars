@@ -35,6 +35,7 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public static void DeclareWar(WarReason warReason, CountryInfo attacker, CountryInfo defender) {
             WarInfo war = new WarInfo(warReason, attacker, defender);
+            wars.Add(war);
         }
 
         public static void SetRelationsWithCountry(CountryInfo country, CountryInfo _country, int v) {
