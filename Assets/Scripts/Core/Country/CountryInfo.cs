@@ -273,12 +273,23 @@ namespace EuropeanWars.Core.Country {
 		}
 		public bool IsInWarWithCountry(CountryInfo country) {
 			foreach (var item in wars) {
-				if (item.Key.ContainsCountry(country) {
+				if (item.Key.ContainsCountry(country)) {
 					return true;
 				}
 			}
 			return false;
 		}
+		public WarInfo GetWarAgainstCountry(CountryInfo country) {
+			if (IsInWarAgainstCountry(country)) {
+				foreach (var item in wars) {
+					if (item.Value.party.Enemies.ContainsCountry(country)) {
+						return item.Key;
+					}
+				}
+            }
+
+			return null;
+        }
 		#endregion
 	}
 }

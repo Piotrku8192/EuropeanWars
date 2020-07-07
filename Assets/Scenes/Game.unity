@@ -4447,6 +4447,8 @@ MonoBehaviour:
     type: 3}
   dipRequestWindowPrefab: {fileID: 35582408458239143, guid: 03c8f294e1e6b7441be8a724c625bcbb,
     type: 3}
+  warInvitationWindowPrefab: {fileID: 4468689959481269101, guid: afb605cd31a08fd47b6e8f40c172012f,
+    type: 3}
   countryWindow: {fileID: 1231622975}
 --- !u!114 &361750540
 MonoBehaviour:

@@ -7,8 +7,11 @@ namespace EuropeanWars.Core.War {
         public readonly WarInfo war;
         public WarParty Enemies { get; private set; }
         public readonly WarCountryInfo major;
-        public readonly List<WarCountryInfo> countries = new List<WarCountryInfo>();
-        public WarScore WarScore { get; private set; }
+        public readonly Dictionary<CountryInfo, WarCountryInfo> countries;
+
+        public int PartyScoreCost => countries.Sum(t => t.Value.CountryScoreCost);
+        public int WarScore => countries.Sum(t => t.Value.WarScore);
+        public float PercentWarScore => WarScore / Enemies.PartyScoreCost;
 
         /// <summary>
         /// After making parties you must set Enemies party by invoking SetEnemies method.
@@ -18,7 +21,8 @@ namespace EuropeanWars.Core.War {
         public WarParty(WarInfo war, CountryInfo major) {
             this.war = war;
             this.major = new WarCountryInfo(major, this);
-            countries = new List<WarCountryInfo>();
+            countries = new Dictionary<CountryInfo, WarCountryInfo>();
+            countries.Add(this.major.country, this.major);
         }
 
         /// <summary>
@@ -30,25 +34,23 @@ namespace EuropeanWars.Core.War {
         }
 
         public bool ContainsCountry(CountryInfo country) {
-            return major.country == country || countries.Where(t => t.country == country).Any();
+            return countries.ContainsKey(country);
         }
         public bool ContainsCountry(WarCountryInfo country) {
-            return major == country || countries.Contains(country);
+            return countries.ContainsValue(country);
         }
         public void JoinParty(CountryInfo country) {
             if (!ContainsCountry(country) && !Enemies.ContainsCountry(country)) {
                 WarCountryInfo c = new WarCountryInfo(country, this);
-                countries.Add(c);
+                countries.Add(country, c);
                 country.wars.Add(war, c);
-                //TODO: Update WarScore in all countries in war
             }
         }
         public void LeaveParty(WarCountryInfo country) {
             if (ContainsCountry(country)) {
                 if (country != major) {
-                    countries.Remove(country);
+                    countries.Remove(country.country);
                     country.country.wars.Remove(war);
-                    //TODO: Update WarScore in all countries in war
                 }
             }
         }
