@@ -21,6 +21,10 @@ namespace EuropeanWars.Network {
             }
         }
 
+        public void OnDestroy() {
+            s.Shutdown("Bye");
+        }
+
         public void Start() {
             NetPeerConfiguration config = new NetPeerConfiguration("ew");
             config.Port = serverPort;

@@ -4,6 +4,7 @@ using EuropeanWars.Core.Province;
 using EuropeanWars.UI.Lobby;
 using Lidgren.Network;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -334,6 +335,20 @@ namespace EuropeanWars.Network {
             msg.Write((ushort)1034);
             msg.Write(inviter);
             msg.Write(country);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1035)]
+        public static void DeclateWar(NetIncomingMessage message) {
+            int attacker = message.ReadInt32();
+            int defender = message.ReadInt32();
+            int warReason = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1035);
+            msg.Write(attacker);
+            msg.Write(defender);
+            msg.Write(warReason);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
         #endregion

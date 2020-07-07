@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
+using System;
 
 namespace EuropeanWars.Core.War {
     public class ConquestWarReason : WarReason {

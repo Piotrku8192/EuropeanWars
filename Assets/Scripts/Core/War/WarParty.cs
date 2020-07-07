@@ -21,6 +21,7 @@ namespace EuropeanWars.Core.War {
         public WarParty(WarInfo war, CountryInfo major) {
             this.war = war;
             this.major = new WarCountryInfo(major, this);
+            major.wars.Add(war, this.major);
             countries = new Dictionary<CountryInfo, WarCountryInfo>();
             countries.Add(this.major.country, this.major);
         }

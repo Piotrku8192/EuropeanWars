@@ -2,6 +2,8 @@
 using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Network;
+using Lidgren.Network;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +15,12 @@ namespace EuropeanWars.UI.Windows {
         public Text countryName;
 
         public DipActionButton[] dipActionButtons;
+        public DeclareWarWindow declareWarWindow;
 
         public CountryInfo country;
 
         public void UpdateWindow(CountryInfo country) {
+            declareWarWindow.ResetAndDisable();
             this.country = country;
             crest.sprite = country.crest;
             religion.sprite = country.religion.image;
@@ -34,22 +38,25 @@ namespace EuropeanWars.UI.Windows {
             foreach (var item in dipActionButtons) {
                 Button button = item.GetComponent<Button>();
                 if (country == GameInfo.PlayerCountry) {
-                    button.interactable = false;
+                    button.gameObject.SetActive(false);
                     continue;
                 }
 
                 switch (item.action) {
+                    case DiplomacyAction.DeclareWar:
+                        button.gameObject.SetActive(!GameInfo.PlayerCountry.IsInWarAgainstCountry(country));
+                        break;
                     case DiplomacyAction.CreateAlliance:
-                        button.interactable = Alliance.CanCreate(GameInfo.PlayerCountry, country);
+                        button.gameObject.SetActive(Alliance.CanCreate(GameInfo.PlayerCountry, country));
                         break;
                     case DiplomacyAction.DeleteAlliance:
-                        button.interactable = Alliance.CanDelete(GameInfo.PlayerCountry, country);
+                        button.gameObject.SetActive(Alliance.CanDelete(GameInfo.PlayerCountry, country));
                         break;
                     case DiplomacyAction.CreateMilitaryAccess:
-                        button.interactable = MilitaryAccess.CanCreate(GameInfo.PlayerCountry, country);
+                        button.gameObject.SetActive(MilitaryAccess.CanCreate(GameInfo.PlayerCountry, country));
                         break;
                     case DiplomacyAction.DeleteMilitaryAccess:
-                        button.interactable = MilitaryAccess.CanDelete(GameInfo.PlayerCountry, country);
+                        button.gameObject.SetActive(MilitaryAccess.CanDelete(GameInfo.PlayerCountry, country));
                         break;
                     default:
                         break;
@@ -59,6 +66,14 @@ namespace EuropeanWars.UI.Windows {
 
         public void PlayAction(DiplomacyAction action) {
             switch (action) {
+                case DiplomacyAction.DeclareWar:
+                    NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                    msg.Write((ushort)1035);
+                    msg.Write(GameInfo.PlayerCountry.id);
+                    msg.Write(country.id);
+                    msg.Write(declareWarWindow.selectedReason.warReasonId);
+                    Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+                    break;
                 case DiplomacyAction.CreateAlliance:
                     Alliance.AllianceRequest(GameInfo.PlayerCountry, country);
                     break;

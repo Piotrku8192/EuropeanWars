@@ -3,6 +3,7 @@
         CreateAlliance,
         DeleteAlliance,
         CreateMilitaryAccess,
-        DeleteMilitaryAccess
+        DeleteMilitaryAccess,
+        DeclareWar,
     }
 }

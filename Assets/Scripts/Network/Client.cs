@@ -22,6 +22,10 @@ namespace EuropeanWars.Network {
             }
         }
 
+        public void OnDestroy() {
+            c.Shutdown("Bye");
+        }
+
         public void Start() {
             isHost = Server.Singleton != null;
 

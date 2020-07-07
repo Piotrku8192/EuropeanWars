@@ -273,6 +273,31 @@ namespace EuropeanWars.Network {
 
             //TODO: Do effects of deliceing war invitation
         }
+
+        [Command(1035)]
+        public static void DeclateWar(NetIncomingMessage message) {
+            int attacker = message.ReadInt32();
+            int defender = message.ReadInt32();
+            int warReason = message.ReadInt32();
+            CountryInfo a = GameInfo.countries[attacker];
+            CountryInfo d = GameInfo.countries[defender];
+
+            if (!a.IsInWarAgainstCountry(d)) {
+                WarReasonFactory factory = new WarReasonFactory(a, d);
+                WarReason w = factory.GetReasons()[warReason];
+                DiplomacyManager.DeclareWar(w, a, d);
+
+                if (d == GameInfo.PlayerCountry) {
+                    //TODO: Implement translation
+                    DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
+                        countries = new List<CountryInfo>() { a, d } }, true);
+                    win.title.text = "Wojna!";
+                    win.description.text = "Nasz niedaleki sąsiad wypowiedział nam wojnę!";
+                    win.acceptText.text = "Ok";
+                    win.deliceText.text = "Ok";
+                }
+            }
+        }
         #endregion
 
         #endregion

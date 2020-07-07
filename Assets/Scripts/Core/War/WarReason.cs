@@ -1,5 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
-using System.Reflection;
+using System;
 
 namespace EuropeanWars.Core.War {
     public abstract class WarReason {
