@@ -270,8 +270,12 @@ namespace EuropeanWars.Network {
         public static void DeliceWarInvitation(NetIncomingMessage message) {
             int inviter = message.ReadInt32();
             int country = message.ReadInt32();
+            CountryInfo i = GameInfo.countries[inviter];
+            CountryInfo c = GameInfo.countries[country];
 
-            //TODO: Do effects of deliceing war invitation
+            if (i.alliances.ContainsKey(c)) {
+                Alliance.DeleteAlliance(i.alliances[c]);
+            }
         }
 
         [Command(1035)]

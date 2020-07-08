@@ -1557,6 +1557,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76109199}
   m_CullTransparentMesh: 0
+--- !u!1 &98474461
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98474462}
+  - component: {fileID: 98474463}
+  - component: {fileID: 98474464}
+  m_Layer: 5
+  m_Name: Wars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &98474462
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98474461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 969072076}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -42.18}
+  m_SizeDelta: {x: 220.86, y: -154.18}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &98474463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98474461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 5
+    m_Right: 5
+    m_Top: 5
+    m_Bottom: 5
+  m_ChildAlignment: 2
+  m_StartCorner: 1
+  m_StartAxis: 1
+  m_CellSize: {x: 50, y: 71.18}
+  m_Spacing: {x: 5, y: 5}
+  m_Constraint: 0
+  m_ConstraintCount: 2
+--- !u!114 &98474464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98474461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09736829f7f43847b3d1c63b4a05306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warButtonPrefab: {fileID: 2983067700218103548, guid: 0154ae62eb5f69c4aa88b010f051ec66,
+    type: 3}
 --- !u!1 &101570409
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,7 +2748,7 @@ RectTransform:
   - {fileID: 1717532026}
   - {fileID: 1817173855}
   m_Father: {fileID: 969072076}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -11962,6 +12037,7 @@ RectTransform:
   - {fileID: 20393645}
   - {fileID: 1389567697}
   - {fileID: 1460378297}
+  - {fileID: 98474462}
   - {fileID: 230229956}
   - {fileID: 1279984208}
   - {fileID: 1370221402}
@@ -14783,7 +14859,7 @@ RectTransform:
   - {fileID: 1556749905}
   - {fileID: 1729731058}
   m_Father: {fileID: 969072076}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16394,7 +16470,7 @@ RectTransform:
   m_Children:
   - {fileID: 1315205506}
   m_Father: {fileID: 969072076}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -22933,7 +23009,7 @@ RectTransform:
   - {fileID: 1200490163}
   - {fileID: 906778238}
   m_Father: {fileID: 969072076}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -27084,7 +27160,7 @@ RectTransform:
   - {fileID: 1517838887}
   - {fileID: 1362373881}
   m_Father: {fileID: 969072076}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}

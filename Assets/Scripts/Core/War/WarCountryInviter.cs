@@ -14,8 +14,8 @@ namespace EuropeanWars.Core.War {
         }
 
         public void InviteFriends() {
-            CountryInfo[] defenders = GetCountryFriends(war.defenders.major.country);
-            CountryInfo[] attackers = GetCountryFriends(war.attackers.major.country).Where(t => !defenders.Contains(t)).ToArray();
+            CountryInfo[] defenders = GetCountryFriends(war.defenders.major.country, war.attackers);
+            CountryInfo[] attackers = GetCountryFriends(war.attackers.major.country, war.attackers).Where(t => !defenders.Contains(t)).ToArray();
 
             foreach (var item in defenders) {
                 SendInvitation(war.defenders.major.country, item, false);
@@ -34,10 +34,15 @@ namespace EuropeanWars.Core.War {
             }
         }
 
-        private CountryInfo[] GetCountryFriends(CountryInfo country) {
+        private CountryInfo[] GetCountryFriends(CountryInfo country, WarParty enemies) {
             List<CountryInfo> result = new List<CountryInfo>();
             foreach (var item in country.alliances) {
-                if (!country.IsInWarAgainstCountry(item.Key)) {
+                foreach (var c in enemies.countries) {
+                    if (country.IsInWarAgainstCountry(c.Key)) {
+                        continue;
+                    }
+                }
+                if (!country.IsInWarAgainstCountry(country)) {
                     if (war.warReason.CanInviteCountryToWar(country, item.Key)) {
                         result.Add(item.Key);
                     }

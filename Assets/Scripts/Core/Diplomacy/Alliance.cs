@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.GameMap;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
@@ -124,24 +125,18 @@ namespace EuropeanWars.Core.Diplomacy {
                 messageSent = false;
             }
         }
-        public static void DeleteAllianceClient(Alliance alliance) {
-            foreach (var item in alliance.countries) {
-                item.alliances.Remove(item.alliances.Where(t => t.Value == alliance).FirstOrDefault().Key);
-            }
-            DiplomacyManager.alliances.Remove(alliance);
 
-            DiplomacyWindow.Singleton.countryWindow.UpdateDipActions();
-            messageSent = false;
-        }
-        public static void DeleteAllianceClient(Alliance alliance, int s) {
-            if (alliance.countries.Contains(GameInfo.PlayerCountry)) {
-                if (GameInfo.PlayerCountry.id != s) {
-                    //TODO: Implement translation
-                    var win = DiplomacyWindow.Singleton.SpawnRequest(alliance, true);
-                    win.title.text = "Koniec sojuszu";
-                    win.description.text = "Nasz sojusznik zerwał z nami sojusz!";
-                    win.acceptText.text = "Ok";
-                    win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
+        public static void DeleteAllianceClient(Alliance alliance, int s = 0) {
+            if (s != 0) {
+                if (alliance.countries.Contains(GameInfo.PlayerCountry)) {
+                    if (GameInfo.PlayerCountry.id != s) {
+                        //TODO: Implement translation
+                        var win = DiplomacyWindow.Singleton.SpawnRequest(alliance, true);
+                        win.title.text = "Koniec sojuszu";
+                        win.description.text = "Nasz sojusznik zerwał z nami sojusz!";
+                        win.acceptText.text = "Ok";
+                        win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
+                    }
                 }
             }
 

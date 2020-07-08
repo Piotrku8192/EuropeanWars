@@ -12,9 +12,11 @@ namespace EuropeanWars.UI.Windows {
         public DeclareWarWindow declareWarWindow;
 
         public void OnClick() {
-            GetComponent<Outline>().enabled = true;
+            if (declareWarWindow.selectedReason) {
+                declareWarWindow.selectedReason.GetComponent<Outline>().enabled = false;
+            }
             declareWarWindow.selectedReason = this;
-            declareWarWindow.selectedReason.GetComponent<Outline>().enabled = false;
+            GetComponent<Outline>().enabled = true;
         }
     }
 }

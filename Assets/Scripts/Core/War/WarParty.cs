@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,9 +23,7 @@ namespace EuropeanWars.Core.War {
         public WarParty(WarInfo war, CountryInfo major) {
             this.war = war;
             this.major = new WarCountryInfo(major, this);
-            major.wars.Add(war, this.major);
             countries = new Dictionary<CountryInfo, WarCountryInfo>();
-            countries.Add(this.major.country, this.major);
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace EuropeanWars.Core.War {
         /// <param name="enemies party"></param>
         public void SetEnemies(WarParty party) {
             Enemies = party;
-            RemoveDiplomaticRelationsOnJoin(major.country);
+            JoinParty(major);
         }
 
         public bool ContainsCountry(CountryInfo country) {
@@ -48,23 +47,44 @@ namespace EuropeanWars.Core.War {
                 countries.Add(country, c);
                 country.wars.Add(war, c);
                 RemoveDiplomaticRelationsOnJoin(country);
+                if (country == GameInfo.PlayerCountry) {
+                    WarList.Singleton.AddWar(c);
+                }
+            }
+        }
+        public void JoinParty(WarCountryInfo country) {
+            if (!ContainsCountry(country) && !Enemies.ContainsCountry(country)) {
+                countries.Add(country.country, country);
+                country.country.wars.Add(war, country);
+                RemoveDiplomaticRelationsOnJoin(country.country);
+                if (country.country == GameInfo.PlayerCountry) {
+                    WarList.Singleton.AddWar(country);
+                }
             }
         }
         public void LeaveParty(WarCountryInfo country) {
             if (ContainsCountry(country)) {
-                if (country != major) {
-                    countries.Remove(country.country);
-                    country.country.wars.Remove(war);
+                if (country == major) {
+                    foreach (var item in countries) {
+                        if (item.Value != major) {
+                            LeaveParty(item.Value);
+                        }
+                    }
+                }
+                countries.Remove(country.country);
+                country.country.wars.Remove(war);
+                if (country.country == GameInfo.PlayerCountry) {
+                    WarList.Singleton.RemoveWar(country);
                 }
             }
         }
         private void RemoveDiplomaticRelationsOnJoin(CountryInfo country) {
             foreach (var item in Enemies.countries) {
                 if (country.alliances.ContainsKey(item.Key)) {
-                    Alliance.DeleteAllianceClient(country.alliances[item.Key]);
+                    Alliance.DeleteAlliance(country.alliances[item.Key]);
                 }
                 if (country.militaryAccesses.ContainsKey(item.Key)) {
-                    MilitaryAccess.DeleteAccessClient(country.militaryAccesses[item.Key]);
+                    MilitaryAccess.DeleteAccess(country.militaryAccesses[item.Key]);
                 }
             }
         }
