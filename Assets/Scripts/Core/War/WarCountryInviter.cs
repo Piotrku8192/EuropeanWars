@@ -1,7 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.UI.Windows;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,12 +13,29 @@ namespace EuropeanWars.Core.War {
 
         public void InviteFriends() {
             CountryInfo[] defenders = GetCountryFriends(war.defenders.major.country, war.attackers);
-            CountryInfo[] attackers = GetCountryFriends(war.attackers.major.country, war.attackers).Where(t => !defenders.Contains(t)).ToArray();
+            CountryInfo[] attackers = GetCountryFriends(war.attackers.major.country, war.defenders).Where(t => !defenders.Contains(t)).ToArray();
 
-            foreach (var item in defenders) {
+            List<CountryInfo> defs = new List<CountryInfo>();
+            List<CountryInfo> attacks = new List<CountryInfo>();
+
+            foreach (var d in defenders) {
+                if (!defenders.Where(t => d.IsInWarAgainstCountry(t)).Any() 
+                    && !attackers.Where(t => d.IsInWarAgainstCountry(t)).Any()) {
+                    defs.Add(d);
+                }
+            }
+
+            foreach (var a in attackers) {
+                if (!attackers.Where(t => a.IsInWarAgainstCountry(t)).Any()
+                    && !defenders.Where(t => a.IsInWarAgainstCountry(t)).Any()) {
+                    attacks.Add(a);
+                }
+            }
+
+            foreach (var item in defs) {
                 SendInvitation(war.defenders.major.country, item, false);
             }
-            foreach (var item in attackers) {
+            foreach (var item in attacks) {
                 SendInvitation(war.attackers.major.country, item, true);
             }
         }
@@ -37,12 +52,7 @@ namespace EuropeanWars.Core.War {
         private CountryInfo[] GetCountryFriends(CountryInfo country, WarParty enemies) {
             List<CountryInfo> result = new List<CountryInfo>();
             foreach (var item in country.alliances) {
-                foreach (var c in enemies.countries) {
-                    if (country.IsInWarAgainstCountry(c.Key)) {
-                        continue;
-                    }
-                }
-                if (!country.IsInWarAgainstCountry(country)) {
+                if (!item.Key.IsInWarAgainstCountry(country) && !item.Key.IsInWarAgainstCountry(enemies.major.country)) {
                     if (war.warReason.CanInviteCountryToWar(country, item.Key)) {
                         result.Add(item.Key);
                     }

@@ -14,7 +14,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public override bool CanInviteCountryToWar(CountryInfo invitator, CountryInfo friend) {
-            return !invitator.IsInWarAgainstCountry(friend) && invitator.alliances.ContainsKey(friend);//TODO: Add || invitator.vassals.Contains(friend) when vassals are implemented
+            return !invitator.IsInWarAgainstCountry(friend) && invitator.alliances.ContainsKey(friend); //TODO: Add || invitator.vassals.Contains(friend) when vassals are implemented
         }
     }
 }

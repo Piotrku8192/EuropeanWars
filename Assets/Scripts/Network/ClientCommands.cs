@@ -274,7 +274,7 @@ namespace EuropeanWars.Network {
             CountryInfo c = GameInfo.countries[country];
 
             if (i.alliances.ContainsKey(c)) {
-                Alliance.DeleteAlliance(i.alliances[c]);
+                Alliance.DeleteAllianceClient(i.alliances[c]);
             }
         }
 
