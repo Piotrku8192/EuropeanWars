@@ -41,12 +41,13 @@ namespace EuropeanWars.Core.Province {
         public int[] religionFollowers;
         public CultureInfo culture;
         public int defense;
-        public int garnison;
+        public Dictionary<UnitInfo, int> garnison = new Dictionary<UnitInfo, int>();
         public bool isTradeCity;
         public bool isTradeRoute;
         public BuildingInfo[] buildings = new BuildingInfo[10];
 
         public List<ArmyInfo> armies = new List<ArmyInfo>();
+        public ProvinceOccupationCounter OccupationCounter { get; private set; }
 
         public ProvinceInfo(ProvinceData d) {
             this.data = d;
@@ -81,6 +82,7 @@ namespace EuropeanWars.Core.Province {
             }
             religion = GameInfo.religions[data.religion];
             culture = GameInfo.cultures[data.culture];
+            OccupationCounter = new ProvinceOccupationCounter(this);
             UpdateLanguage();
         }
 

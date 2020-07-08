@@ -81,10 +81,10 @@ namespace EuropeanWars.Core.War {
         private void RemoveDiplomaticRelationsOnJoin(CountryInfo country) {
             foreach (var item in Enemies.countries) {
                 if (country.alliances.ContainsKey(item.Key)) {
-                    Alliance.DeleteAlliance(country.alliances[item.Key]);
+                    Alliance.DeleteAllianceClient(country.alliances[item.Key], item.Key.id);
                 }
                 if (country.militaryAccesses.ContainsKey(item.Key)) {
-                    MilitaryAccess.DeleteAccess(country.militaryAccesses[item.Key]);
+                    MilitaryAccess.DeleteAccessClient(country.militaryAccesses[item.Key], item.Key.id);
                 }
             }
         }

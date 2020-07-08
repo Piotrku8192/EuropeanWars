@@ -2,11 +2,9 @@ using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
-using EuropeanWars.GameMap;
 using EuropeanWars.Network;
 using Lidgren.Network;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace EuropeanWars.Core.Army {
@@ -41,6 +39,16 @@ namespace EuropeanWars.Core.Army {
 
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += ArmyObject.CountMovement;
+            TimeManager.onDayElapsed += UpdateBlackStatus;
+        }
+
+        ~ArmyInfo() {
+            TimeManager.onDayElapsed -= ArmyObject.CountMovement;
+            TimeManager.onDayElapsed -= UpdateBlackStatus;
+        }
+
+        private void UpdateBlackStatus() {
+            BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country) && !Country.IsInWarAgainstCountry(Province.Country);
         }
 
         public static void UnselectAll() {
@@ -124,8 +132,7 @@ namespace EuropeanWars.Core.Army {
             }
 
             Province = newProvince;
-            BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country); //TODO: Add this: && !country.HasWarWith(province.Country);
-
+            
             //TODO: Add occupation and battle finding
 
         }
