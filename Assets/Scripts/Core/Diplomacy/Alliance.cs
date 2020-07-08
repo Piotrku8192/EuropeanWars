@@ -16,7 +16,7 @@ namespace EuropeanWars.Core.Diplomacy {
         }
 
         public static bool CanCreate(CountryInfo sender, CountryInfo receiver) => 
-            !sender.alliances.ContainsKey(receiver); //TODO: Add if sender.relations[receiver] >= some value.
+            !sender.alliances.ContainsKey(receiver) && !sender.IsInWarAgainstCountry(receiver); //TODO: Add if sender.relations[receiver] >= some value.
 
         public static bool CanDelete(CountryInfo sender, CountryInfo receiver) =>
             sender.alliances.ContainsKey(receiver);

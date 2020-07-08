@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,6 +33,7 @@ namespace EuropeanWars.Core.War {
         /// <param name="enemies party"></param>
         public void SetEnemies(WarParty party) {
             Enemies = party;
+            RemoveDiplomaticRelationsOnJoin(major.country);
         }
 
         public bool ContainsCountry(CountryInfo country) {
@@ -45,6 +47,7 @@ namespace EuropeanWars.Core.War {
                 WarCountryInfo c = new WarCountryInfo(country, this);
                 countries.Add(country, c);
                 country.wars.Add(war, c);
+                RemoveDiplomaticRelationsOnJoin(country);
             }
         }
         public void LeaveParty(WarCountryInfo country) {
@@ -52,6 +55,16 @@ namespace EuropeanWars.Core.War {
                 if (country != major) {
                     countries.Remove(country.country);
                     country.country.wars.Remove(war);
+                }
+            }
+        }
+        private void RemoveDiplomaticRelationsOnJoin(CountryInfo country) {
+            foreach (var item in Enemies.countries) {
+                if (country.alliances.ContainsKey(item.Key)) {
+                    Alliance.DeleteAllianceClient(country.alliances[item.Key]);
+                }
+                if (country.militaryAccesses.ContainsKey(item.Key)) {
+                    MilitaryAccess.DeleteAccessClient(country.militaryAccesses[item.Key]);
                 }
             }
         }

@@ -282,6 +282,10 @@ namespace EuropeanWars.Network {
             CountryInfo a = GameInfo.countries[attacker];
             CountryInfo d = GameInfo.countries[defender];
 
+            if (a == GameInfo.PlayerCountry) {
+                DiplomacyWindow.Singleton.UpdateWindow();
+            }
+
             if (!a.IsInWarAgainstCountry(d)) {
                 WarReasonFactory factory = new WarReasonFactory(a, d);
                 WarReason w = factory.GetReasons()[warReason];
