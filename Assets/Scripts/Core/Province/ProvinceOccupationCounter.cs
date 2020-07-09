@@ -90,6 +90,7 @@ namespace EuropeanWars.Core.Province {
                     c.wars[occupantWar].RemoveEnemyOccupatedProvince(province);
                 }
             }
+            province.RefreshFogOfWarInRegion();
             //TODO: Add uprising statement
 
             FindNewOccupant();
