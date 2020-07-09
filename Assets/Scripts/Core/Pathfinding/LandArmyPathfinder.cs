@@ -71,8 +71,8 @@ namespace EuropeanWars.Core.Pathfinding {
                 && province.isInteractive
                 && (army.BlackStatus
                 || province.Country == country
-                || country.militaryAccesses.ContainsKey(province.Country));
-            //TODO Add: || country.HasWarWith(province.Country);
+                || country.militaryAccesses.ContainsKey(province.Country))
+                || country.IsInWarAgainstCountry(province.Country);
         }
     }
 }

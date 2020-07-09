@@ -32,7 +32,7 @@ namespace EuropeanWars.Core.Army {
                         item.Value * item.Key.attack * attackersAttackModifier[(int)item.Key.type] / (float)key.health), 0, int.MaxValue);
                 }
                 else {
-                    onAttackersEmpty.Invoke();
+                    onDefendersEmpty.Invoke();
                 }
             }
             
@@ -43,7 +43,7 @@ namespace EuropeanWars.Core.Army {
                         item.Value * item.Key.attack * defendersAttackModifier[(int)item.Key.type] / (float)key.health), 0, int.MaxValue);
                 }
                 else {
-                    onDefendersEmpty.Invoke();
+                    onAttackersEmpty.Invoke();
                 }
             }
         }

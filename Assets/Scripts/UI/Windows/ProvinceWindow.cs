@@ -37,6 +37,13 @@ namespace EuropeanWars.UI.Windows {
         public BuildingBuilder builder;
         public DeleteBuildingWindow deleteBuildingWindowPrefab;
 
+        public GameObject occupationWindow;
+        public Text occupationProgress;
+        public Image occupationProgressBar;
+        public Image occupantCrest;
+        public Text occupantArmySize;
+        public Text garnisonSize;
+
         public ProvinceInfo province;
 
         public int selectedBuildingSlot;
@@ -79,6 +86,25 @@ namespace EuropeanWars.UI.Windows {
             devastateButton.interactable = b;
             fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
                 && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
+
+            if (province.OccupationCounter.Army != null) {
+                occupationWindow.SetActive(true);
+            }
+        }
+
+        public void Update() {
+            if (province != null) {
+                if (province.OccupationCounter.Army != null) {
+                    occupationProgress.text = Mathf.FloorToInt(province.OccupationCounter.Progress) + "%";
+                    occupationProgressBar.fillAmount = province.OccupationCounter.Progress * 0.01f;
+                    occupantCrest.sprite = province.OccupationCounter.Army.Country.crest;
+                    garnisonSize.text = province.garnison.Sum(t => t.Value).ToString();
+                    occupantArmySize.text = province.OccupationCounter.Army.Size.ToString();
+                }
+                else {
+                    occupationWindow.SetActive(false);
+                }
+            }
         }
 
         public void SelectBuildingSlot(int id) {

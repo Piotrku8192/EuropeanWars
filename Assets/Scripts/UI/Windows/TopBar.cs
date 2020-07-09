@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class TopBar : MonoBehaviour
-    {
+    public class TopBar : MonoBehaviour {
         public Text gold;
         public Text manpower;
         public Text prestige;
