@@ -110,6 +110,15 @@ namespace EuropeanWars.Core.Army {
         /// <param name="target"></param>
         public void GenerateRoute(ProvinceInfo target) {
             LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
+
+            if (target == Province) {
+                route.Clear();
+                route.Enqueue(target);
+                if (Country == GameInfo.PlayerCountry) {
+                    ArmyObject.DrawRoute(route.ToArray());
+                }
+                return;
+            }
             ProvinceInfo[] r = pathfinder.FindPath(target);
             if (r != null) {
                 route.Clear();
