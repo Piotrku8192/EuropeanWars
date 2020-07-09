@@ -5,6 +5,7 @@ using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Religion;
+using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
 using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
@@ -84,12 +85,18 @@ namespace EuropeanWars.Core.Province {
             culture = GameInfo.cultures[data.culture];
             OccupationCounter = new ProvinceOccupationCounter(this);
             UpdateLanguage();
+
+            TimeManager.onDayElapsed += OnDayElapsed;
         }
 
         public void UpdateLanguage() {
             if (LanguageDictionary.language.ContainsKey("ProvinceName-" + color)) {
                 name = LanguageDictionary.language["ProvinceName-" + color];
             }
+        }
+
+        public void OnDayElapsed() {
+            OccupationCounter.UpdateProgress();
         }
 
         public void SetCountry(CountryInfo country, bool nationalCountry = false) {

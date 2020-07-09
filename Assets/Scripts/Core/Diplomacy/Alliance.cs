@@ -125,7 +125,6 @@ namespace EuropeanWars.Core.Diplomacy {
                 messageSent = false;
             }
         }
-
         public static void DeleteAllianceClient(Alliance alliance, int s = 0) {
             if (s != 0) {
                 if (alliance.countries.Contains(GameInfo.PlayerCountry)) {
