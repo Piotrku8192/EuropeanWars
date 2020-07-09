@@ -13,7 +13,7 @@ namespace EuropeanWars.Core.War {
 
         public int PartyScoreCost => countries.Sum(t => t.Value.CountryScoreCost);
         public int WarScore => countries.Sum(t => t.Value.WarScore);
-        public float PercentWarScore => (float)WarScore / Enemies.PartyScoreCost;
+        public float PercentWarScore => (float)WarScore / WarScore < 0 ? PartyScoreCost : Enemies.PartyScoreCost;
 
         /// <summary>
         /// After making parties you must set Enemies party by invoking SetEnemies method.

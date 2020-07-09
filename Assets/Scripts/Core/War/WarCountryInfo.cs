@@ -14,7 +14,7 @@ namespace EuropeanWars.Core.War {
 
         public int CountryScoreCost => country.nationalProvinces.Sum(t => t.taxation);
         public int WarScore { get; private set; }
-        public float PercentWarScore => (float)WarScore / party.Enemies.PartyScoreCost;
+        public float PercentWarScore => (float)WarScore / WarScore < 0 ? CountryScoreCost : party.Enemies.PartyScoreCost;
 
         public WarCountryInfo(CountryInfo country, WarParty party) {
             this.country = country;
