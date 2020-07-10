@@ -11,6 +11,7 @@ using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace EuropeanWars.Core.Province {
     public class ProvinceInfo {
@@ -78,6 +79,8 @@ namespace EuropeanWars.Core.Province {
             //        neighbours.Add(GameInfo.provinces[data.neighbours[i]]);
             //    }
             //}
+            garnison.Add(GameInfo.units[0], taxation * 100); //TODO: Change it to garnison = data.garnison; or something
+
             for (int i = 0; i < 10; i++) {
                 buildings[i] = GameInfo.buildings[data.buildings[i]];
             }
@@ -87,6 +90,7 @@ namespace EuropeanWars.Core.Province {
             UpdateLanguage();
 
             TimeManager.onDayElapsed += OnDayElapsed;
+            TimeManager.onMonthElapsed += OnMonthElapsed;
         }
 
         public void UpdateLanguage() {
@@ -97,6 +101,10 @@ namespace EuropeanWars.Core.Province {
 
         public void OnDayElapsed() {
             OccupationCounter.UpdateProgress();
+        }
+
+        public void OnMonthElapsed() {
+            UpdateGarnisonSize();
         }
 
         public void SetCountry(CountryInfo country, bool nationalCountry = false) {
@@ -120,6 +128,12 @@ namespace EuropeanWars.Core.Province {
                 if (GameInfo.gameStarted) {
                     RefreshFogOfWar();
                 }
+            }
+        }
+
+        public void UpdateGarnisonSize() {
+            if (garnison[GameInfo.units[0]] < taxation * 100) {
+                garnison[GameInfo.units[0]] = Mathf.Clamp(garnison[GameInfo.units[0]] + taxation * 10, 0, taxation * 100);
             }
         }
 

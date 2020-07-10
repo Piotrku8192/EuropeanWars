@@ -37,7 +37,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void UpdateProgress() {
-            if (Army != null) {
+            if (Army != null && Army.Province == province) {
                 if (province.Country.IsInWarAgainstCountry(Army.Country)) {
                     int artilleries = Army.units.Where(t => t.Key.type == UnitType.Artillery).Sum(t => t.Value);
                     Progress += (float)1 / province.defense + Mathf.Clamp(artilleries, 0, 50) * 0.1f; //TODO: Add these values to GameStatistics
