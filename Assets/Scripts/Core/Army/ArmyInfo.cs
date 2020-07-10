@@ -47,6 +47,7 @@ namespace EuropeanWars.Core.Army {
         ~ArmyInfo() {
             TimeManager.onDayElapsed -= ArmyObject.CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
+            TimeManager.onMonthElapsed -= ReinforcementArmy;
         }
 
         private void ReinforcementArmy() {
