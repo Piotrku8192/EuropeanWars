@@ -134,6 +134,9 @@ namespace EuropeanWars.Core.Province {
         public void UpdateGarnisonSize() {
             if (garnison[GameInfo.units[0]] < taxation * 100) {
                 garnison[GameInfo.units[0]] = Mathf.Clamp(garnison[GameInfo.units[0]] + taxation * 10, 0, taxation * 100);
+                if (ProvinceWindow.Singleton.province == this) {
+                    ProvinceWindow.Singleton.UpdateWindow(this);
+                }
             }
         }
 

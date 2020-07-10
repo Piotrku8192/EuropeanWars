@@ -1,6 +1,7 @@
 ﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.War;
+using EuropeanWars.UI.Windows;
 using System.Linq;
 using UnityEngine;
 
@@ -33,6 +34,9 @@ namespace EuropeanWars.Core.Province {
                 Army = army;
                 attackCounter = new ArmyAttackCounter(Army.units, province.garnison, GameStatistics.occupantArmyAttackModifier,
                     GameStatistics.occupatedArmyAttackModifier, OnAttackersEmpty, OnDefendersEmpty); 
+                if (ProvinceWindow.Singleton.province == province) {
+                    ProvinceWindow.Singleton.UpdateWindow(province);
+                }
             }
         }
 
