@@ -1,1 +1,44 @@
-[{"id":0,"name":null,"image":"Country-0","type":0,"recruitBuilding":1,"recruitSize":100,"recruitCost":0,"recruitDays":100,"attack":10,"health":60,"attackCooldown":0,"speed":10},{"id":1,"name":null,"image":"Country-1","type":1,"recruitBuilding":1,"recruitSize":50,"recruitCost":250,"recruitDays":100,"attack":50,"health":700,"attackCooldown":0,"speed":20},{"id":2,"name":null,"image":"Country-2","type":1,"recruitBuilding":1,"recruitSize":70,"recruitCost":200,"recruitDays":100,"attack":30,"health":503,"attackCooldown":0,"speed":26}]
+[
+  {
+    "id": 0,
+    "name": null,
+    "image": "Unit-0",
+    "type": 0,
+    "recruitBuilding": 1,
+    "recruitSize": 100,
+    "recruitCost": 0,
+    "recruitDays": 100,
+    "attack": 10,
+    "health": 60,
+    "attackCooldown": 0,
+    "speed": 10
+  },
+  {
+    "id": 1,
+    "name": null,
+    "image": "Unit-1",
+    "type": 1,
+    "recruitBuilding": 1,
+    "recruitSize": 50,
+    "recruitCost": 250,
+    "recruitDays": 100,
+    "attack": 50,
+    "health": 700,
+    "attackCooldown": 0,
+    "speed": 20
+  },
+  {
+    "id": 2,
+    "name": null,
+    "image": "Unit-2",
+    "type": 1,
+    "recruitBuilding": 1,
+    "recruitSize": 70,
+    "recruitCost": 200,
+    "recruitDays": 100,
+    "attack": 30,
+    "health": 503,
+    "attackCooldown": 0,
+    "speed": 26
+  }
+]
