@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Province;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void Update() {
-            size.text = $"{army.Size * 0.001f}k";
+            size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
             UpdateScale();
         }
 

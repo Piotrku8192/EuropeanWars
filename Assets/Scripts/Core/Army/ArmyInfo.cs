@@ -6,6 +6,7 @@ using EuropeanWars.Network;
 using Lidgren.Network;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace EuropeanWars.Core.Army {
     public class ArmyInfo {
@@ -40,11 +41,31 @@ namespace EuropeanWars.Core.Army {
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += ArmyObject.CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
+            TimeManager.onMonthElapsed += ReinforcementArmy;
         }
 
         ~ArmyInfo() {
             TimeManager.onDayElapsed -= ArmyObject.CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
+        }
+
+        private void ReinforcementArmy() {
+            if (Province.claimators.Contains(Country)) {
+                int avaiable = Mathf.Clamp(Province.taxation * 100, 0, Country.manpower);
+                UnitInfo[] ks = units.Keys.ToArray();
+                foreach (var item in ks) {
+                    if (units[item] < maxUnits[item]) {
+                        int i = Mathf.Clamp(maxUnits[item] - units[item], 0, avaiable);
+                        units[item] += i;
+                        avaiable -= i;
+                        Country.manpower -= i;
+                    }
+
+                    if (avaiable == 0) {
+                        break;
+                    }
+                }
+            }
         }
 
         private void UpdateBlackStatus() {
