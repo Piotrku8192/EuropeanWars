@@ -30,7 +30,7 @@ namespace EuropeanWars.UI.Windows {
             window.SetActive(true);
 
             foreach (var item in GameInfo.countries) {
-                if (!countries.ContainsKey(item.Value)) {
+                if (!countries.ContainsKey(item.Value) && item.Value.provinces.Count > 0 && item.Key != 0) {
                     CountryButton button = Instantiate(countryButtonPrefab, countriesListContent);
                     button.SetCountry(item.Value);
                     countries.Add(item.Value, button);
