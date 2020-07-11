@@ -21,7 +21,7 @@ namespace EuropeanWars.Core.Army {
                 return;
             }
 
-            if (!GameInfo.IsPointerOverUIObject()) {
+            //if (!GameInfo.IsPointerOverUIObject()) {
                 Vector2 point = Controller.Singleton.playerCam.ScreenToWorldPoint(Input.mousePosition);
 
                 if (Input.GetKeyDown(KeyCode.Mouse1) && !isActive) {
@@ -39,7 +39,7 @@ namespace EuropeanWars.Core.Army {
                     rect.anchoredPosition = start;
                     image.enabled = true;
                 }
-            }
+            //}
 
             if (Input.GetKeyUp(KeyCode.Mouse1) && isActive) {
                 isActive = false;
