@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,7 @@ namespace EuropeanWars.UI {
         }
 
         public void CloseAllWindows() {
+            GameInfo.UnselectProvince();
             foreach (var item in windows) {
                 item.SetActive(false);
             }

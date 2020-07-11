@@ -18,6 +18,10 @@ namespace EuropeanWars.Core.Time {
         }
 
         public void Update() {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                PauseRequest();
+            }
+
             if (Server.Singleton == null) {
                 return;
             }

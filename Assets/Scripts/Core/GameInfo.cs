@@ -72,7 +72,7 @@ namespace EuropeanWars.Core {
         }
 
         public static void UnselectProvince() {
-            SelectedProvince.mapProvince.OnSelectProvince();
+            SelectedProvince?.mapProvince.OnUnselectProvince();
             SelectedProvince = null;
         }
 

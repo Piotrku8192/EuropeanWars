@@ -64,7 +64,7 @@ namespace EuropeanWars.UI.Windows {
             buildingsIncome.text = province.buildingsIncome.ToString();
             tradeIncome.text = province.tradeIncome.ToString();
             culture.text = province.culture.name;
-            garnison.text = province.garnison.Sum(t => t.Value).ToString();
+            garnison.text = province.fogOfWar ? "-" : province.garnison.Sum(t => t.Value).ToString();
 
             foreach (var item in claimators) {
                 Destroy(item.gameObject);
@@ -87,14 +87,18 @@ namespace EuropeanWars.UI.Windows {
             fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
                 && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
 
-            if (province.OccupationCounter.Army != null) {
+            if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                 occupationWindow.SetActive(true);
             }
         }
 
+        public void UnselectProvince() {
+            GameInfo.UnselectProvince();
+        }
+
         public void Update() {
             if (province != null) {
-                if (province.OccupationCounter.Army != null) {
+                if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                     occupationProgress.text = Mathf.FloorToInt(province.OccupationCounter.Progress) + "%";
                     occupationProgressBar.fillAmount = province.OccupationCounter.Progress * 0.01f;
                     occupantCrest.sprite = province.OccupationCounter.Army.Country.crest;
