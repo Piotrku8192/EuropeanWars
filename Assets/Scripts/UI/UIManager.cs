@@ -21,11 +21,11 @@ namespace EuropeanWars.UI {
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 CloseAllWindows();
                 ArmyInfo.UnselectAll();
+                GameInfo.UnselectProvince();
             }
         }
 
         public void CloseAllWindows() {
-            GameInfo.UnselectProvince();
             foreach (var item in windows) {
                 item.SetActive(false);
             }

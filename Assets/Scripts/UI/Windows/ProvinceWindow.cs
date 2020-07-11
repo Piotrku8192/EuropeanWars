@@ -64,7 +64,7 @@ namespace EuropeanWars.UI.Windows {
             buildingsIncome.text = province.buildingsIncome.ToString();
             tradeIncome.text = province.tradeIncome.ToString();
             culture.text = province.culture.name;
-            garnison.text = province.fogOfWar ? "-" : province.garnison.Sum(t => t.Value).ToString();
+            garnison.text = province.fogOfWar ? "?" : province.garnison.Sum(t => t.Value).ToString();
 
             foreach (var item in claimators) {
                 Destroy(item.gameObject);
