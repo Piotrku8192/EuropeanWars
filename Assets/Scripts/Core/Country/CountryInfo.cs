@@ -41,9 +41,11 @@ namespace EuropeanWars.Core.Country {
 		public int taxationIncome;
 		public int buildingsIncome;
 		public int tradeIncome;
+		public int armyMaintenance;
 		public float taxationIncomeModifier;
 		public float buildingsIncomeModifier;
 		public float tradeIncomeModifier;
+		public float armyMaintenanceModifier;
 
 		//Economy -> Loans
 		public int loans;
@@ -79,6 +81,7 @@ namespace EuropeanWars.Core.Country {
 			taxationIncomeModifier = data.taxationIncomeModifier;
 			buildingsIncomeModifier = data.buildingsIncomeModifier;
 			tradeIncomeModifier = data.tradeIncomeModifier;
+			armyMaintenanceModifier = 1;
 		}
 
 		public void Initialize() {
@@ -116,6 +119,7 @@ namespace EuropeanWars.Core.Country {
 			taxationIncome = 0;
 			buildingsIncome = 0;
 			tradeIncome = 0;
+			armyMaintenance = 0;
 			foreach (var item in provinces) {
 				taxationIncome += item.taxation;
 				buildingsIncome += item.buildingsIncome;
@@ -125,7 +129,12 @@ namespace EuropeanWars.Core.Country {
 			buildingsIncome = Mathf.FloorToInt(buildingsIncome * buildingsIncomeModifier);
 			tradeIncome = Mathf.FloorToInt(tradeIncome * tradeIncomeModifier);
 
-			gold += taxationIncome + buildingsIncome + tradeIncome;
+            foreach (var item in armies) {
+				armyMaintenance += item.Maintenance;
+            }
+			armyMaintenance = Mathf.FloorToInt(armyMaintenance * armyMaintenanceModifier);
+
+			gold += taxationIncome + buildingsIncome + tradeIncome - armyMaintenance;
 
 			//Calculate maintenance and other stuff.
 

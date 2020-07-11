@@ -18,6 +18,7 @@ namespace EuropeanWars.Core.Army {
         public int health;
         public int attackCooldown;
         public int speed;
+        public int maintenance;
 
         public UnitInfo(UnitData data) {
             this.data = data;
@@ -30,6 +31,7 @@ namespace EuropeanWars.Core.Army {
             health = data.health;
             attackCooldown = data.attackCooldown;
             speed = data.speed;
+            maintenance = data.maintenance;
         }
 
         public void Initialize() {

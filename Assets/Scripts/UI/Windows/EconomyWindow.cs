@@ -50,6 +50,8 @@ namespace EuropeanWars.UI.Windows {
             buildingsModifier.text = (GameInfo.PlayerCountry.buildingsIncomeModifier * 100).ToString() + "%";
             tradeValue.text = GameInfo.PlayerCountry.tradeIncome.ToString();
             tradeModifier.text = (GameInfo.PlayerCountry.tradeIncomeModifier * 100).ToString() + "%";
+            armyValue.text = GameInfo.PlayerCountry.armyMaintenance.ToString();
+            armyModifier.text = (GameInfo.PlayerCountry.armyMaintenanceModifier * 100).ToString() + "%";
 
             loans.text = GameInfo.PlayerCountry.loans.ToString();
             balance.text = GameInfo.PlayerCountry.balance.ToString();

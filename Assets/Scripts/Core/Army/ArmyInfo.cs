@@ -18,6 +18,7 @@ namespace EuropeanWars.Core.Army {
 
         public int Size => units.Values.Sum();
         public int AverageSpeed => units.Sum(t => t.Key.speed * t.Value) / Size;
+        public int Maintenance => units.Sum(t => t.Key.maintenance * t.Value);
         public bool IsSelected { get; private set; }
 
         public CountryInfo Country { get; private set; }
