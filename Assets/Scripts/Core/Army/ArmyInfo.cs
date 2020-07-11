@@ -46,7 +46,6 @@ namespace EuropeanWars.Core.Army {
         }
 
         ~ArmyInfo() {
-            TimeManager.onDayElapsed -= ArmyObject.CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
             TimeManager.onMonthElapsed -= ReinforcementArmy;
         }
@@ -81,9 +80,11 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void Delete() {
+            GameInfo.armies.Remove(id);
             Country.armies.Remove(this);
             Province.armies.Remove(this);
             TimeManager.onDayElapsed -= ArmyObject.CountMovement;
+            ArmyObject.StopAllCoroutines();
             ArmySpawner.Singleton.DestroyArmy(ArmyObject);
         }
 
