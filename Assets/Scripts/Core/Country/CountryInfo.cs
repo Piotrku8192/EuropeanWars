@@ -93,7 +93,7 @@ namespace EuropeanWars.Core.Country {
 			TimeManager.onYearElapsed += OnYearElapsed;
 
 			gold = 4000;
-			units.AddRange(GameInfo.units.Values); //TODO: Remove this
+			units.AddRange(GameInfo.units.Values.Where(t => t.id != 0)); //TODO: Remove this
 		}
 		public void UpdateLanguage() {
 			name = LanguageDictionary.language["CountryName-" + id.ToString()];
