@@ -137,6 +137,7 @@ namespace EuropeanWars.Core.Army {
             if (target == Province) {
                 route.Clear();
                 route.Enqueue(target);
+                ArmyObject.transform.position = new Vector3(Province.x, Province.y);
                 if (Country == GameInfo.PlayerCountry) {
                     ArmyObject.DrawRoute(route.ToArray());
                 }
