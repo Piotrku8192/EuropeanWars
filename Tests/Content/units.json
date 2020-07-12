@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "name": null,
+    "name": "Lokalni mieszkañcy",
     "image": "Unit-0",
     "type": 0,
     "recruitBuilding": 1,
@@ -15,7 +15,7 @@
   },
   {
     "id": 1,
-    "name": null,
+    "name": "Husaria",
     "image": "Unit-1",
     "type": 1,
     "recruitBuilding": 1,
@@ -29,7 +29,7 @@
   },
   {
     "id": 2,
-    "name": null,
+    "name": "Pancerni",
     "image": "Unit-2",
     "type": 1,
     "recruitBuilding": 1,

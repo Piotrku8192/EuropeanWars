@@ -23,6 +23,7 @@ namespace EuropeanWars.Core.Army {
         public UnitInfo(UnitData data) {
             this.data = data;
             id = data.id;
+            name = data.name; //TODO: Make this from language.
             type = (UnitType)data.type;
             recruitSize = data.recruitSize;
             recruitCost = data.recruitCost;
