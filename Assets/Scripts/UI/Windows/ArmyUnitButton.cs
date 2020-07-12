@@ -23,5 +23,16 @@ namespace EuropeanWars.UI.Windows {
                 size.color = Color.Lerp(Color.red, Color.green, army.units[unit] / (float)army.maxUnits[unit]);
             }
         }
+
+        public void MoveUnitToSecondArmy() {
+            if (army == SelectedArmyWindow.Singleton.SelectedArmy 
+                && SelectedArmyWindow.Singleton.MovingArmy != null) {
+                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.MovingArmy, unit.recruitSize);
+            }
+            else if (army == SelectedArmyWindow.Singleton.MovingArmy 
+                && SelectedArmyWindow.Singleton.SelectedArmy != null) {
+                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.SelectedArmy, unit.recruitSize);
+            }
+        }
     }
 }

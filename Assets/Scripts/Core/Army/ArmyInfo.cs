@@ -105,10 +105,12 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
-            int c = units[unit];
-            int mc = maxUnits[unit];
-            RemoveUnitRequest(unit, count);
-            targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+            if (Province == targetArmy.Province) {
+                int c = units[unit];
+                int mc = maxUnits[unit];
+                RemoveUnitRequest(unit, count);
+                targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+            }
         }
 
         public void AddUnitRequest(UnitInfo unit, int count, int maxCount) {
@@ -130,6 +132,10 @@ namespace EuropeanWars.Core.Army {
                 maxUnits[unit] += maxCount;
                 units[unit] += count;
             }
+
+            if (selectedArmies.Contains(this)) {
+                SelectedArmyWindow.Singleton.UpdateWindow();
+            }
         }
 
         public void RemoveUnitRequest(UnitInfo unit, int count) {
@@ -143,7 +149,7 @@ namespace EuropeanWars.Core.Army {
 
         public void RemoveUnit(UnitInfo unit, int count) {
             if (units.ContainsKey(unit) && maxUnits.ContainsKey(unit)) {
-                if (count > maxUnits[unit]) {
+                if (count >= maxUnits[unit]) {
                     units.Remove(unit);
                     maxUnits.Remove(unit);
                     return;
@@ -151,6 +157,10 @@ namespace EuropeanWars.Core.Army {
                 else {
                     units[unit] -= Mathf.Clamp(count, 0, units[unit]);
                     maxUnits[unit] -= count;
+                }
+
+                if (selectedArmies.Contains(this)) {
+                    SelectedArmyWindow.Singleton.UpdateWindow();
                 }
             }
         }

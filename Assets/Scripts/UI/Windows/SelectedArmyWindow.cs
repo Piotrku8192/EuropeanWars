@@ -44,6 +44,15 @@ namespace EuropeanWars.UI.Windows {
             }
         }
 
+        public void UpdateWindow() {
+            ArmyInfo a = SelectedArmy;
+            SelectedArmy = null;
+            SelectArmy(a);
+            ArmyInfo m = MovingArmy;
+            MovingArmy = null;
+            SelectMovingArmy(m);
+        }
+
         public void OnClose() {
             ArmyInfo.UnselectAll();
         }
@@ -111,6 +120,7 @@ namespace EuropeanWars.UI.Windows {
             }
             movingUnits.Clear();
             movingUnitsObject.SetActive(true);
+            MovingArmy = army;
             foreach (var item in army.units) {
                 ArmyUnitButton b = Instantiate(armyUnitButtonPrefab, movingUnitsContent);
                 b.SetUnit(item.Key, army);
