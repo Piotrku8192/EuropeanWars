@@ -55,6 +55,8 @@ namespace EuropeanWars.Core.Army {
                         item.SelectArmy(false);
                     }
                 }
+
+                rect.sizeDelta = new Vector2();
             }
         }
     }
