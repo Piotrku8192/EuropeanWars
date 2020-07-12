@@ -36,7 +36,16 @@ namespace EuropeanWars.UI.Windows {
             if (SelectedArmy != null) {
                 armySize.text = $"{SelectedArmy.Size}/{SelectedArmy.MaxSize}";
                 armySize.color = Color.Lerp(Color.red, Color.green, SelectedArmy.Size / (float)SelectedArmy.MaxSize);
+
+                if (MovingArmy != null && SelectedArmy.Province != MovingArmy.Province) {
+                    movingUnitsObject.SetActive(false);
+                    MovingArmy = null;
+                }
             }
+        }
+
+        public void OnClose() {
+            ArmyInfo.UnselectAll();
         }
 
         public void AddArmy(ArmyInfo army) {
@@ -55,6 +64,7 @@ namespace EuropeanWars.UI.Windows {
             armies.Remove(army);
 
             if (armies.Count == 0) {
+                movingUnitsObject.SetActive(false);
                 windowObject.SetActive(false);
                 SelectedArmy = null;
                 return;
@@ -69,7 +79,7 @@ namespace EuropeanWars.UI.Windows {
             if (SelectedArmy == army) {
                 return;
             }
-            else if (MovingArmy == army) {
+            else if (MovingArmy == army || MovingArmy?.Province != army.Province) {
                 movingUnitsObject.SetActive(false);
                 MovingArmy = null;
             }
@@ -92,7 +102,7 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void SelectMovingArmy(ArmyInfo army) {
-            if (SelectedArmy == army || MovingArmy == army) {
+            if (SelectedArmy == null || SelectedArmy == army || MovingArmy == army || SelectedArmy.Province != army.Province) {
                 return;
             }
 
@@ -100,8 +110,9 @@ namespace EuropeanWars.UI.Windows {
                 Destroy(item.gameObject);
             }
             movingUnits.Clear();
+            movingUnitsObject.SetActive(true);
             foreach (var item in army.units) {
-                ArmyUnitButton b = Instantiate(armyUnitButtonPrefab, unitsContent);
+                ArmyUnitButton b = Instantiate(armyUnitButtonPrefab, movingUnitsContent);
                 b.SetUnit(item.Key, army);
                 movingUnits.Add(b);
             }

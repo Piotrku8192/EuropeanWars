@@ -3,9 +3,9 @@ using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
-using EuropeanWars.UI;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -104,10 +104,54 @@ namespace EuropeanWars.Core.Army {
             ArmySpawner.Singleton.DestroyArmy(ArmyObject);
         }
 
-        public void AppendUnit(UnitToRecruit unit) {
-            if (Province == unit.province && unit.country == Country) {
-                units.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
-                maxUnits.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
+        public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
+            int c = units[unit];
+            int mc = maxUnits[unit];
+            RemoveUnitRequest(unit, count);
+            targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+        }
+
+        public void AddUnitRequest(UnitInfo unit, int count, int maxCount) {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2050);
+            msg.Write(id);
+            msg.Write(unit.id);
+            msg.Write(count);
+            msg.Write(maxCount);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void AddUnit(UnitInfo unit, int count, int maxCount) {
+            if (!units.ContainsKey(unit)) {
+                maxUnits.Add(unit, maxCount);
+                units.Add(unit, count);
+            }
+            else {
+                maxUnits[unit] += maxCount;
+                units[unit] += count;
+            }
+        }
+
+        public void RemoveUnitRequest(UnitInfo unit, int count) {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2051);
+            msg.Write(id);
+            msg.Write(unit.id);
+            msg.Write(count);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void RemoveUnit(UnitInfo unit, int count) {
+            if (units.ContainsKey(unit) && maxUnits.ContainsKey(unit)) {
+                if (count > maxUnits[unit]) {
+                    units.Remove(unit);
+                    maxUnits.Remove(unit);
+                    return;
+                }
+                else {
+                    units[unit] -= Mathf.Clamp(count, 0, units[unit]);
+                    maxUnits[unit] -= count;
+                }
             }
         }
 

@@ -383,6 +383,38 @@ namespace EuropeanWars.Network {
             msg.Write(target);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(2050)]
+        public static void AddUnit(NetIncomingMessage message) {
+            int army = message.ReadInt32();
+            int unit = message.ReadInt32();
+            int count = message.ReadInt32();
+            int maxCount = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2050);
+            msg.Write(army);
+            msg.Write(unit);
+            msg.Write(count);
+            msg.Write(maxCount);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+
+        [Command(2051)]
+        public static void RemoveUnit(NetIncomingMessage message) {
+            int army = message.ReadInt32();
+            int unit = message.ReadInt32();
+            int count = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2051);
+            msg.Write(army);
+            msg.Write(unit);
+            msg.Write(count);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         #endregion
     }
 }

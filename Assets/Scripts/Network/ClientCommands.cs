@@ -328,6 +328,26 @@ namespace EuropeanWars.Network {
 
             GameInfo.armies[id].GenerateRoute(GameInfo.provinces[target]);
         }
+
+        [Command(2050)]
+        public static void AddUnit(NetIncomingMessage message) {
+            int army = message.ReadInt32();
+            int unit = message.ReadInt32();
+            int count = message.ReadInt32();
+            int maxCount = message.ReadInt32();
+
+            GameInfo.armies[army].AddUnit(GameInfo.units[unit], count, maxCount);
+        }
+
+
+        [Command(2051)]
+        public static void RemoveUnit(NetIncomingMessage message) {
+            int army = message.ReadInt32();
+            int unit = message.ReadInt32();
+            int count = message.ReadInt32();
+
+            GameInfo.armies[army].RemoveUnit(GameInfo.units[unit], count);
+        }
         #endregion
     }
 }
