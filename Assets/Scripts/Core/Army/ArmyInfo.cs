@@ -3,6 +3,8 @@ using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
+using EuropeanWars.UI;
+using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace EuropeanWars.Core.Army {
         public Dictionary<UnitInfo, int> maxUnits = new Dictionary<UnitInfo, int>();
 
         public int Size => units.Values.Sum();
+        public int MaxSize => maxUnits.Values.Sum();
+        public int Artilleries => GetArtilleries();
         public int AverageSpeed => units.Sum(t => t.Key.speed * t.Value) / Size;
         public int Maintenance => units.Sum(t => t.Key.maintenance * t.Value);
         public bool IsSelected { get; private set; }
@@ -73,6 +77,17 @@ namespace EuropeanWars.Core.Army {
             BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country) && !Country.IsInWarAgainstCountry(Province.Country);
         }
 
+        private int GetArtilleries() {
+            int i = 0;
+            foreach (var item in units) {
+                if (item.Key.type == UnitType.Artillery) {
+                    i += item.Value;
+                }
+            }
+
+            return i;
+        }
+
         public static void UnselectAll() {
             foreach (var item in new List<ArmyInfo>(selectedArmies)) {
                 item.UnselectArmy();
@@ -80,6 +95,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void Delete() {
+            UnselectArmy();
             GameInfo.armies.Remove(id);
             Country.armies.Remove(this);
             Province.armies.Remove(this);
@@ -106,13 +122,17 @@ namespace EuropeanWars.Core.Army {
                 selectedArmies.Add(this);
                 IsSelected = true;
                 ArmyObject.selectionOutline.gameObject.SetActive(true);
+                SelectedArmyWindow.Singleton.AddArmy(this);
             }
         }
 
         public void UnselectArmy() {
-            selectedArmies.Remove(this);
-            IsSelected = false;
-            ArmyObject.selectionOutline.gameObject.SetActive(false);
+            if (selectedArmies.Contains(this)) {
+                selectedArmies.Remove(this);
+                IsSelected = false;
+                ArmyObject.selectionOutline.gameObject.SetActive(false);
+                SelectedArmyWindow.Singleton.RemoveArmy(this);
+            }
         }
 
         /// <summary>

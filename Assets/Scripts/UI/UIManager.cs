@@ -25,7 +25,17 @@ namespace EuropeanWars.UI {
             }
         }
 
-        public void CloseAllWindows() {
+        public void CloseAllWindows(bool unselectArmies = true) {
+            foreach (var item in windows) {
+                item.SetActive(false);
+            }
+            if (unselectArmies) {
+                ArmyInfo.UnselectAll();
+            }
+            GameInfo.UnselectProvince();
+        }
+
+        public void CloseAllWindowsProvince() {
             foreach (var item in windows) {
                 item.SetActive(false);
             }

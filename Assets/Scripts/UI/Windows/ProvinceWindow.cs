@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
@@ -53,7 +54,12 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void UpdateWindow(ProvinceInfo province) {
-            UIManager.Singleton.CloseAllWindows();
+            if (ArmyInfo.selectedArmies.Count > 0) {
+                GameInfo.UnselectProvince();
+                return;
+            }
+
+            UIManager.Singleton.CloseAllWindowsProvince();
             provinceWindow.SetActive(true);
             this.province = province;
             provinceName.text = province.name;
@@ -90,10 +96,6 @@ namespace EuropeanWars.UI.Windows {
             if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                 occupationWindow.SetActive(true);
             }
-        }
-
-        public void UnselectProvince() {
-            GameInfo.UnselectProvince();
         }
 
         public void Update() {
