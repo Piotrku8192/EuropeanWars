@@ -26,7 +26,7 @@ namespace EuropeanWars.Core.Army {
 
         public void CountAttack() {
             foreach (var item in attackers) {
-                UnitInfo key = defenders.OrderBy(t => t.Key.type).SingleOrDefault(t => t.Value > 0).Key;
+                UnitInfo key = defenders.OrderBy(t => t.Key.type).FirstOrDefault(t => t.Value > 0).Key;
                 if (key != null) {
                     defenders[key] = Mathf.Clamp(defenders[key] - Mathf.FloorToInt(
                         item.Value * item.Key.attack * attackersAttackModifier[(int)item.Key.type] / (float)key.health), 0, int.MaxValue);
@@ -37,7 +37,7 @@ namespace EuropeanWars.Core.Army {
             }
             
             foreach (var item in defenders) {
-                UnitInfo key = attackers.OrderBy(t => t.Key.type).SingleOrDefault(t => t.Value > 0).Key;
+                UnitInfo key = attackers.OrderBy(t => t.Key.type).FirstOrDefault(t => t.Value > 0).Key;
                 if (key != null) {
                     attackers[key] = Mathf.Clamp(attackers[key] - Mathf.FloorToInt(
                         item.Value * item.Key.attack * defendersAttackModifier[(int)item.Key.type] / (float)key.health), 0, int.MaxValue);

@@ -13,6 +13,7 @@ using UnityEngine;
 namespace EuropeanWars.Core.Army {
     public class ArmyInfo {
         public static List<ArmyInfo> selectedArmies = new List<ArmyInfo>();
+        private static int nextId;
         public readonly int id;
 
         public Dictionary<UnitInfo, int> units = new Dictionary<UnitInfo, int>();
@@ -40,8 +41,9 @@ namespace EuropeanWars.Core.Army {
             Province = unit.province;
             Country.armies.Add(this);
             Province.armies.Add(this);
-            id = GameInfo.armies.Count;
-            GameInfo.armies.Add(GameInfo.armies.Count, this);
+            id = nextId;
+            GameInfo.armies.Add(id, this);
+            nextId++;
 
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += ArmyObject.CountMovement;
@@ -105,7 +107,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
-            if (Province == targetArmy.Province) {
+            if (targetArmy != null && Province == targetArmy.Province) {
                 int c = units[unit];
                 int mc = maxUnits[unit];
                 RemoveUnitRequest(unit, count);
@@ -152,15 +154,17 @@ namespace EuropeanWars.Core.Army {
                 if (count >= maxUnits[unit]) {
                     units.Remove(unit);
                     maxUnits.Remove(unit);
-                    return;
+                    if (units.Count == 0) {
+                        Delete();
+                    }
+
+                    if (selectedArmies.Contains(this)) {
+                        SelectedArmyWindow.Singleton.UpdateWindow();
+                    }
                 }
                 else {
                     units[unit] -= Mathf.Clamp(count, 0, units[unit]);
                     maxUnits[unit] -= count;
-                }
-
-                if (selectedArmies.Contains(this)) {
-                    SelectedArmyWindow.Singleton.UpdateWindow();
                 }
             }
         }

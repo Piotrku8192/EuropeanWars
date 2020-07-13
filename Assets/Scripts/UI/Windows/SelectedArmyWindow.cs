@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Province;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -47,10 +48,14 @@ namespace EuropeanWars.UI.Windows {
         public void UpdateWindow() {
             ArmyInfo a = SelectedArmy;
             SelectedArmy = null;
-            SelectArmy(a);
+            if (ArmyInfo.selectedArmies.Contains(a)) {
+                SelectArmy(a);
+            }
             ArmyInfo m = MovingArmy;
             MovingArmy = null;
-            SelectMovingArmy(m);
+            if (ArmyInfo.selectedArmies.Contains(m)) {
+                SelectMovingArmy(m);
+            }
         }
 
         public void OnClose() {
@@ -76,11 +81,17 @@ namespace EuropeanWars.UI.Windows {
                 movingUnitsObject.SetActive(false);
                 windowObject.SetActive(false);
                 SelectedArmy = null;
+                
                 return;
             }
 
             if (SelectedArmy == army) {
-                SelectArmy(armies.First().Key);
+                SelectArmy(armies.FirstOrDefault().Key);
+            }
+
+            if (MovingArmy == army) {
+                movingUnitsObject.SetActive(false);
+                MovingArmy = null;
             }
         }
 
@@ -125,6 +136,32 @@ namespace EuropeanWars.UI.Windows {
                 ArmyUnitButton b = Instantiate(armyUnitButtonPrefab, movingUnitsContent);
                 b.SetUnit(item.Key, army);
                 movingUnits.Add(b);
+            }
+        }
+
+        public void MergeSelectedArmies() {
+            List<ProvinceInfo> provinces = new List<ProvinceInfo>();
+            foreach (var item in armies) {
+                if (!provinces.Contains(item.Key.Province)) {
+                    provinces.Add(item.Key.Province);
+                }
+            }
+
+            foreach (var item in provinces) {
+                ArmyInfo[] armies = item.armies.Where(t => t.IsSelected).ToArray();
+                if (armies.Length > 1) {
+                    for (int i = 1; i < armies.Length; i++) {
+                        foreach (var unit in armies[i].units) {
+                            armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void DeleteSelectedArmies() {
+            foreach (var item in new List<ArmyInfo>(armies.Keys)) {
+                item.Delete();
             }
         }
     }

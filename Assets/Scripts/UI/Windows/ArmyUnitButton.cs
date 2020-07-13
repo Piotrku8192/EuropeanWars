@@ -24,14 +24,14 @@ namespace EuropeanWars.UI.Windows {
             }
         }
 
-        public void MoveUnitToSecondArmy() {
+        public void MoveUnitToSecondArmy(int count) {
             if (army == SelectedArmyWindow.Singleton.SelectedArmy 
                 && SelectedArmyWindow.Singleton.MovingArmy != null) {
-                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.MovingArmy, unit.recruitSize);
+                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.MovingArmy, unit.recruitSize * count);
             }
             else if (army == SelectedArmyWindow.Singleton.MovingArmy 
                 && SelectedArmyWindow.Singleton.SelectedArmy != null) {
-                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.SelectedArmy, unit.recruitSize);
+                army.MoveUnitToOtherArmy(unit, SelectedArmyWindow.Singleton.SelectedArmy, unit.recruitSize * count);
             }
         }
     }

@@ -41,7 +41,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void UpdateProgress() {
-            if (Army != null && Army.Province == province) {
+            if (Army != null && province.armies.Contains(Army)) {
                 if (province.Country.IsInWarAgainstCountry(Army.Country)) {
                     int artilleries = Army.units.Where(t => t.Key.type == UnitType.Artillery).Sum(t => t.Value);
                     Progress += (float)1 / province.defense + Mathf.Clamp(artilleries, 0, 50) * 0.1f; //TODO: Add these values to GameStatistics
@@ -72,30 +72,32 @@ namespace EuropeanWars.Core.Province {
         }
 
         private void OnDefendersEmpty() {
-            CountryInfo c = province.Country;
-            WarInfo armyWar = Army.Country.GetWarAgainstCountry(province.NationalCountry);
-            WarInfo occupantWar = c.GetWarAgainstCountry(province.NationalCountry);
+            if (Army != null) {
+                CountryInfo c = province.Country;
+                WarInfo armyWar = Army.Country.GetWarAgainstCountry(province.NationalCountry);
+                WarInfo occupantWar = c.GetWarAgainstCountry(province.NationalCountry);
 
-            if (c == province.NationalCountry && Army.Country != province.NationalCountry) {
-                if (armyWar != null) {
-                    province.SetCountry(Army.Country);
-                    Army.Country.wars[armyWar].AddEnemyOccupatedProvince(province);
+                if (c == province.NationalCountry && Army.Country != province.NationalCountry) {
+                    if (armyWar != null) {
+                        province.SetCountry(Army.Country);
+                        Army.Country.wars[armyWar].AddEnemyOccupatedProvince(province);
+                    }
                 }
-            }
-            else if (Army.Country == province.NationalCountry && c != province.NationalCountry) {
-                if (occupantWar != null) {
-                    province.SetCountry(Army.Country);
-                    c.wars[occupantWar].RemoveEnemyOccupatedProvince(province);
+                else if (Army.Country == province.NationalCountry && c != province.NationalCountry) {
+                    if (occupantWar != null) {
+                        province.SetCountry(Army.Country);
+                        c.wars[occupantWar].RemoveEnemyOccupatedProvince(province);
+                    }
                 }
-            }
-            else if (Army.Country != province.NationalCountry && c != province.NationalCountry && Army.Country.IsInWarAgainstCountry(c)) {
-                if (occupantWar != null) {
-                    province.SetCountry(province.NationalCountry);
-                    c.wars[occupantWar].RemoveEnemyOccupatedProvince(province);
+                else if (Army.Country != province.NationalCountry && c != province.NationalCountry && Army.Country.IsInWarAgainstCountry(c)) {
+                    if (occupantWar != null) {
+                        province.SetCountry(province.NationalCountry);
+                        c.wars[occupantWar].RemoveEnemyOccupatedProvince(province);
+                    }
                 }
+                province.RefreshFogOfWarInRegion();
+                //TODO: Add uprising statement
             }
-            province.RefreshFogOfWarInRegion();
-            //TODO: Add uprising statement
 
             FindNewOccupant();
         }
