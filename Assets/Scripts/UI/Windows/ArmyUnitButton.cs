@@ -9,12 +9,17 @@ namespace EuropeanWars.UI.Windows {
         public Image image;
         public Text unitName;
         public Text size;
+        public GameObject moveUnitButtons;
 
         public void SetUnit(UnitInfo unit, ArmyInfo army) {
             this.unit = unit;
             this.army = army;
             image.sprite = unit.image;
             unitName.text = unit.name;
+
+            if (army == SelectedArmyWindow.Singleton.MovingArmy) {
+                moveUnitButtons.SetActive(true);
+            }
         }
 
         public void Update() {

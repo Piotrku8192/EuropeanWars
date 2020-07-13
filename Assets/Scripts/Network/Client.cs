@@ -23,7 +23,13 @@ namespace EuropeanWars.Network {
         }
 
         public void OnDestroy() {
-            c.Shutdown("Bye");
+            c.Disconnect("");
+            c.Shutdown("");
+        }
+
+        public void OnApplicationQuit() {
+            c.Disconnect("");
+            c.Shutdown("");
         }
 
         public void Start() {

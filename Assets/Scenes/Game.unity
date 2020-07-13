@@ -6550,7 +6550,7 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 2103512442}
   m_VerticalScrollbar: {fileID: 1027345140}
   m_HorizontalScrollbarVisibility: 1
-  m_VerticalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -22995,13 +22995,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d7356893fe2f2aa4d86f3bdb49c194e5, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 41261b2068f861840ae9e0a2f34f7b0f, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -27076,7 +27076,7 @@ MonoBehaviour:
   m_HorizontalScrollbar: {fileID: 775746647}
   m_VerticalScrollbar: {fileID: 179336258}
   m_HorizontalScrollbarVisibility: 1
-  m_VerticalScrollbarVisibility: 2
+  m_VerticalScrollbarVisibility: 0
   m_HorizontalScrollbarSpacing: -3
   m_VerticalScrollbarSpacing: -3
   m_OnValueChanged:
@@ -32054,13 +32054,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d7356893fe2f2aa4d86f3bdb49c194e5, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 8f32170ad305ebb4fb570d9a40978cf6, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
