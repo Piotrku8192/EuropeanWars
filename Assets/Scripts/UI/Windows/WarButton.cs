@@ -14,12 +14,13 @@ namespace EuropeanWars.UI.Windows {
 		}
 
 		public void OnClick() {
-			//TODO: Show WarWindow
+			WarWindow.Singleton.SetWar(Country.party.war);
 		}
 
 		public void Update() {
 			if (Country != null) {
 				warScore.text = Mathf.FloorToInt(Country.PercentWarScore * 100) + "%";
+				warScore.color = Country.PercentWarScoreColor;
 			}
 		}
 	}

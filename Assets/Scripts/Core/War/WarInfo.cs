@@ -1,5 +1,6 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Time;
 
 namespace EuropeanWars.Core.War {
     public class WarInfo {
@@ -7,12 +8,19 @@ namespace EuropeanWars.Core.War {
 
         public readonly int id;
         public readonly WarReason warReason;
+
+        public readonly int startYear;
+        public readonly int startMonth;
+        public readonly int startDay;
         
         public readonly WarParty attackers;
         public readonly WarParty defenders;
 
         public WarInfo(WarReason warReason, CountryInfo attacker, CountryInfo defender) {
             id = nextId;
+            startDay = TimeManager.day;
+            startMonth = TimeManager.month;
+            startYear = TimeManager.year;
             nextId++;
             this.warReason = warReason;
             attackers = new WarParty(this, attacker);

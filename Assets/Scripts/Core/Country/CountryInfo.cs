@@ -150,7 +150,7 @@ namespace EuropeanWars.Core.Country {
 			//TODO: Update this function after create new system
 			maxManpower = nationalProvinces.Count * 5000;
 			manpowerIncrease = taxationIncome;
-			manpowerModifier = 1.0f;
+			manpowerModifier = 0.6f;
 			if (manpower + manpowerIncrease <= maxManpower) {
 				manpower += Mathf.FloorToInt(manpowerIncrease * manpowerModifier);
 			}

@@ -2,19 +2,24 @@
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
 using System.Linq;
+using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public class WarCountryInfo {
         public readonly CountryInfo country;
         public readonly WarParty party;
 
-        private readonly List<ProvinceInfo> enemyOccupatedProvinces = new List<ProvinceInfo>();
-        private readonly List<ProvinceInfo> localOccupatedProvinces = new List<ProvinceInfo>();
+        public readonly List<ProvinceInfo> enemyOccupatedProvinces = new List<ProvinceInfo>();
+        public readonly List<ProvinceInfo> localOccupatedProvinces = new List<ProvinceInfo>();
         //TODO: Add battles
+
+        public int killedEnemies;
+        public int killedLocal;
 
         public int CountryScoreCost => country.nationalProvinces.Sum(t => t.taxation);
         public int WarScore { get; private set; }
         public float PercentWarScore => (float)WarScore / (WarScore < 0 ? CountryScoreCost : party.Enemies.PartyScoreCost);
+        public Color PercentWarScoreColor => PercentWarScore == 0 ? Color.yellow : (PercentWarScore > 0 ? Color.green : Color.red);
 
         public WarCountryInfo(CountryInfo country, WarParty party) {
             this.country = country;

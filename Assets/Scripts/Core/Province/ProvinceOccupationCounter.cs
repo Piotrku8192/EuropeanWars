@@ -48,7 +48,18 @@ namespace EuropeanWars.Core.Province {
 
                     if (daysToNext <= 0) {
                         daysToNext = daysBetweenAttacks;
-                        attackCounter.CountAttack();
+                        int killedAttackers = 0;
+                        int killedDefenders = 0;
+
+                        WarInfo war = province.Country.GetWarAgainstCountry(Army.Country);
+                        ArmyInfo army = Army;
+                        attackCounter.CountAttack(out killedDefenders, out killedAttackers);
+
+                        province.Country.wars[war].killedEnemies += killedAttackers;
+                        province.Country.wars[war].killedLocal += killedDefenders;
+
+                        army.Country.wars[war].killedEnemies += killedDefenders; 
+                        army.Country.wars[war].killedLocal += killedAttackers; 
                     }
                     daysToNext--;
 

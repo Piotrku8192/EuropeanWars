@@ -3,6 +3,7 @@ using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public class WarParty {
@@ -14,6 +15,7 @@ namespace EuropeanWars.Core.War {
         public int PartyScoreCost => countries.Sum(t => t.Value.CountryScoreCost);
         public int WarScore => countries.Sum(t => t.Value.WarScore);
         public float PercentWarScore => (float)WarScore / (WarScore < 0 ? PartyScoreCost : Enemies.PartyScoreCost);
+        public Color PercentWarScoreColor => PercentWarScore == 0 ? Color.yellow : (PercentWarScore > 0 ? Color.green : Color.red);
 
         /// <summary>
         /// After making parties you must set Enemies party by invoking SetEnemies method.
@@ -50,6 +52,10 @@ namespace EuropeanWars.Core.War {
                 if (country == GameInfo.PlayerCountry) {
                     WarList.Singleton.AddWar(c);
                 }
+
+                if (WarWindow.Singleton.war == war) {
+                    WarWindow.Singleton.SetWar(war);
+                }
             }
         }
         public void JoinParty(WarCountryInfo country) {
@@ -59,6 +65,10 @@ namespace EuropeanWars.Core.War {
                 RemoveDiplomaticRelationsOnJoin(country.country);
                 if (country.country == GameInfo.PlayerCountry) {
                     WarList.Singleton.AddWar(country);
+                }
+
+                if (WarWindow.Singleton.war == war) {
+                    WarWindow.Singleton.SetWar(war);
                 }
             }
         }
@@ -75,6 +85,10 @@ namespace EuropeanWars.Core.War {
                 country.country.wars.Remove(war);
                 if (country.country == GameInfo.PlayerCountry) {
                     WarList.Singleton.RemoveWar(country);
+                }
+
+                if (WarWindow.Singleton.war == war) {
+                    WarWindow.Singleton.SetWar(war);
                 }
             }
         }
