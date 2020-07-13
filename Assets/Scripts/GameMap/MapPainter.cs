@@ -47,8 +47,15 @@ namespace EuropeanWars.GameMap {
                     color = province.culture.color;
                     break;
                 case MapMode.Trade:
-                    color = province.isTradeRoute ? Color.yellow : Color.gray;
-                    color = province.isTradeCity ? Color.blue : Color.gray;
+                    if (province.isTradeRoute) {
+                        color = Color.yellow;
+                    }
+                    else if (province.isTradeCity) {
+                        color = Color.blue;
+                    }
+                    else {
+                        color = Color.gray;
+                    }
                     break;
                 case MapMode.Terrain:
                     break;
