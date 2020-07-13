@@ -64,10 +64,12 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void Update() {
-            attackersWarScore.text = Mathf.FloorToInt(war.attackers.PercentWarScore * 100) + "%";
-            attackersWarScore.color = war.attackers.PercentWarScoreColor;
-            defendersWarScore.text = Mathf.FloorToInt(war.defenders.PercentWarScore * 100) + "%";
-            defendersWarScore.color = war.defenders.PercentWarScoreColor;
+            if (war != null) {
+                attackersWarScore.text = Mathf.FloorToInt(war.attackers.PercentWarScore * 100) + "%";
+                attackersWarScore.color = war.attackers.PercentWarScoreColor;
+                defendersWarScore.text = Mathf.FloorToInt(war.defenders.PercentWarScore * 100) + "%";
+                defendersWarScore.color = war.defenders.PercentWarScoreColor;
+            }
         }
     }
 }
