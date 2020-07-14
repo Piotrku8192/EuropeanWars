@@ -1,6 +1,6 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core.Country;
+﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,6 +15,8 @@ namespace EuropeanWars.Core.War {
 
         public int killedEnemies;
         public int killedLocal;
+
+        public bool IsMajor => party.major == this;
 
         public int CountryScoreCost => country.nationalProvinces.Sum(t => t.taxation);
         public int WarScore { get; private set; }
