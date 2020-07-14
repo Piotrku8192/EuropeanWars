@@ -27,6 +27,15 @@ namespace EuropeanWars.Core.War {
             factory.FillPeaceDeal();
         }
 
+        /// <summary>
+        /// Adds gainedGold by change * 10. Every 1 change costs 1% warScore.
+        /// </summary>
+        /// <param name="change">GainedGold change in 10 size bits.</param>
+        public void ChangeGold(int change) {
+            GainedGold += change * 10;
+            UsedWarScore += change;
+        }
+
         public void SelectSenderElement(PeaceDealElement element) {
             if (!selectedSenderElements.Contains(element.id)) {
                 selectedSenderElements.Add(element.id);
@@ -59,6 +68,7 @@ namespace EuropeanWars.Core.War {
             msg.Write(war.id);
             msg.Write(sender.country.id);
             msg.Write(receiver.country.id);
+            msg.Write(GainedGold);
             msg.Write(selectedSenderElements.Count);
             foreach (var item in selectedSenderElements) {
                 msg.Write(item);
@@ -72,12 +82,22 @@ namespace EuropeanWars.Core.War {
         }
 
         public void SendRequest() {
+            if (receiver.country.isPlayer) {
+                NetworkSendRequest();
+            }
+            else {
+                ProcessRequest();
+            }
+        }
+
+        private void NetworkSendRequest() {
             NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
             msg.Write((ushort)1037);
             msg.Write(receiver.country.id);
             msg.Write(war.id);
             msg.Write(sender.country.id);
             msg.Write(receiver.country.id);
+            msg.Write(GainedGold);
             msg.Write(selectedSenderElements.Count);
             foreach (var item in selectedSenderElements) {
                 msg.Write(item);

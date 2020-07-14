@@ -312,6 +312,7 @@ namespace EuropeanWars.Network {
             int war = message.ReadInt32();
             int sender = message.ReadInt32();
             int receiver = message.ReadInt32();
+            int gainedGold = message.ReadInt32();
 
             int senderCount = message.ReadInt32();
             List<int> senderElements = new List<int>();
@@ -327,6 +328,7 @@ namespace EuropeanWars.Network {
 
             WarInfo w = DiplomacyManager.wars[war];
             PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+            deal.ChangeGold(gainedGold / 10);
             deal.selectedSenderElements.AddRange(senderElements);
             deal.selectedReceiverElements.AddRange(receiverElements);
             deal.Execute();
@@ -337,6 +339,7 @@ namespace EuropeanWars.Network {
             int war = message.ReadInt32();
             int sender = message.ReadInt32();
             int receiver = message.ReadInt32();
+            int gainedGold = message.ReadInt32();
 
             int senderCount = message.ReadInt32();
             List<int> senderElements = new List<int>();
@@ -352,6 +355,7 @@ namespace EuropeanWars.Network {
 
             WarInfo w = DiplomacyManager.wars[war];
             PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+            deal.ChangeGold(gainedGold / 10);
             deal.selectedSenderElements.AddRange(senderElements);
             deal.selectedReceiverElements.AddRange(receiverElements);
             deal.ProcessRequest();
