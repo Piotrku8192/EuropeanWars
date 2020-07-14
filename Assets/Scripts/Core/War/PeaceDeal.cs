@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using EuropeanWars.Network;
+using Lidgren.Network;
+using System.Collections.Generic;
 
 namespace EuropeanWars.Core.War {
     public class PeaceDeal {
         public readonly WarInfo war;
         public readonly WarCountryInfo sender;
         public readonly WarCountryInfo receiver;
+
+        public int nextElementId;
 
         public Dictionary<int, PeaceDealElement> senderElements = new Dictionary<int, PeaceDealElement>();
         public Dictionary<int, PeaceDealElement> receiverElements = new Dictionary<int, PeaceDealElement>();
@@ -25,19 +29,72 @@ namespace EuropeanWars.Core.War {
 
         public void SelectSenderElement(PeaceDealElement element) {
             if (!selectedSenderElements.Contains(element.id)) {
-
+                selectedSenderElements.Add(element.id);
+                UsedWarScore += element.WarScoreCost;
             }
         }
 
         public void UnselectSenderElement(PeaceDealElement element) {
-
+            if (selectedSenderElements.Remove(element.id)) {
+                UsedWarScore -= element.WarScoreCost;
+            }
         }
 
         public void SelectReceiverElement(PeaceDealElement element) {
-
+            if (!selectedReceiverElements.Contains(element.id)) {
+                selectedReceiverElements.Add(element.id);
+                UsedWarScore -= element.WarScoreCost;
+            }
         }
 
         public void UnselectReceiverElement(PeaceDealElement element) {
+            if (selectedReceiverElements.Remove(element.id)) {
+                UsedWarScore += element.WarScoreCost;
+            }
+        }
+
+        public void Send() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)1036);
+            msg.Write(war.id);
+            msg.Write(sender.country.id);
+            msg.Write(receiver.country.id);
+            msg.Write(selectedSenderElements.Count);
+            foreach (var item in selectedSenderElements) {
+                msg.Write(item);
+            }
+            msg.Write(selectedReceiverElements.Count);
+            foreach (var item in selectedReceiverElements) {
+                msg.Write(item);
+            }
+
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void SendRequest() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)1037);
+            msg.Write(receiver.country.id);
+            msg.Write(war.id);
+            msg.Write(sender.country.id);
+            msg.Write(receiver.country.id);
+            msg.Write(selectedSenderElements.Count);
+            foreach (var item in selectedSenderElements) {
+                msg.Write(item);
+            }
+            msg.Write(selectedReceiverElements.Count);
+            foreach (var item in selectedReceiverElements) {
+                msg.Write(item);
+            }
+
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void ProcessRequest() {
+
+        }
+
+        public void Execute() {
 
         }
     }

@@ -12,33 +12,30 @@ namespace EuropeanWars.Core.War {
         public void FillPeaceDeal() {
             if (peaceDeal.sender.IsMajor) {
                 foreach (var item in peaceDeal.sender.party.countries) {
-                    peaceDeal.senderElements.AddRange(GetProvinceElements(item.Value.enemyOccupatedProvinces));
+                    GetProvinceElements(item.Value.enemyOccupatedProvinces, peaceDeal.senderElements);
                 }
             }
             else {
-                peaceDeal.senderElements.AddRange(GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces));
+                GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces, peaceDeal.senderElements);
             }
 
             if (peaceDeal.receiver.IsMajor) {
                 foreach (var item in peaceDeal.receiver.party.countries) {
-                    peaceDeal.receiverElements.AddRange(GetProvinceElements(item.Value.enemyOccupatedProvinces));
+                    GetProvinceElements(item.Value.enemyOccupatedProvinces, peaceDeal.receiverElements);
                 }
             }
             else {
-                peaceDeal.receiverElements.AddRange(GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces));
+                GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces, peaceDeal.receiverElements);
             }
         }
 
-        private PeaceDealElement[] GetProvinceElements(List<ProvinceInfo> provinces) {
-            List<PeaceDealElement> result = new List<PeaceDealElement>();
+        private void GetProvinceElements(List<ProvinceInfo> provinces, Dictionary<int, PeaceDealElement> target) {
             foreach (var item in provinces) {
-                ProvincePeaceDealElement element = new ProvincePeaceDealElement(item);
+                ProvincePeaceDealElement element = new ProvincePeaceDealElement(item, peaceDeal);
                 if (element.CanBeUsed(peaceDeal)) {
-                    result.Add(element);
+                    target.Add(element.id, element);
                 }
             }
-
-            return result.ToArray();
         }
     }
 }

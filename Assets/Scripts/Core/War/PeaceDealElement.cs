@@ -3,19 +3,18 @@ using System;
 
 namespace EuropeanWars.Core.War {
     public abstract class PeaceDealElement {
-        private static int nextId;
-
         public abstract string Name { get; }
+        public abstract int WarScoreCost { get; }
 
         public readonly int id;
         public readonly CountryInfo from;
         public readonly CountryInfo to;
 
-        protected PeaceDealElement(CountryInfo from, CountryInfo to) {
+        protected PeaceDealElement(PeaceDeal peaceDeal, CountryInfo from, CountryInfo to) {
             this.from = from;
             this.to = to;
-            id = nextId;
-            nextId++;
+            id = peaceDeal.nextElementId;
+            peaceDeal.nextElementId++;
         }
 
         /// <summary>

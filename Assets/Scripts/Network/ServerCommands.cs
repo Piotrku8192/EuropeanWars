@@ -339,7 +339,7 @@ namespace EuropeanWars.Network {
         }
 
         [Command(1035)]
-        public static void DeclateWar(NetIncomingMessage message) {
+        public static void DeclareWar(NetIncomingMessage message) {
             int attacker = message.ReadInt32();
             int defender = message.ReadInt32();
             int warReason = message.ReadInt32();
@@ -350,6 +350,28 @@ namespace EuropeanWars.Network {
             msg.Write(defender);
             msg.Write(warReason);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1036)]
+        public static void SendPeaceDeal(NetIncomingMessage message) {
+            byte[] b = message.ReadBytes(message.LengthBytes);
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1036);
+            msg.Write(b);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1037)]
+        public static void PeaceDealRequest(NetIncomingMessage message) {
+            int receiver = message.ReadInt32();
+            byte[] b = message.ReadBytes(message.LengthBytes);
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1037);
+            msg.Write(b);
+            Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => 
+            t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
         }
         #endregion
 
@@ -399,7 +421,6 @@ namespace EuropeanWars.Network {
             msg.Write(maxCount);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
-
 
         [Command(2051)]
         public static void RemoveUnit(NetIncomingMessage message) {

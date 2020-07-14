@@ -279,7 +279,7 @@ namespace EuropeanWars.Network {
         }
 
         [Command(1035)]
-        public static void DeclateWar(NetIncomingMessage message) {
+        public static void DeclareWar(NetIncomingMessage message) {
             int attacker = message.ReadInt32();
             int defender = message.ReadInt32();
             int warReason = message.ReadInt32();
@@ -305,6 +305,56 @@ namespace EuropeanWars.Network {
                     win.deliceText.text = "Ok";
                 }
             }
+        }
+
+        [Command(1036)]
+        public static void SendPeaceDeal(NetIncomingMessage message) {
+            int war = message.ReadInt32();
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            int senderCount = message.ReadInt32();
+            List<int> senderElements = new List<int>();
+            for (int i = 0; i < senderCount; i++) {
+                senderElements.Add(message.ReadInt32());
+            }
+
+            int receiverCount = message.ReadInt32();
+            List<int> receiverElements = new List<int>();
+            for (int i = 0; i < receiverCount; i++) {
+                senderElements.Add(message.ReadInt32());
+            }
+
+            WarInfo w = DiplomacyManager.wars[war];
+            PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+            deal.selectedSenderElements.AddRange(senderElements);
+            deal.selectedReceiverElements.AddRange(receiverElements);
+            deal.Execute();
+        }
+
+        [Command(1037)]
+        public static void PeaceDealRequest(NetIncomingMessage message) {
+            int war = message.ReadInt32();
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            int senderCount = message.ReadInt32();
+            List<int> senderElements = new List<int>();
+            for (int i = 0; i < senderCount; i++) {
+                senderElements.Add(message.ReadInt32());
+            }
+
+            int receiverCount = message.ReadInt32();
+            List<int> receiverElements = new List<int>();
+            for (int i = 0; i < receiverCount; i++) {
+                senderElements.Add(message.ReadInt32());
+            }
+
+            WarInfo w = DiplomacyManager.wars[war];
+            PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+            deal.selectedSenderElements.AddRange(senderElements);
+            deal.selectedReceiverElements.AddRange(receiverElements);
+            deal.ProcessRequest();
         }
         #endregion
 
