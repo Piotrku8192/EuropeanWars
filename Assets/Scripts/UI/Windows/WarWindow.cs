@@ -65,9 +65,9 @@ namespace EuropeanWars.UI.Windows {
 
         public void Update() {
             if (war != null) {
-                attackersWarScore.text = Mathf.FloorToInt(war.attackers.PercentWarScore * 100) + "%";
+                attackersWarScore.text = war.attackers.PercentWarScore + "%";
                 attackersWarScore.color = war.attackers.PercentWarScoreColor;
-                defendersWarScore.text = Mathf.FloorToInt(war.defenders.PercentWarScore * 100) + "%";
+                defendersWarScore.text = war.defenders.PercentWarScore + "%";
                 defendersWarScore.color = war.defenders.PercentWarScoreColor;
             }
         }

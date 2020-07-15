@@ -1,10 +1,12 @@
 ﻿using EuropeanWars.Core.Country;
 using System;
+using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public abstract class PeaceDealElement {
         public abstract string Name { get; }
         public abstract int WarScoreCost { get; }
+        public abstract Color Color { get; }
 
         public readonly int id;
         public readonly CountryInfo from;

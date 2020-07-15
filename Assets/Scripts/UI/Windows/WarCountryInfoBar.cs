@@ -26,7 +26,7 @@ namespace EuropeanWars.UI.Windows {
 
         public void Update() {
             if (country != null) {
-                warScore.text = Mathf.FloorToInt(country.PercentWarScore * 100) + "%";
+                warScore.text = country.PercentWarScore + "%";
                 warScore.color = country.PercentWarScoreColor;
                 enemyOccupatedProvinces.text = country.enemyOccupatedProvinces.Count.ToString();
                 localOccupatedProvinces.text = country.localOccupatedProvinces.Count.ToString();

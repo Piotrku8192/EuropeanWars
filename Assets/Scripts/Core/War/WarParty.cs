@@ -14,7 +14,7 @@ namespace EuropeanWars.Core.War {
 
         public int PartyScoreCost => countries.Sum(t => t.Value.CountryScoreCost);
         public int WarScore => countries.Sum(t => t.Value.WarScore);
-        public float PercentWarScore => (float)WarScore / (WarScore < 0 ? PartyScoreCost : Enemies.PartyScoreCost);
+        public int PercentWarScore => Mathf.RoundToInt((float)WarScore / (WarScore < 0 ? PartyScoreCost : Enemies.PartyScoreCost) * 100);
         public Color PercentWarScoreColor => PercentWarScore == 0 ? Color.yellow : (PercentWarScore > 0 ? Color.green : Color.red);
 
         /// <summary>

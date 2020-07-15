@@ -19,8 +19,8 @@ namespace EuropeanWars.UI.Windows {
 
 		public void Update() {
 			if (Country != null) {
-				warScore.text = Mathf.FloorToInt(Country.PercentWarScore * 100) + "%";
-				warScore.color = Country.PercentWarScoreColor;
+				warScore.text = (Country.IsMajor ? Country.party.PercentWarScore : Country.PercentWarScore) + "%";
+				warScore.color = Country.IsMajor ? Country.party.PercentWarScoreColor : Country.PercentWarScoreColor;
 			}
 		}
 	}

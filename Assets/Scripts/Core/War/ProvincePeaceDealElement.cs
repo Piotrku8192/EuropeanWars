@@ -5,6 +5,7 @@ namespace EuropeanWars.Core.War {
     public class ProvincePeaceDealElement : PeaceDealElement {
         public override string Name => $"{province.NationalCountry.name} oddaje prowincję {province.name} dla {province.Country.name}"; //TODO: Make this translating when translate system is done.
         public override int WarScoreCost => Mathf.FloorToInt(province.taxation * costModifier);
+        public override Color Color => Color.yellow;
 
         public readonly ProvinceInfo province;
         public readonly float costModifier;
