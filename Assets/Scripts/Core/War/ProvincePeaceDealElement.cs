@@ -18,5 +18,10 @@ namespace EuropeanWars.Core.War {
         public override bool CanBeUsed(PeaceDeal peaceDeal) {
             return peaceDeal.war.warReason.ProvinceTakingEnabled;
         }
+
+        public override bool IsSame(PeaceDealElement element) {
+            ProvincePeaceDealElement e = (ProvincePeaceDealElement)element;
+            return base.IsSame(element) && province == e.province && costModifier == e.costModifier;
+        }
     }
 }

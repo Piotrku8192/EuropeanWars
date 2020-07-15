@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Network;
 using Lidgren.Network;
+using System;
 using System.Collections.Generic;
 
 namespace EuropeanWars.Core.War {
@@ -40,7 +41,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void SelectSenderElement(PeaceDealElement element) {
-            if (!selectedSenderElements.Contains(element.id)) {
+            if (element != null && !selectedSenderElements.Contains(element.id)) {
                 selectedSenderElements.Add(element.id);
                 UsedWarScore += element.WarScoreCost;
             }
@@ -53,7 +54,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void SelectReceiverElement(PeaceDealElement element) {
-            if (!selectedReceiverElements.Contains(element.id)) {
+            if (element != null && !selectedReceiverElements.Contains(element.id)) {
                 selectedReceiverElements.Add(element.id);
                 UsedWarScore -= element.WarScoreCost;
             }
@@ -114,11 +115,11 @@ namespace EuropeanWars.Core.War {
         }
 
         public void ProcessRequest() {
-
+            throw new NotImplementedException();
         }
 
         public void Execute() {
-
+            throw new NotImplementedException();
         }
     }
 }

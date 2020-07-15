@@ -5933,6 +5933,7 @@ GameObject:
   - component: {fileID: 361750540}
   - component: {fileID: 361750541}
   - component: {fileID: 361750542}
+  - component: {fileID: 361750543}
   m_Layer: 0
   m_Name: Windows
   m_TagString: Untagged
@@ -6140,6 +6141,26 @@ MonoBehaviour:
     type: 3}
   attackersContent: {fileID: 1051690822}
   defendersContent: {fileID: 11376232}
+--- !u!114 &361750543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361750533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe100f7c7e168b47842d785dc330417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  windowObject: {fileID: 0}
+  receiverCrest: {fileID: 0}
+  warScore: {fileID: 0}
+  usedWarScore: {fileID: 0}
+  gold: {fileID: 0}
+  peaceDealElementButtonPrefab: {fileID: 0}
+  senderElementsContent: {fileID: 0}
+  receiverElementsContent: {fileID: 0}
 --- !u!1 &362252110
 GameObject:
   m_ObjectHideFlags: 0

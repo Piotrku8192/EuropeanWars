@@ -25,5 +25,10 @@ namespace EuropeanWars.Core.War {
         /// <param name="peaceDeal"></param>
         /// <returns></returns>
         public abstract bool CanBeUsed(PeaceDeal peaceDeal);
+
+        public virtual bool IsSame(PeaceDealElement element) {
+            return Name == element.Name && WarScoreCost == element.WarScoreCost && Color == element.Color
+                && from == element.from && to == element.to;
+        }
     }
 }

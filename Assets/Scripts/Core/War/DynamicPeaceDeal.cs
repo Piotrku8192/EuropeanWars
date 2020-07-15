@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace EuropeanWars.Core.War {
     public class DynamicPeaceDeal : PeaceDeal {
@@ -6,7 +7,18 @@ namespace EuropeanWars.Core.War {
         }
 
         public PeaceDeal GetFinalPeaceDeal() {
-            throw new NotImplementedException();
+            PeaceDeal result = new PeaceDeal(war, sender, receiver);
+            foreach (var item in selectedSenderElements) {
+                result.SelectSenderElement(result.senderElements.Where(t => 
+                t.Value.IsSame(senderElements[item])).FirstOrDefault().Value);
+            }
+            foreach (var item in selectedReceiverElements) {
+                result.SelectReceiverElement(result.receiverElements.Where(t => 
+                t.Value.IsSame(receiverElements[item])).FirstOrDefault().Value);
+            }
+
+            result.ChangeGold(GainedGold / 10);
+            return result;
         }
     }
 }
