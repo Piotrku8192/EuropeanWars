@@ -66,7 +66,7 @@ namespace EuropeanWars.Core {
                 }
 
                 if (gameStarted) {
-                    ProvinceWindow.Singleton.UpdateWindow(SelectedProvince);
+                    ProvinceWindow.Singleton.UpdateWindow(SelectedProvince, true);
                 }
             }
         }

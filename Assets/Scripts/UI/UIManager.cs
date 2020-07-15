@@ -20,8 +20,6 @@ namespace EuropeanWars.UI {
         public void Update() {
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 CloseAllWindows();
-                ArmyInfo.UnselectAll();
-                GameInfo.UnselectProvince();
             }
         }
 

@@ -40,6 +40,10 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void Update() {
+            if (!windowObject.activeInHierarchy) {
+                peaceDeal = null;
+            }
+
             if (peaceDeal != null) {
                 warScore.text = peaceDeal.SenderWarScore.ToString();
                 warScore.color = peaceDeal.sender.PercentWarScoreColor;
@@ -47,6 +51,12 @@ namespace EuropeanWars.UI.Windows {
                 usedWarScore.color = peaceDeal.UsedWarScore <= peaceDeal.sender.PercentWarScore ? Color.yellow : Color.red;
                 gold.text = peaceDeal.GainedGold.ToString();
             }
+        }
+
+        public void SendRequest() {
+            PeaceDeal finalDeal = peaceDeal.GetFinalPeaceDeal();
+            finalDeal.SendRequest();
+            windowObject.SetActive(false);
         }
 
         public void AddSenderElement(PeaceDealElement element) {

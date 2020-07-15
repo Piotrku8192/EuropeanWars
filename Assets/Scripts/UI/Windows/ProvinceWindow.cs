@@ -53,48 +53,50 @@ namespace EuropeanWars.UI.Windows {
             Singleton = this;
         }
 
-        public void UpdateWindow(ProvinceInfo province) {
+        public void UpdateWindow(ProvinceInfo province, bool activateWindow = false) {
             if (ArmyInfo.selectedArmies.Count > 0) {
                 GameInfo.UnselectProvince();
                 return;
             }
 
-            UIManager.Singleton.CloseAllWindowsProvince();
-            provinceWindow.SetActive(true);
-            this.province = province;
-            provinceName.text = province.name;
-            countryCrest.SetCountry(province.Country);
-            religion.sprite = province.religion.image;
-            //TODO: Add: terrainImage = ...
-            tax.text = province.taxation.ToString();
-            buildingsIncome.text = province.buildingsIncome.ToString();
-            tradeIncome.text = province.tradeIncome.ToString();
-            culture.text = province.culture.name;
-            garnison.text = province.fogOfWar ? "?" : province.garnison.Sum(t => t.Value).ToString();
+            if (provinceWindow.activeInHierarchy || activateWindow) {
+                UIManager.Singleton.CloseAllWindowsProvince();
+                provinceWindow.SetActive(true);
+                this.province = province;
+                provinceName.text = province.name;
+                countryCrest.SetCountry(province.Country);
+                religion.sprite = province.religion.image;
+                //TODO: Add: terrainImage = ...
+                tax.text = province.taxation.ToString();
+                buildingsIncome.text = province.buildingsIncome.ToString();
+                tradeIncome.text = province.tradeIncome.ToString();
+                culture.text = province.culture.name;
+                garnison.text = province.fogOfWar ? "?" : province.garnison.Sum(t => t.Value).ToString();
 
-            foreach (var item in claimators) {
-                Destroy(item.gameObject);
-            }
-            claimators.Clear();
-            foreach (var item in province.claimators) {
-                CountryButton clmtr = Instantiate(countryCrest, claimersContent);
-                clmtr.SetCountry(item);
-                claimators.Add(clmtr);
-            }
+                foreach (var item in claimators) {
+                    Destroy(item.gameObject);
+                }
+                claimators.Clear();
+                foreach (var item in province.claimators) {
+                    CountryButton clmtr = Instantiate(countryCrest, claimersContent);
+                    clmtr.SetCountry(item);
+                    claimators.Add(clmtr);
+                }
 
-            for (int i = 0; i < 10; i++) {
-                buildings[i].UpdateButton(province.buildings[i]);
-            }
-            builder.SetWindowActive(false);
+                for (int i = 0; i < 10; i++) {
+                    buildings[i].UpdateButton(province.buildings[i]);
+                }
+                builder.SetWindowActive(false);
 
-            bool b = GameInfo.PlayerCountry == province.Country;
-            upgradeButton.interactable = b;
-            devastateButton.interactable = b;
-            fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
-                && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
+                bool b = GameInfo.PlayerCountry == province.Country;
+                upgradeButton.interactable = b;
+                devastateButton.interactable = b;
+                fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
+                    && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
 
-            if (!province.fogOfWar && province.OccupationCounter.Army != null) {
-                occupationWindow.SetActive(true);
+                if (!province.fogOfWar && province.OccupationCounter.Army != null) {
+                    occupationWindow.SetActive(true);
+                }
             }
         }
 
