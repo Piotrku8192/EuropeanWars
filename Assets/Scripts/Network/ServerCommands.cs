@@ -354,7 +354,7 @@ namespace EuropeanWars.Network {
 
         [Command(1036)]
         public static void SendPeaceDeal(NetIncomingMessage message) {
-            byte[] b = message.ReadBytes(message.LengthBytes);
+            byte[] b = message.ReadBytes(message.LengthBytes - 2);
 
             NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
             msg.Write((ushort)1036);
@@ -365,7 +365,7 @@ namespace EuropeanWars.Network {
         [Command(1037)]
         public static void PeaceDealRequest(NetIncomingMessage message) {
             int receiver = message.ReadInt32();
-            byte[] b = message.ReadBytes(message.LengthBytes);
+            byte[] b = message.ReadBytes(message.LengthBytes - 6);
 
             NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
             msg.Write((ushort)1037);

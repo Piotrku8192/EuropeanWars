@@ -23,5 +23,12 @@ namespace EuropeanWars.Core.War {
             ProvincePeaceDealElement e = (ProvincePeaceDealElement)element;
             return base.IsSame(element) && province == e.province && costModifier == e.costModifier;
         }
+
+        public override void Execute() {
+            if (province != null) {
+                province.SetCountry(to, true);
+
+            }
+        }
     }
 }

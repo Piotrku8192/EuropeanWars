@@ -52,7 +52,9 @@ namespace EuropeanWars.Core.War {
             if (enemyOccupatedProvinces.Contains(province) && province.Country == province.NationalCountry) {
                 enemyOccupatedProvinces.Remove(province);
                 WarScore -= province.taxation;
-                party.Enemies.countries[province.NationalCountry].RemoveLocalOccupatedProvince(province);
+                if (party.Enemies.countries.ContainsKey(province.NationalCountry)) {
+                    party.Enemies.countries[province.NationalCountry]?.RemoveLocalOccupatedProvince(province);
+                }
 
                 UpdateDynamicPeaceDealOnRemoveEnemyProvince(province);
             }

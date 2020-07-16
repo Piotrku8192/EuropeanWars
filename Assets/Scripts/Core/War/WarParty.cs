@@ -1,5 +1,7 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Province;
+using EuropeanWars.GameMap;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,13 +74,27 @@ namespace EuropeanWars.Core.War {
                 }
             }
         }
-        public void LeaveParty(WarCountryInfo country) {
+        public void LeaveParty(WarCountryInfo country, bool isWarEnd = false) {
             if (ContainsCountry(country)) {
+                foreach (var item in new List<ProvinceInfo>(country.enemyOccupatedProvinces)) {
+                    item.SetCountry(item.NationalCountry);
+                    country.RemoveEnemyOccupatedProvince(item);
+                }
+
+                foreach (var item in new List<ProvinceInfo>(country.localOccupatedProvinces)) {
+                    item.SetCountry(item.NationalCountry);
+                    item.Country.wars[war].RemoveEnemyOccupatedProvince(item);
+                }
+
                 if (country == major) {
-                    foreach (var item in countries) {
+                    foreach (var item in new Dictionary<CountryInfo, WarCountryInfo>(countries)) {
                         if (item.Value != major) {
                             LeaveParty(item.Value);
                         }
+                    }
+
+                    if (!isWarEnd) {
+                        Enemies.LeaveParty(Enemies.major, true);
                     }
                 }
                 countries.Remove(country.country);
@@ -89,6 +105,16 @@ namespace EuropeanWars.Core.War {
 
                 if (WarWindow.Singleton.war == war) {
                     WarWindow.Singleton.SetWar(war);
+                }
+
+                if (!isWarEnd) {
+                    if (countries.Count == 0) {
+                        war.Delete();
+                    }
+                }
+
+                foreach (var item in GameInfo.provinces) {
+                    item.Value.RefreshFogOfWar();
                 }
             }
         }

@@ -115,11 +115,32 @@ namespace EuropeanWars.Core.War {
         }
 
         public void ProcessRequest() {
-            throw new NotImplementedException();
+            if (receiver.country == GameInfo.PlayerCountry) {
+                //TODO: Show accept window.
+            }
+            else {
+                //TODO: Make bot decision.
+                //TODO: Remove this temporary code when bots are done.
+                if (UsedWarScore <= SenderWarScore) {
+                    Send();
+                }
+                else {
+                    //TODO: Send delice message
+                }
+            }
         }
 
         public void Execute() {
-            throw new NotImplementedException();
+            foreach (var item in selectedSenderElements) {
+                senderElements[item].Execute();
+            }
+            foreach (var item in selectedReceiverElements) {
+                receiverElements[item].Execute();
+            }
+            sender.country.gold += GainedGold;
+            receiver.country.gold -= GainedGold;
+
+            receiver.party.LeaveParty(receiver);
         }
     }
 }

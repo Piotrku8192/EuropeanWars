@@ -263,7 +263,7 @@ namespace EuropeanWars.Network {
             int country = message.ReadInt32();
             bool isAttacker = message.ReadBoolean();
 
-            DiplomacyManager.wars.Single(t => t.id == war).JoinWar(GameInfo.countries[country], isAttacker);
+            DiplomacyManager.wars[war].JoinWar(GameInfo.countries[country], isAttacker);
         }
 
         [Command(1034)]

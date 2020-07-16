@@ -1,6 +1,8 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Time;
+using EuropeanWars.UI.Windows;
 
 namespace EuropeanWars.Core.War {
     public class WarInfo {
@@ -29,6 +31,14 @@ namespace EuropeanWars.Core.War {
             defenders.SetEnemies(attackers);
             WarCountryInviter inviter = new WarCountryInviter(this);
             inviter.InviteFriends();
+        }
+
+        public void Delete() {
+            DiplomacyManager.wars.Remove(id);
+            if (WarWindow.Singleton.war == this) {
+                WarWindow.Singleton.war = null;
+                WarWindow.Singleton.windowObject.SetActive(false);
+            }
         }
 
         public bool ContainsCountry(CountryInfo country) {

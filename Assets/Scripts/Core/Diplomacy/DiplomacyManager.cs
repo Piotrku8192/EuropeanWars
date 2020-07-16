@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EuropeanWars.Core.Diplomacy {
     public static class DiplomacyManager {
-        public static List<WarInfo> wars = new List<WarInfo>();
+        public static Dictionary<int, WarInfo> wars = new Dictionary<int, WarInfo>();
         public static List<MilitaryAccess> militaryAccesses = new List<MilitaryAccess>();
         public static List<Alliance> alliances = new List<Alliance>();
 
@@ -35,7 +35,7 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public static void DeclareWar(WarReason warReason, CountryInfo attacker, CountryInfo defender) {
             WarInfo war = new WarInfo(warReason, attacker, defender);
-            wars.Add(war);
+            wars.Add(war.id, war);
         }
 
         public static void SetRelationsWithCountry(CountryInfo country, CountryInfo _country, int v) {

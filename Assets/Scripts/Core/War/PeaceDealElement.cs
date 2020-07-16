@@ -26,6 +26,8 @@ namespace EuropeanWars.Core.War {
         /// <returns></returns>
         public abstract bool CanBeUsed(PeaceDeal peaceDeal);
 
+        public abstract void Execute();
+
         public virtual bool IsSame(PeaceDealElement element) {
             return Name == element.Name && WarScoreCost == element.WarScoreCost && Color == element.Color
                 && from == element.from && to == element.to;
