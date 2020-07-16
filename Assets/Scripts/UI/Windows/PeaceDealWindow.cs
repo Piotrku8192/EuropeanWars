@@ -49,7 +49,7 @@ namespace EuropeanWars.UI.Windows {
                 warScore.text = peaceDeal.SenderWarScore.ToString() + "%";
                 warScore.color = peaceDeal.sender.PercentWarScoreColor;
                 usedWarScore.text = peaceDeal.UsedWarScore.ToString() + "%";
-                usedWarScore.color = peaceDeal.UsedWarScore <= peaceDeal.sender.PercentWarScore ? Color.yellow : Color.red;
+                usedWarScore.color = peaceDeal.UsedWarScore <= peaceDeal.SenderWarScore ? Color.yellow : Color.red;
                 gold.text = peaceDeal.GainedGold.ToString();
             }
         }

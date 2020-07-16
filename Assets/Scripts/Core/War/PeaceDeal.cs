@@ -20,8 +20,8 @@ namespace EuropeanWars.Core.War {
         public int GainedGold { get; private set; }
         public int UsedWarScore { get; private set; }
 
-        public int SenderWarScore => sender.IsMajor ? sender.party.PercentWarScore : sender.PercentWarScore;
-        public int ReceiverWarScore => receiver.IsMajor ? receiver.party.PercentWarScore : receiver.PercentWarScore;
+        public int SenderWarScore => sender.IsMajor ? (receiver.IsMajor ? sender.party.PercentWarScore : -receiver.PercentWarScore) : sender.PercentWarScore;
+        public int ReceiverWarScore => receiver.IsMajor ? (sender.IsMajor ? receiver.party.PercentWarScore : -sender.PercentWarScore) : receiver.PercentWarScore;
 
         public PeaceDeal(WarInfo war, WarCountryInfo sender, WarCountryInfo receiver) {
             this.war = war;
