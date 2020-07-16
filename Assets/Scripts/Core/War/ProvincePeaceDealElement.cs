@@ -27,7 +27,6 @@ namespace EuropeanWars.Core.War {
         public override void Execute() {
             if (province != null) {
                 province.SetCountry(to, true);
-
             }
         }
     }

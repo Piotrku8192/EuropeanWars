@@ -14,6 +14,11 @@ namespace EuropeanWars.UI.Windows {
         public DiplomaticRelation relation;
         public bool isNotification;
 
+        public delegate void OnAccept();
+        public delegate void OnDelice();
+        public OnAccept onAccept;
+        public OnDelice onDelice;
+
         public void Init(bool isNotification = false) {
             this.isNotification = isNotification;
             senderCrest.SetCountry(relation.countries[0]);
@@ -25,6 +30,7 @@ namespace EuropeanWars.UI.Windows {
             if (!isNotification) {
                 DiplomacyManager.AcceptRelation(relation);
             }
+            onAccept?.Invoke();
             Destroy(gameObject);
         }
 
@@ -32,6 +38,7 @@ namespace EuropeanWars.UI.Windows {
             if (!isNotification) {
                 DiplomacyManager.DeliceRelation(relation);
             }
+            onDelice?.Invoke();
             Destroy(gameObject);
         }
     }

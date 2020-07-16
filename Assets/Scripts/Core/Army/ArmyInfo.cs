@@ -97,6 +97,13 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void Delete() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2052);
+            msg.Write(id);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void DeleteLocal() {
             UnselectArmy();
             GameInfo.armies.Remove(id);
             Country.armies.Remove(this);

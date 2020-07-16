@@ -1,7 +1,11 @@
-﻿using EuropeanWars.Network;
+﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Network;
+using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public class PeaceDeal {
@@ -85,6 +89,14 @@ namespace EuropeanWars.Core.War {
             Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
+        public void SendDelice() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)1038);
+            msg.Write(sender.country.id);
+            msg.Write(receiver.country.id);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         public void SendRequest() {
             if (receiver.country.isPlayer) {
                 NetworkSendRequest();
@@ -116,7 +128,27 @@ namespace EuropeanWars.Core.War {
 
         public void ProcessRequest() {
             if (receiver.country == GameInfo.PlayerCountry) {
-                //TODO: Show accept window.
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() { 
+                    countries = new List<CountryInfo>() {
+                        sender.country, receiver.country
+                    }
+                },
+                true);
+
+                //TODO: translations!!!
+                window.acceptText.text = "Zaakceptuj";
+                window.deliceText.text = "Odrzuć";
+                window.title.text = "Propozycja pokoju";
+                string description = $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
+                foreach (var item in selectedSenderElements) {
+                    description += senderElements[item].Name + "\n";
+                }
+                foreach (var item in selectedReceiverElements) {
+                    description += receiverElements[item].Name;
+                }
+
+                window.onAccept = Send;
+                window.onDelice = SendDelice;
             }
             else {
                 //TODO: Make bot decision.
@@ -131,16 +163,45 @@ namespace EuropeanWars.Core.War {
         }
 
         public void Execute() {
+            if (receiver.country == GameInfo.PlayerCountry) {
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
+                    countries = new List<CountryInfo>() {
+                        sender.country, receiver.country
+                    }
+                },
+                true);
+
+                //TODO: translations!!!
+                window.acceptText.text = "Ok";
+                window.deliceText.gameObject.SetActive(false);
+                window.title.text = "Pokój";
+                string description = $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
+
+                foreach (var item in selectedSenderElements) {
+                    description += senderElements[item].Name + "\n";
+                }
+                foreach (var item in selectedReceiverElements) {
+                    description += receiverElements[item].Name;
+                }
+                window.description.text = description;
+            }
+
+            sender.country.gold += GainedGold;
+            receiver.country.gold -= GainedGold;
+
+            if (!sender.IsMajor) {
+                sender.party.LeaveParty(sender);
+            }
+            else {
+                receiver.party.LeaveParty(receiver);
+            }
+
             foreach (var item in selectedSenderElements) {
                 senderElements[item].Execute();
             }
             foreach (var item in selectedReceiverElements) {
                 receiverElements[item].Execute();
             }
-            sender.country.gold += GainedGold;
-            receiver.country.gold -= GainedGold;
-
-            receiver.party.LeaveParty(receiver);
         }
     }
 }

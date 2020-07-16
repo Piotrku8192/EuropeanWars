@@ -360,6 +360,26 @@ namespace EuropeanWars.Network {
             deal.selectedReceiverElements.AddRange(receiverElements);
             deal.ProcessRequest();
         }
+
+        [Command(1038)]
+        public static void SendDelicePeaceDeal(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            if (sender == GameInfo.PlayerCountry.id) {
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
+                    countries = new List<CountryInfo>() {
+                        GameInfo.countries[sender], GameInfo.countries[receiver]
+                    }
+                },
+                true);
+                //TODO: translations!!!!
+                window.title.text = "Odrzucono propozycję pokoju!";
+                window.description.text = $"Państwo {GameInfo.countries[receiver].name} odrzuciło naszą propozycję pokoju.";
+                window.acceptText.text = "Ok";
+                window.deliceText.gameObject.SetActive(false);
+            }
+        }
         #endregion
 
         #endregion
@@ -401,6 +421,14 @@ namespace EuropeanWars.Network {
             int count = message.ReadInt32();
 
             GameInfo.armies[army].RemoveUnit(GameInfo.units[unit], count);
+        }
+
+        [Command(2052)]
+        public static void DeleteArmy(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+            if (GameInfo.armies.ContainsKey(id)) {
+                GameInfo.armies[id].DeleteLocal();
+            }
         }
         #endregion
     }

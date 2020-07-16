@@ -373,6 +373,18 @@ namespace EuropeanWars.Network {
             Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => 
             t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(1038)]
+        public static void SendDelicePeaceDeal(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1038);
+            msg.Write(sender);
+            msg.Write(receiver);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
 
         #endregion
@@ -433,6 +445,16 @@ namespace EuropeanWars.Network {
             msg.Write(army);
             msg.Write(unit);
             msg.Write(count);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(2052)]
+        public static void DeleteArmy(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2052);
+            msg.Write(id);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
