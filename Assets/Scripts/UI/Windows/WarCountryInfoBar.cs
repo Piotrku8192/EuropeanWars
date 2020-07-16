@@ -36,7 +36,7 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void Peace() {
-
+            PeaceDealWindow.Singleton.CreatePeaceDeal(country.party.war, GameInfo.PlayerCountry.wars[country.party.war], country);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace EuropeanWars.UI.Windows {
         public void CreatePeaceDeal(WarInfo war, WarCountryInfo sender, WarCountryInfo receiver) {
             ClearElements();
             peaceDeal = new DynamicPeaceDeal(war, sender, receiver);
+            UIManager.Singleton.CloseAllWindows();
             windowObject.SetActive(true);
             receiverCrest.sprite = receiver.country.crest;
             InitElements();
@@ -45,9 +46,9 @@ namespace EuropeanWars.UI.Windows {
             }
 
             if (peaceDeal != null) {
-                warScore.text = peaceDeal.SenderWarScore.ToString();
+                warScore.text = peaceDeal.SenderWarScore.ToString() + "%";
                 warScore.color = peaceDeal.sender.PercentWarScoreColor;
-                usedWarScore.text = peaceDeal.UsedWarScore.ToString();
+                usedWarScore.text = peaceDeal.UsedWarScore.ToString() + "%";
                 usedWarScore.color = peaceDeal.UsedWarScore <= peaceDeal.sender.PercentWarScore ? Color.yellow : Color.red;
                 gold.text = peaceDeal.GainedGold.ToString();
             }
@@ -71,9 +72,9 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void AddReceiverElement(PeaceDealElement element) {
-            PeaceDealElementButton b = Instantiate(peaceDealElementButtonPrefab, senderElementsContent);
+            PeaceDealElementButton b = Instantiate(peaceDealElementButtonPrefab, receiverElementsContent);
             b.SetElement(element, false);
-            senderElements.Add(element, b);
+            receiverElements.Add(element, b);
         }
 
         public void RemoveReceiverElement(PeaceDealElement element) {
@@ -83,10 +84,10 @@ namespace EuropeanWars.UI.Windows {
         
         private void ClearElements() {
             foreach (var item in senderElements) {
-                Destroy(item.Value);
+                Destroy(item.Value.gameObject);
             }
             foreach (var item in receiverElements) {
-                Destroy(item.Value);
+                Destroy(item.Value.gameObject);
             }
 
             senderElements.Clear();

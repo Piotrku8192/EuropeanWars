@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Province;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EuropeanWars.Core.War {
     public class PeaceDealElementsFactory {
@@ -12,20 +13,29 @@ namespace EuropeanWars.Core.War {
         public void FillPeaceDeal() {
             if (peaceDeal.sender.IsMajor) {
                 foreach (var item in peaceDeal.sender.party.countries) {
-                    GetProvinceElements(item.Value.enemyOccupatedProvinces, peaceDeal.senderElements);
+                    GetCountryElements(item.Value, peaceDeal.receiver, peaceDeal.senderElements);
                 }
             }
             else {
-                GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces, peaceDeal.senderElements);
+                GetCountryElements(peaceDeal.sender, peaceDeal.receiver, peaceDeal.senderElements);
             }
 
             if (peaceDeal.receiver.IsMajor) {
                 foreach (var item in peaceDeal.receiver.party.countries) {
-                    GetProvinceElements(item.Value.enemyOccupatedProvinces, peaceDeal.receiverElements);
+                    GetCountryElements(item.Value, peaceDeal.sender, peaceDeal.receiverElements);
                 }
             }
             else {
-                GetProvinceElements(peaceDeal.sender.enemyOccupatedProvinces, peaceDeal.receiverElements);
+                GetCountryElements(peaceDeal.receiver, peaceDeal.sender, peaceDeal.receiverElements);
+            }
+        }
+
+        private void GetCountryElements(WarCountryInfo country, WarCountryInfo secondCountry, Dictionary<int, PeaceDealElement> target) {
+            if (secondCountry.IsMajor) {
+                GetProvinceElements(country.enemyOccupatedProvinces, target);
+            }
+            else {
+                GetProvinceElements(country.enemyOccupatedProvinces.Where(t => t.NationalCountry == secondCountry.country).ToList(), target);
             }
         }
 
