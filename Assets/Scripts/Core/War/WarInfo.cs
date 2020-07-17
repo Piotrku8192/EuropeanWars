@@ -42,7 +42,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public bool ContainsCountry(CountryInfo country) {
-            return attackers.ContainsCountry(country);
+            return attackers.ContainsCountry(country) || defenders.ContainsCountry(country);
         }
 
         public void JoinWar(CountryInfo country, bool isAttacker) {

@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
+using EuropeanWars.GameMap;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,10 @@ namespace EuropeanWars.Core.War {
                     deal.nextElementId++;
                     PeaceDealWindow.Singleton.AddReceiverElement(e);
                 }
+
+                if (MapPainter.mapMode == MapMode.Peace) {
+                    MapPainter.PaintProvince(province);
+                }
             }
         }
 
@@ -140,6 +145,9 @@ namespace EuropeanWars.Core.War {
                         deal.receiverElements.Remove(id);
                     }
                 }
+            }
+            if (MapPainter.mapMode == MapMode.Peace) {
+                MapPainter.PaintProvince(province);
             }
         }
     }

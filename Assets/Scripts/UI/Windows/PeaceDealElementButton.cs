@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.War;
+using EuropeanWars.GameMap;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,6 +43,10 @@ namespace EuropeanWars.UI.Windows {
                     else {
                         PeaceDealWindow.Singleton.peaceDeal.UnselectReceiverElement(element);
                     }
+                }
+
+                if (MapPainter.mapMode == MapMode.Peace) {
+                    MapPainter.PaintMap(MapMode.Peace);
                 }
             }
         }

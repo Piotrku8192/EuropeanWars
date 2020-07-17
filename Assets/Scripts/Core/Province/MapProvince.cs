@@ -2,10 +2,12 @@
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
+using EuropeanWars.Core.War;
 using EuropeanWars.GameMap;
 using EuropeanWars.GameMap.Data;
 using EuropeanWars.Network;
 using EuropeanWars.UI;
+using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +28,23 @@ namespace EuropeanWars.Province {
             if (!GameInfo.IsPointerOverUIObject()) {
                 if (MapPainter.mapMode == MapMode.Recrutation) {
                     RecruitRegularArmy();
+                    return;
+                }
+                else if (MapPainter.mapMode == MapMode.Peace) {
+                    foreach (var item in PeaceDealWindow.Singleton.senderElements) {
+                        if (item.Key is ProvincePeaceDealElement p) {
+                            if (p.province == provinceInfo) {
+                                item.Value.OnClick();                               
+                            }
+                        }
+                    }
+                    foreach (var item in PeaceDealWindow.Singleton.receiverElements) {
+                        if (item.Key is ProvincePeaceDealElement p) {
+                            if (p.province == provinceInfo) {
+                                item.Value.OnClick();
+                            }
+                        }
+                    }
                     return;
                 }
                 GameInfo.SelectProvince(provinceInfo);

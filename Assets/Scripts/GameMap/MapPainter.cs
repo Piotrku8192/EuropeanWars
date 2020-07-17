@@ -1,8 +1,11 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Province;
+using EuropeanWars.Core.War;
 using EuropeanWars.UI;
+using EuropeanWars.UI.Windows;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace EuropeanWars.GameMap {
     public enum MapMode {
@@ -11,7 +14,8 @@ namespace EuropeanWars.GameMap {
         Cultures,
         Trade,
         Terrain,
-        Recrutation
+        Recrutation,
+        Peace
     }
 
     public static class MapPainter {
@@ -65,9 +69,56 @@ namespace EuropeanWars.GameMap {
                         && province.Country == GameInfo.PlayerCountry ? Color.green
                         : province.Country == GameInfo.PlayerCountry ? Color.gray : Color.black;
                     break;
+                case MapMode.Peace:
+                    PeaceDeal peaceDeal = PeaceDealWindow.Singleton.peaceDeal;
+
+                    if (peaceDeal != null) {
+                        if (peaceDeal.war.ContainsCountry(province.NationalCountry)) {
+                            color = province.NationalCountry.color;
+                        }
+
+                        foreach (var item in peaceDeal.senderElements) {
+                            if (item.Value is ProvincePeaceDealElement p) {
+                                if (p.province == province) {
+                                    if (peaceDeal.selectedSenderElements.Contains(item.Key)) {
+                                        color = Color.green;
+                                    }
+                                    else {
+                                        if (item.Value.CanBeSelected(peaceDeal)) {
+                                            color = new Color32(232, 112, 0, 255);
+                                        }
+                                        else {
+                                            color = Color.yellow;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        foreach (var item in peaceDeal.receiverElements) {
+                            if (item.Value is ProvincePeaceDealElement p) {
+                                if (p.province == province) {
+                                    if (peaceDeal.selectedReceiverElements.Contains(item.Key)) {
+                                        color = Color.red;
+                                    }
+                                    else {
+                                        if (item.Value.CanBeSelected(peaceDeal)) {
+                                            color = new Color32(157, 0, 255, 255);
+                                        }
+                                        else {
+                                            color = Color.magenta;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
+
             if (province.mapProvince != null && province.isLand) {
                 province.mapProvince.material.color = color;
                 if (!b) {

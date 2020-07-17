@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.War;
+using EuropeanWars.GameMap;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,11 +39,15 @@ namespace EuropeanWars.UI.Windows {
             windowObject.SetActive(true);
             receiverCrest.sprite = receiver.country.crest;
             InitElements();
+            MapPainter.PaintMap(MapMode.Peace);
         }
 
         public void Update() {
             if (!windowObject.activeInHierarchy) {
                 peaceDeal = null;
+                if (MapPainter.mapMode == MapMode.Peace) {
+                    MapPainter.PaintMap(MapMode.Countries);
+                }
             }
 
             if (peaceDeal != null) {

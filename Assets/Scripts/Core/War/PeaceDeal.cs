@@ -46,7 +46,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void SelectSenderElement(PeaceDealElement element) {
-            if (element != null && !selectedSenderElements.Contains(element.id)) {
+            if (element != null && !selectedSenderElements.Contains(element.id) && element.CanBeSelected(this)) {
                 selectedSenderElements.Add(element.id);
                 UsedWarScore += element.WarScoreCost;
             }
@@ -59,7 +59,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void SelectReceiverElement(PeaceDealElement element) {
-            if (element != null && !selectedReceiverElements.Contains(element.id)) {
+            if (element != null && !selectedReceiverElements.Contains(element.id) && element.CanBeSelected(this)) {
                 selectedReceiverElements.Add(element.id);
                 UsedWarScore -= element.WarScoreCost;
             }
