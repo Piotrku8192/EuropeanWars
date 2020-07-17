@@ -52,12 +52,17 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void DrawRoute(ProvinceInfo[] route) {
-            lineRenderer.positionCount = route.Length;
-            lineRenderer.SetPosition(0, transform.position);
+            try { 
+                lineRenderer.positionCount = route.Length;
+                lineRenderer.SetPosition(0, transform.position);
 
-            for (int i = 0; i < route.Length; i++) {
-                ProvinceInfo item = route[i];
-                lineRenderer.SetPosition(i, new Vector2(item.x, item.y));
+                for (int i = 0; i < route.Length; i++) {
+                    ProvinceInfo item = route[i];
+                    lineRenderer.SetPosition(i, new Vector2(item.x, item.y));
+                }
+            }
+            catch {
+
             }
         }
 
