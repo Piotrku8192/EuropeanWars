@@ -27,32 +27,52 @@ namespace EuropeanWars.Core.Army {
         public void CountAttack(out int killedDefenders, out int killedAttackers) {
             killedDefenders = 0;
             killedAttackers = 0;
-            foreach (var item in attackers) {
-                UnitInfo key = defenders.OrderBy(t => t.Key.type).FirstOrDefault(t => t.Value > 0).Key;
-                if (key != null) {
-                    int killed = Mathf.Clamp(Mathf.FloorToInt(
-                        item.Value * item.Key.attack * attackersAttackModifier[(int)item.Key.type] / (float)key.health),
-                        0, defenders[key]);
-                    defenders[key] -= killed;
-                    killedDefenders += killed;
+
+            int attackersAttack = Mathf.RoundToInt(attackers.Sum(t => t.Key.attack * t.Value 
+            * attackersAttackModifier[(int)t.Key.type]) / attackers.Sum(t => t.Value)) * 400;
+            int defendersAttack = Mathf.RoundToInt(defenders.Sum(t => t.Key.attack * t.Value 
+            * defendersAttackModifier[(int)t.Key.type]) / defenders.Sum(t => t.Value)) * 400;
+
+            Dictionary<UnitInfo, int> defendersToKill = new Dictionary<UnitInfo, int>();
+            Dictionary<UnitInfo, int> attackersToKill = new Dictionary<UnitInfo, int>();
+
+            foreach (var item in defenders.OrderBy(t => t.Key.type)) {
+                if (attackersAttack <= 0) {
+                    break;
                 }
-                else {
-                    onDefendersEmpty.Invoke();
+
+                int k = Mathf.Clamp(attackersAttack / item.Key.health, 0, item.Value);
+                attackersAttack -= item.Key.health * k;
+                killedDefenders += k;
+                if (k > 0) {
+                    defendersToKill.Add(item.Key, k);
                 }
             }
-            
-            foreach (var item in defenders) {
-                UnitInfo key = attackers.OrderBy(t => t.Key.type).FirstOrDefault(t => t.Value > 0).Key;
-                if (key != null) {
-                    int killed = Mathf.Clamp(Mathf.FloorToInt(
-                        item.Value * item.Key.attack * defendersAttackModifier[(int)item.Key.type] / (float)key.health),
-                        0, attackers[key]);
-                    attackers[key] -= killed;
-                    killedAttackers += killed;
+
+            foreach (var item in attackers.OrderBy(t => t.Key.type)) {
+                if (defendersAttack <= 0) {
+                    break;
                 }
-                else {
-                    onAttackersEmpty.Invoke();
+
+                int k = Mathf.Clamp(defendersAttack / item.Key.health, 0, item.Value);
+                defendersAttack -= item.Key.health * k;
+                killedAttackers += k;
+                if (k > 0) {
+                    attackersToKill.Add(item.Key, k);
                 }
+            }
+
+            foreach (var item in attackersToKill) {
+                attackers[item.Key] -= item.Value;
+            }
+            foreach (var item in defendersToKill) {
+                defenders[item.Key] -= item.Value;
+            }
+            if (!attackers.Where(t => t.Value > 0).Any()) {
+                onAttackersEmpty.Invoke();
+            }
+            if (!defenders.Where(t => t.Value > 0).Any()) {
+                onDefendersEmpty.Invoke();
             }
         }
     }
