@@ -40,6 +40,7 @@ namespace EuropeanWars.Core.War {
         /// </summary>
         /// <param name="change">GainedGold change in 10 size bits.</param>
         public void ChangeGold(int change) {
+            change = Mathf.Clamp(change, -GainedGold / 10, (receiver.country.gold - GainedGold) / 10);
             GainedGold += change * 10;
             UsedWarScore += change;
         }

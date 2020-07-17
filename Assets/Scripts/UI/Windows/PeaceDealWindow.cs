@@ -60,6 +60,10 @@ namespace EuropeanWars.UI.Windows {
             windowObject.SetActive(false);
         }
 
+        public void ChangeGold(int i) {
+            peaceDeal.ChangeGold(i);
+        }
+
         public void AddSenderElement(PeaceDealElement element) {
             PeaceDealElementButton b = Instantiate(peaceDealElementButtonPrefab, senderElementsContent);
             b.SetElement(element, true);
