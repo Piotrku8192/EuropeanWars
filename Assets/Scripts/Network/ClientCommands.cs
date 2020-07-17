@@ -350,7 +350,7 @@ namespace EuropeanWars.Network {
             int receiverCount = message.ReadInt32();
             List<int> receiverElements = new List<int>();
             for (int i = 0; i < receiverCount; i++) {
-                senderElements.Add(message.ReadInt32());
+                receiverElements.Add(message.ReadInt32());
             }
 
             WarInfo w = DiplomacyManager.wars[war];
