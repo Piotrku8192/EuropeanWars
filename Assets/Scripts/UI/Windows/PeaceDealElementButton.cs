@@ -11,6 +11,7 @@ namespace EuropeanWars.UI.Windows {
         public Text cost;
 
         public Image selectionMask;
+        public Button selectionButton;
 
         public bool IsSelected { get; private set; }
 
@@ -42,6 +43,12 @@ namespace EuropeanWars.UI.Windows {
                         PeaceDealWindow.Singleton.peaceDeal.UnselectReceiverElement(element);
                     }
                 }
+            }
+        }
+
+        public void Update() {
+            if (element != null) {
+                selectionButton.gameObject.SetActive(element.CanBeSelected(PeaceDealWindow.Singleton.peaceDeal));
             }
         }
     }

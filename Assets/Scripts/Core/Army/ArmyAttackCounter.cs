@@ -28,10 +28,10 @@ namespace EuropeanWars.Core.Army {
             killedDefenders = 0;
             killedAttackers = 0;
 
-            int attackersAttack = Mathf.RoundToInt(attackers.Sum(t => t.Key.attack * t.Value 
-            * attackersAttackModifier[(int)t.Key.type]) / attackers.Sum(t => t.Value)) * 400;
-            int defendersAttack = Mathf.RoundToInt(defenders.Sum(t => t.Key.attack * t.Value 
-            * defendersAttackModifier[(int)t.Key.type]) / defenders.Sum(t => t.Value)) * 400;
+            int attackersAttack = Mathf.RoundToInt(attackers.Sum(t => t.Key.attack * t.Value
+            * attackersAttackModifier[(int)t.Key.type]) / attackers.Sum(t => t.Value) * GameStatistics.armyAverageAttackModifier);
+            int defendersAttack = Mathf.RoundToInt(defenders.Sum(t => t.Key.attack * t.Value
+            * defendersAttackModifier[(int)t.Key.type]) / defenders.Sum(t => t.Value) * GameStatistics.armyAverageAttackModifier);
 
             Dictionary<UnitInfo, int> defendersToKill = new Dictionary<UnitInfo, int>();
             Dictionary<UnitInfo, int> attackersToKill = new Dictionary<UnitInfo, int>();

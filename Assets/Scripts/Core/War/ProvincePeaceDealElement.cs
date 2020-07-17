@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Province;
+using System.Linq;
 using UnityEngine;
 
 namespace EuropeanWars.Core.War {
@@ -28,6 +29,34 @@ namespace EuropeanWars.Core.War {
             if (province != null) {
                 province.SetCountry(to, true);
             }
+        }
+
+        public override bool CanBeSelected(PeaceDeal peaceDeal) {
+            if (HasCountryNeightbour()) {
+                return true;
+            }
+            foreach (var item in peaceDeal.selectedSenderElements) {
+                if (peaceDeal.senderElements[item] is ProvincePeaceDealElement p) {
+                    if (province.neighbours.Contains(p.province)) {
+                        return true;
+                    }
+                }
+            }
+            foreach (var item in peaceDeal.selectedReceiverElements) {
+                if (peaceDeal.receiverElements[item] is ProvincePeaceDealElement p) {
+                    if (province.neighbours.Contains(p.province)) {
+                        return true;
+                    }
+                }
+            }
+
+            peaceDeal.UnselectSenderElement(this);
+            peaceDeal.UnselectReceiverElement(this);
+            return false;
+        }
+
+        private bool HasCountryNeightbour() {
+            return province.neighbours.Where(t => t.NationalCountry == to).Any();
         }
     }
 }

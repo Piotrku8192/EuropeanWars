@@ -408,6 +408,7 @@ MonoBehaviour:
   description: {fileID: 4438097048930007711}
   cost: {fileID: 174245580275216632}
   selectionMask: {fileID: 8697860476505957872}
+  selectionButton: {fileID: 29763349989604961}
 --- !u!1 &9041114593777501098
 GameObject:
   m_ObjectHideFlags: 0
