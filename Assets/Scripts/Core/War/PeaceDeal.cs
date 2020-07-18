@@ -128,7 +128,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void ProcessRequest() {
-            if (receiver.country == GameInfo.PlayerCountry) {
+            if (receiver.country == GameInfo.PlayerCountry && SenderWarScore < 99) {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() { 
                     countries = new List<CountryInfo>() {
                         sender.country, receiver.country
@@ -147,6 +147,7 @@ namespace EuropeanWars.Core.War {
                 foreach (var item in selectedReceiverElements) {
                     description += receiverElements[item].Name;
                 }
+                window.description.text = description;
 
                 window.onAccept = Send;
                 window.onDelice = SendDelice;
@@ -164,7 +165,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public void Execute() {
-            if (receiver.country == GameInfo.PlayerCountry) {
+            if (war.ContainsCountry(GameInfo.PlayerCountry)) {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
                     countries = new List<CountryInfo>() {
                         sender.country, receiver.country

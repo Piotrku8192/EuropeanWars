@@ -85,10 +85,10 @@ namespace EuropeanWars.GameMap {
                                     }
                                     else {
                                         if (item.Value.CanBeSelected(peaceDeal)) {
-                                            color = new Color32(232, 112, 0, 255);
+                                            color = Color.yellow;
                                         }
                                         else {
-                                            color = Color.yellow;
+                                            color = new Color32(232, 112, 0, 255);
                                         }
                                     }
                                     break;
@@ -103,20 +103,29 @@ namespace EuropeanWars.GameMap {
                                     }
                                     else {
                                         if (item.Value.CanBeSelected(peaceDeal)) {
-                                            color = new Color32(157, 0, 255, 255);
+                                            color = Color.magenta;
                                         }
                                         else {
-                                            color = Color.magenta;
+                                            color = new Color32(157, 0, 255, 255);
                                         }
                                     }
                                     break;
                                 }
                             }
                         }
+
                     }
                     break;
                 default:
                     break;
+            }
+            if (GameInfo.gameStarted) {
+                if (mapMode == MapMode.Countries) {
+                    province.RefreshFogOfWar();
+                }
+                else {
+                    province.SetFogOfWar(false);
+                }
             }
 
             if (province.mapProvince != null && province.isLand) {
