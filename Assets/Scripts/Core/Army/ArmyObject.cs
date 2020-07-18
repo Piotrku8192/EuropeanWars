@@ -13,7 +13,12 @@ namespace EuropeanWars.Core.Army {
         public Image selectionOutline;
         public Image crest;
         public Text size;
+        public Text artillerySize;
         public Image sizeBackground;
+        public GameObject blackStatusImage;
+        public GameObject occupationProgress;
+        public Image occupationProgressBar;
+        public Text occupationProgressText;
 
         public float scale;
 
@@ -25,7 +30,19 @@ namespace EuropeanWars.Core.Army {
 
         public void Update() {
             size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
+            artillerySize.text = army.Artilleries.ToString();
             UpdateScale();
+            UpdateColor();
+            blackStatusImage.SetActive(army.BlackStatus);
+
+            if (army.Province.OccupationCounter?.Army == army) {
+                occupationProgress.SetActive(true);
+                occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
+                occupationProgressText.text = army.Province.OccupationCounter.Progress + "%";
+            }
+            else {
+                occupationProgress.SetActive(false);
+            }
         }
 
         public void OnClick() {
@@ -49,6 +66,25 @@ namespace EuropeanWars.Core.Army {
                 lineRenderer.enabled = true;
             }
             transform.localScale = new Vector3(1, 1, 1) * scale * curDistance / Controller.Singleton.minScope;
+        }
+
+        public void UpdateColor() {
+            Color color = Color.gray;
+
+            if (army.Country == GameInfo.PlayerCountry) {
+                color = Color.green;
+            }
+            else if (GameInfo.PlayerCountry.IsInWarAgainstCountry(army.Country)) {
+                color = Color.red;
+            }
+            else if (GameInfo.PlayerCountry.IsInWarWithCountry(army.Country)) {
+                color = Color.blue;
+            }
+            else if (GameInfo.PlayerCountry.alliances.ContainsKey(army.Country)) {
+                color = Color.cyan;
+            }
+
+            sizeBackground.color = color;
         }
 
         public void DrawRoute(ProvinceInfo[] route) {
