@@ -153,7 +153,7 @@ namespace EuropeanWars.Province {
             msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedUnit.id);
             msg.Write(GameInfo.PlayerCountry.id);
             msg.Write(provinceInfo.id);
-            msg.Write(1);
+            msg.Write(Mathf.RoundToInt(ArmyWindow.Singleton.recrutationWindow.recruitSizeSlider.value));
             Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }

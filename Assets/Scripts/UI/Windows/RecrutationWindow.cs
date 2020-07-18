@@ -3,6 +3,7 @@ using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.GameMap;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,13 @@ namespace EuropeanWars.UI {
         public UnitInfo selectedUnit;
         public Text unitName;
         public Image unitImage;
+        public Text attack;
+        public Text health;
+        public Text speed;
+        public Text type;
+
+        public Slider recruitSizeSlider;
+        public Text recruitSizeText;
 
         [Header("RecruitingUnits")]
         public Transform recruitingUnitsListContent;
@@ -37,11 +45,24 @@ namespace EuropeanWars.UI {
             units.FirstOrDefault().OnClick();
         }
 
+        public void Update() {
+            if (selectedUnit != null) {
+                recruitSizeText.text = (recruitSizeSlider.value * selectedUnit.recruitSize).ToString();
+                recruitSizeSlider.minValue = 0;
+                recruitSizeSlider.maxValue = Mathf.Clamp(Mathf.Min(GameInfo.PlayerCountry.gold / selectedUnit.recruitCost,
+                    GameInfo.PlayerCountry.manpower / selectedUnit.recruitSize), 0, int.MaxValue);
+            }
+        }
+
         public void SelectUnit(UnitInfo unit) {
             if (unit != null) {
                 selectedUnit = unit;
                 unitName.text = unit.name;
                 unitImage.sprite = unit.image;
+                type.text = unit.type.ToString();
+                attack.text = unit.attack.ToString();
+                health.text = unit.health.ToString();
+                speed.text = unit.speed.ToString();
             }
         }
 
