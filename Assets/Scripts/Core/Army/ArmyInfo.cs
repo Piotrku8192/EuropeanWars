@@ -252,9 +252,11 @@ namespace EuropeanWars.Core.Army {
             }
 
             Province = newProvince;
-            
-            //TODO: Add occupation and battle finding
 
+            var a = Province.armies.FirstOrDefault(t => t.Country.IsInWarAgainstCountry(Country));
+            if (a != null) {
+                new Battle(this, a, Province);
+            }
         }
     }
 }
