@@ -148,13 +148,15 @@ namespace EuropeanWars.Province {
         }
 
         public void RecruitRegularArmy() {
-            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
-            msg.Write((ushort)2048);
-            msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedUnit.id);
-            msg.Write(GameInfo.PlayerCountry.id);
-            msg.Write(provinceInfo.id);
-            msg.Write(Mathf.RoundToInt(ArmyWindow.Singleton.recrutationWindow.recruitSizeSlider.value));
-            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+            if (ArmyWindow.Singleton.recrutationWindow.recruitSizeSlider.value > 0) {
+                NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                msg.Write((ushort)2048);
+                msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedUnit.id);
+                msg.Write(GameInfo.PlayerCountry.id);
+                msg.Write(provinceInfo.id);
+                msg.Write(Mathf.RoundToInt(ArmyWindow.Singleton.recrutationWindow.recruitSizeSlider.value));
+                Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+            }
         }
     }
 }
