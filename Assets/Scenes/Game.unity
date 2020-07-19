@@ -16431,7 +16431,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &873352750
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37146,7 +37146,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0141adowanie Mapy..."
+  m_Text: Wczytywanie gry...
 --- !u!222 &1907835564
 CanvasRenderer:
   m_ObjectHideFlags: 0

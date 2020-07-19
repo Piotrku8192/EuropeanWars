@@ -23,7 +23,7 @@ namespace EuropeanWars.Core.Army {
         public int MaxSize => maxUnits.Values.Sum();
         public int Artilleries => GetArtilleries();
         public int AverageSpeed => units.Sum(t => t.Key.speed * t.Value) / (Size > 0 ? Size : 1);
-        public int Maintenance => units.Sum(t => t.Key.maintenance * t.Value);
+        public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
         public bool IsSelected { get; private set; }
 
         public CountryInfo Country { get; private set; }
@@ -83,7 +83,7 @@ namespace EuropeanWars.Core.Army {
             int i = 0;
             foreach (var item in units) {
                 if (item.Key.type == UnitType.Artillery) {
-                    i += item.Value;
+                    i += Mathf.CeilToInt(item.Value / (float)item.Key.recruitSize);
                 }
             }
 
