@@ -30,8 +30,8 @@ namespace EuropeanWars.UI.Windows {
             provinceName.text = province.name;
             winnerCrest.sprite = winner.Country.crest;
             loserCrest.sprite = loser.Country.crest;
-            winnerImage.sprite = winner.maxUnits.OrderBy(t => t.Value).First().Key.image;
-            loserImage.sprite = loser.maxUnits.OrderBy(t => t.Value).First().Key.image;
+            winnerImage.sprite = winner.maxUnits.OrderBy(t => t.Value).Last().Key.image;
+            loserImage.sprite = loser.maxUnits.OrderBy(t => t.Value).Last().Key.image;
             winnerKilledText.text = winnerKilled.ToString();
             loserKilledText.text = loserKilled.ToString();
         }
