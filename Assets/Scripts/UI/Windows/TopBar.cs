@@ -11,6 +11,7 @@ namespace EuropeanWars.UI.Windows {
         public void Update() {
             if (GameInfo.gameStarted) {
                 gold.text = GameInfo.PlayerCountry.gold.ToString();
+                gold.color = GameInfo.PlayerCountry.gold < 0 ? Color.red : Color.white;
                 manpower.text = GameInfo.PlayerCountry.manpower.ToString();
                 prestige.text = GameInfo.PlayerCountry.prestige.ToString();
             }

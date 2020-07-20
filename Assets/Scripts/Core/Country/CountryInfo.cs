@@ -138,8 +138,6 @@ namespace EuropeanWars.Core.Country {
 
 			gold += taxationIncome + buildingsIncome + tradeIncome - armyMaintenance;
 
-			//Calculate maintenance and other stuff.
-
 			if (!isBankruptcy && gold < 0) {
 				TakeLoans(gold / -300);
 			}
@@ -212,7 +210,7 @@ namespace EuropeanWars.Core.Country {
 			}
 		}
 		public void Bankruptcy() {
-			monthsToEndBanktruptcy = 120;
+			monthsToEndBanktruptcy = 60;
 			loans = 0;
 			isBankruptcy = true;
 			taxationIncomeModifier -= 0.2f;

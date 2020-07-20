@@ -38,7 +38,7 @@ namespace EuropeanWars.Core.Army {
             if (army.Province.OccupationCounter?.Army == army) {
                 occupationProgress.SetActive(true);
                 occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
-                occupationProgressText.text = army.Province.OccupationCounter.Progress + "%";
+                occupationProgressText.text = Mathf.RoundToInt(army.Province.OccupationCounter.Progress) + "%";
             }
             else {
                 occupationProgress.SetActive(false);

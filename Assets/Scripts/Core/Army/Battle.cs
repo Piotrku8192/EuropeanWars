@@ -46,7 +46,7 @@ namespace EuropeanWars.Core.Army {
                 OnDefenderWin();
                 attacker.DeleteLocal();
             }
-            else if (killedDefenders > killedAttackers) {
+            else if (killedDefenders >= killedAttackers) {
                 OnAttackerWin();
                 defender.GenerateRoute(defender.Country.provinces.OrderBy(t => Vector2.Distance(
                     new Vector2(province.x, province.y), new Vector2(t.x, t.y))).ThenBy(t => t == defender.Province).First());
