@@ -109,6 +109,8 @@ namespace EuropeanWars.Core.Army {
             Country.armies.Remove(this);
             Province.armies.Remove(this);
             TimeManager.onDayElapsed -= ArmyObject.CountMovement;
+            TimeManager.onDayElapsed -= UpdateBlackStatus;
+            TimeManager.onMonthElapsed -= ReinforcementArmy;
             ArmyObject.StopAllCoroutines();
             ArmySpawner.Singleton.DestroyArmy(ArmyObject);
         }

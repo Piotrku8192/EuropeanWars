@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 4468689959481269087}
   - component: {fileID: 4468689959481269072}
   - component: {fileID: 4468689959481269101}
+  - component: {fileID: -7384154504541789339}
   m_Layer: 5
   m_Name: WarInvitationWindow
   m_TagString: Untagged
@@ -256,6 +257,18 @@ MonoBehaviour:
   description: {fileID: 4468689961365356636}
   acceptText: {fileID: 4468689960938453322}
   deliceText: {fileID: 4468689959647187213}
+--- !u!114 &-7384154504541789339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4468689959481269075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a45650fd766b7ca42919a7766cc59db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4468689959647187214
 GameObject:
   m_ObjectHideFlags: 0

@@ -1067,6 +1067,7 @@ GameObject:
   - component: {fileID: 2939329783470966929}
   - component: {fileID: 2939329783470966958}
   - component: {fileID: 2939329783470966959}
+  - component: {fileID: -5031869449072052719}
   m_Layer: 5
   m_Name: BattleResult
   m_TagString: Untagged
@@ -1169,6 +1170,18 @@ MonoBehaviour:
   loserImage: {fileID: 2939329782355225060}
   winnerKilledText: {fileID: 2939329782986587324}
   loserKilledText: {fileID: 2939329782014096743}
+--- !u!114 &-5031869449072052719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2939329783470966957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a45650fd766b7ca42919a7766cc59db3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2939329783554615770
 GameObject:
   m_ObjectHideFlags: 0

@@ -96,7 +96,7 @@ namespace EuropeanWars.Core.Diplomacy {
             }
         }
         public static void CreateAccessClient(MilitaryAccess access) {
-            if (access.countries.Count == 2) {
+            if (access.countries.Count == 2 && CanCreate(access.countries[1], access.countries[0])) {
                 DiplomacyManager.militaryAccesses.Add(access);
                 access.countries[0].militaryAccesses.Add(access.countries[1], access);
                 access.countries[1].militaryAccesses.Add(access.countries[0], access);

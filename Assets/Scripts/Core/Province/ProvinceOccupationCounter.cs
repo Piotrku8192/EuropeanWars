@@ -16,6 +16,9 @@ namespace EuropeanWars.Core.Province {
         private int daysToNext;
         private ArmyAttackCounter attackCounter;
 
+        private bool areAttackersEmpty;
+        private bool areDefendersEmpty;
+
         public ProvinceOccupationCounter(ProvinceInfo province, int daysBetweenAttacks = 4) {
             this.province = province;
             this.daysBetweenAttacks = daysBetweenAttacks;
@@ -33,7 +36,7 @@ namespace EuropeanWars.Core.Province {
             if (army != null) {
                 Army = army;
                 attackCounter = new ArmyAttackCounter(Army.units, province.garnison, GameStatistics.occupantArmyAttackModifier,
-                    GameStatistics.occupatedArmyAttackModifier, OnAttackersEmpty, OnDefendersEmpty); 
+                    GameStatistics.occupatedArmyAttackModifier, () => areAttackersEmpty = true, () => areDefendersEmpty = true); 
                 if (ProvinceWindow.Singleton.province == province) {
                     ProvinceWindow.Singleton.UpdateWindow(province);
                 }
@@ -42,7 +45,7 @@ namespace EuropeanWars.Core.Province {
 
         public void UpdateProgress() {
             if (Army != null && province.armies.Contains(Army)) {
-                if (province.Country.IsInWarAgainstCountry(Army.Country)) {
+                if (province.Country.IsInWarAgainstCountry(Army.Country)) { //TODO: Add uprising here
                     int artilleries = Army.units.Where(t => t.Key.type == UnitType.Artillery).Sum(t => t.Value);
                     Progress += (float)1 / province.defense + Mathf.Clamp(artilleries, 0, 50) * 0.1f; //TODO: Add these values to GameStatistics
 
@@ -63,8 +66,11 @@ namespace EuropeanWars.Core.Province {
                     }
                     daysToNext--;
 
-                    if (Progress >= 100) {
+                    if (Progress >= 100 || areDefendersEmpty) {
                         OnDefendersEmpty();
+                    }
+                    else if (areAttackersEmpty) {
+                        OnAttackersEmpty();
                     }
 
                     return;

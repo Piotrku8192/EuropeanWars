@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Pathfinding;
+﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
@@ -7,9 +7,10 @@ using EuropeanWars.Core.Religion;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using EuropeanWars.Core.Army;
+using UnityEngine.UI;
 
 namespace EuropeanWars.Core {
     public static class GameInfo {
@@ -84,6 +85,16 @@ namespace EuropeanWars.Core {
             EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
             return results.Count > 0;
+        }
+
+        public static bool IsPointerOverScrollView() {
+            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current) {
+                position = new Vector2(Input.mousePosition.x, Input.mousePosition.y)
+            };
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+            return results.Where(t => t.gameObject.GetComponent<ScrollRect>() != null).Any();
         }
     }
 }

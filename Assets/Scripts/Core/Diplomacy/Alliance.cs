@@ -98,7 +98,7 @@ namespace EuropeanWars.Core.Diplomacy {
             }
         }
         public static void CreateAllianceClient(Alliance alliance) {
-            if (alliance.countries.Count == 2) {
+            if (alliance.countries.Count == 2 && CanCreate(alliance.countries[1], alliance.countries[0])) {
                 DiplomacyManager.alliances.Add(alliance);
                 alliance.countries[0].alliances.Add(alliance.countries[1], alliance);
                 alliance.countries[1].alliances.Add(alliance.countries[0], alliance);

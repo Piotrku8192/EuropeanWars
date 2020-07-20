@@ -1,4 +1,5 @@
-﻿using EuropeanWars.GameMap;
+﻿using EuropeanWars.Core;
+using EuropeanWars.GameMap;
 using UnityEngine;
 
 namespace EuropeanWars {
@@ -24,11 +25,15 @@ namespace EuropeanWars {
 
         private void Update()
         {
-            Vector3 p = transform.position + (new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
+            Vector3 p = transform.position + (new Vector3(Input.GetAxis("Horizontal"),
+                Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
             transform.position = new Vector3(Mathf.Clamp(p.x, 0, 2400), Mathf.Clamp(p.y, -2400, 0), p.z);
 
             Vector3 pos = playerCam.transform.localPosition;
-            playerCam.orthographicSize = Mathf.Clamp(playerCam.orthographicSize - Input.mouseScrollDelta.y * scaleSpeed, minScope, maxScope);
+            if (!GameInfo.IsPointerOverScrollView()) {
+                playerCam.orthographicSize = Mathf.Clamp(
+                    playerCam.orthographicSize - Input.mouseScrollDelta.y * scaleSpeed, minScope, maxScope);
+            }
             playerCam.transform.localPosition = new Vector3(pos.x, pos.y, -10);
         }
     }
