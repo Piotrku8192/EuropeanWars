@@ -48,13 +48,13 @@ namespace EuropeanWars.Core.Army {
             }
             else if (killedDefenders >= killedAttackers) {
                 OnAttackerWin();
-                defender.GenerateRoute(defender.Country.provinces.OrderBy(t => Vector2.Distance(
-                    new Vector2(province.x, province.y), new Vector2(t.x, t.y))).ThenBy(t => t == defender.Province).First());
+                ProvinceInfo[] ps = defender.Country.provinces.Where(t => t != province).ToArray();
+                defender.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
             }
             else if (killedAttackers > killedDefenders) {
                 OnDefenderWin();
-                attacker.GenerateRoute(attacker.Country.provinces.OrderBy(t => Vector2.Distance(
-                    new Vector2(province.x, province.y), new Vector2(t.x, t.y))).ThenBy(t => t == attacker.Province).First());
+                ProvinceInfo[] ps = attacker.Country.provinces.Where(t => t != province).ToArray();
+                attacker.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
             }
         }
 

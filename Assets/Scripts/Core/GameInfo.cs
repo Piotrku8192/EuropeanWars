@@ -14,6 +14,8 @@ using UnityEngine.UI;
 
 namespace EuropeanWars.Core {
     public static class GameInfo {
+        public static System.Random random;
+
         public static Dictionary<string, Sprite> gfx = new Dictionary<string, Sprite>();
 
         public static Dictionary<int, ProvinceInfo> provinces = new Dictionary<int, ProvinceInfo>();
@@ -32,6 +34,8 @@ namespace EuropeanWars.Core {
         public static bool gameStarted;
 
         public static void Initialize() {
+            random = new System.Random(69); //hahaha very funny seed lol ~PZFN 20.07.2020 20:40 ;) (im stupid man i guess)
+
             foreach (var item in buildings) {
                 item.Value.Initialize();
             }
