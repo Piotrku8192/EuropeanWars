@@ -210,12 +210,14 @@ namespace EuropeanWars.Core.Country {
 			}
 		}
 		public void Bankruptcy() {
-			monthsToEndBanktruptcy = 60;
-			loans = 0;
-			isBankruptcy = true;
-			taxationIncomeModifier -= 0.2f;
-			buildingsIncomeModifier -= 0.2f;
-			tradeIncomeModifier -= 0.2f;
+			if (!isBankruptcy) {
+				monthsToEndBanktruptcy = 60;
+				loans = 0;
+				isBankruptcy = true;
+				taxationIncomeModifier -= 0.2f;
+				buildingsIncomeModifier -= 0.2f;
+				tradeIncomeModifier -= 0.2f;
+            }
 		}
 		private void EndBankruptcy() {
 			if (monthsToEndBanktruptcy > 0) {

@@ -11,6 +11,8 @@ namespace EuropeanWars.UI {
         public GameObject ui;
         public Image playerCountryCrest;
 
+        public TabList managementButtonsTabList;
+
         public GameObject[] windows;
 
         public void Awake() {
@@ -31,12 +33,15 @@ namespace EuropeanWars.UI {
                 ArmyInfo.UnselectAll();
             }
             GameInfo.UnselectProvince();
+
+            managementButtonsTabList.UnselectAll();
         }
 
         public void CloseAllWindowsProvince() {
             foreach (var item in windows) {
                 item.SetActive(false);
             }
+            managementButtonsTabList.UnselectAll();
         }
     }
 }

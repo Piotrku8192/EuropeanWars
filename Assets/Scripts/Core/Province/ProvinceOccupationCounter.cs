@@ -68,19 +68,23 @@ namespace EuropeanWars.Core.Province {
 
                     if (Progress >= 100 || areDefendersEmpty) {
                         OnDefendersEmpty();
+                        Reset();
                     }
                     else if (areAttackersEmpty) {
                         OnAttackersEmpty();
+                        Reset();
                     }
 
                     return;
                 }
             }
-            FindNewOccupant();
+            else {
+                FindNewOccupant();
+            }
         }
 
         private void FindNewOccupant() {
-            SetArmy(province.armies.Where(t => province.Country.IsInWarAgainstCountry(t.Country) && t.route.Count == 0).FirstOrDefault());
+            SetArmy(province.armies.FirstOrDefault(t => province.Country.IsInWarAgainstCountry(t.Country) && !t.route.Any(x => x != province)));
         }
 
         private void OnAttackersEmpty() {
