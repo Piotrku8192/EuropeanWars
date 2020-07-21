@@ -12,7 +12,7 @@ namespace EuropeanWars.UI.Windows {
             Singleton = this;
         }
 
-        public void Spawn(ArmyInfo winner, ArmyInfo loser, ProvinceInfo province, int winnerKilled, int loserKilled) {
+        public void Spawn(ArmyGroup winner, ArmyGroup loser, ProvinceInfo province, int winnerKilled, int loserKilled) {
             BattleResultWindow w = Instantiate(prefab, UIManager.Singleton.ui.transform);
             w.Init(winner, loser, province, winnerKilled, loserKilled);
         }

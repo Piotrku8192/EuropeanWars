@@ -79,6 +79,7 @@ namespace EuropeanWars.Core.Army {
 
         private void UpdateBlackStatus() {
             BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country) && !Country.IsInWarAgainstCountry(Province.Country);
+            isMoveLocked = route.Count < 2;
         }
 
         private int GetArtilleries() {
@@ -265,9 +266,9 @@ namespace EuropeanWars.Core.Army {
 
             Province = newProvince;
 
-            var a = Province.armies.FirstOrDefault(t => t.Country.IsInWarAgainstCountry(Country));
-            if (a != null) {
-                new Battle(this, a, Province);
+            var a = Province.armies.Where(t => t.Country.IsInWarAgainstCountry(Country)); //TODO: Add uprisings
+            if (a.Count() > 0) {
+                new Battle(new ArmyGroup(new ArmyInfo[1] { this } ), new ArmyGroup(a.ToArray()), Province);
             }
         }
     }

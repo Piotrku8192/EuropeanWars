@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace EuropeanWars.Core.Army {
     public class Battle {
-        private readonly ArmyInfo attacker;
-        private readonly ArmyInfo defender;
+        private readonly ArmyGroup attackers;
+        private readonly ArmyGroup defenders;
         private readonly ProvinceInfo province;
         private readonly ArmyAttackCounter attackCounter;
 
@@ -16,18 +16,18 @@ namespace EuropeanWars.Core.Army {
 
         private bool ended;
 
-        public Battle(ArmyInfo attacker, ArmyInfo defender, ProvinceInfo province) {
-            this.attacker = attacker;
-            this.defender = defender;
+        public Battle(ArmyGroup attacker, ArmyGroup defender, ProvinceInfo province) {
+            this.attackers = attacker;
+            this.defenders = defender;
             this.province = province;
-            attackCounter = new ArmyAttackCounter(attacker.units, defender.units, GameStatistics.battleAttackerArmyAttackModifier,
+            attackCounter = new ArmyAttackCounter(attacker.GetUnits(), defender.GetUnits(), GameStatistics.battleAttackerArmyAttackModifier,
                 GameStatistics.battleDefenderArmyAttackModifier, () => ended = true, () => ended = true);
 
             PlayBattle();
         }
 
         private void PlayBattle() {
-            int attacksCount = Mathf.CeilToInt((attacker.Size + defender.Size) * GameStatistics.battleAttacksCountModifier);
+            int attacksCount = Mathf.CeilToInt((attackers.Size + defenders.Size) * GameStatistics.battleAttacksCountModifier);
             for (int i = 0; i < attacksCount; i++) {
                 if (ended) {
                     break;
@@ -37,58 +37,78 @@ namespace EuropeanWars.Core.Army {
                 killedDefenders += kd;
                 killedAttackers += ka;
             }
+            attackers.UpdateArmies();
+            defenders.UpdateArmies();
 
-            if (defender.Size <= 0) {
-                OnAttackerWin();
-                defender.DeleteLocal();
+            foreach (var item in defenders.Armies) {
+                if (item.Size <= 0) {
+                    item.DeleteLocal();
+                } 
             }
-            else if (attacker.Size <= 0) {
-                OnDefenderWin();
-                attacker.DeleteLocal();
+            foreach (var item in attackers.Armies) {
+                if (item.Size <= 0) {
+                    item.DeleteLocal();
+                }
+            }
+            if (defenders.Size <= 0) {
+                OnAttackersWin();
+            }
+            else if (attackers.Size <= 0) {
+                OnDefendersWin();
             }
             else if (killedDefenders >= killedAttackers) {
-                OnAttackerWin();
-                ProvinceInfo[] ps = defender.Country.provinces.Where(t => t != province).ToArray();
-                if (ps.Length == 0) {
-                    ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                OnAttackersWin();
+                foreach (var item in attackers.Armies) {
+                    ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
+                    if (ps.Length == 0) {
+                        ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                    }
+                    item.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
+                    item.isMoveLocked = true;
                 }
-                defender.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
-                defender.isMoveLocked = true;
             }
             else if (killedAttackers > killedDefenders) {
-                OnDefenderWin();
-                ProvinceInfo[] ps = attacker.Country.provinces.Where(t => t != province).ToArray();
-                if (ps.Length == 0) {
-                    ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                OnDefendersWin();
+                foreach (var item in defenders.Armies) {
+                    ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
+                    if (ps.Length == 0) {
+                        ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                    }
+                    item.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
+                    item.isMoveLocked = true;
                 }
-                attacker.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
-                attacker.isMoveLocked = true;
             }
         }
 
-        private void OnAttackerWin() {
-            if (attacker.Country == GameInfo.PlayerCountry || defender.Country == GameInfo.PlayerCountry) {
-                BattleResultWindowSpawner.Singleton.Spawn(attacker, defender, province, killedAttackers, killedDefenders);
+        private void OnAttackersWin() {
+            ArmyInfo a = attackers.Armies.First();
+            ArmyInfo d = defenders.Armies.First();
+
+            if (a.Country == GameInfo.PlayerCountry || d.Country == GameInfo.PlayerCountry) {
+                BattleResultWindowSpawner.Singleton.Spawn(attackers, defenders, province, killedAttackers, killedDefenders);
             }
 
-            if (attacker.Country.IsInWarAgainstCountry(defender.Country)) {
-                attacker.Country.wars[attacker.Country.GetWarAgainstCountry(defender.Country)].killedEnemies += killedDefenders;
-                attacker.Country.wars[attacker.Country.GetWarAgainstCountry(defender.Country)].killedLocal += killedAttackers;
-                defender.Country.wars[defender.Country.GetWarAgainstCountry(attacker.Country)].killedEnemies += killedAttackers;
-                defender.Country.wars[defender.Country.GetWarAgainstCountry(attacker.Country)].killedLocal += killedDefenders;
+            if (a.Country.IsInWarAgainstCountry(d.Country)) {
+                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedEnemies += killedDefenders;
+                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedLocal += killedAttackers;
+                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedEnemies += killedAttackers;
+                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedLocal += killedDefenders;
             }
         }
 
-        private void OnDefenderWin() {
-            if (attacker.Country == GameInfo.PlayerCountry || defender.Country == GameInfo.PlayerCountry) {
-                BattleResultWindowSpawner.Singleton.Spawn(defender, attacker, province, killedDefenders, killedAttackers);
+        private void OnDefendersWin() {
+            ArmyInfo a = attackers.Armies.First();
+            ArmyInfo d = defenders.Armies.First();
+
+            if (a.Country == GameInfo.PlayerCountry || d.Country == GameInfo.PlayerCountry) {
+                BattleResultWindowSpawner.Singleton.Spawn(defenders, attackers, province, killedDefenders, killedAttackers);
             }
 
-            if (attacker.Country.IsInWarAgainstCountry(defender.Country)) {
-                attacker.Country.wars[attacker.Country.GetWarAgainstCountry(defender.Country)].killedEnemies += killedDefenders;
-                attacker.Country.wars[attacker.Country.GetWarAgainstCountry(defender.Country)].killedLocal += killedAttackers;
-                defender.Country.wars[defender.Country.GetWarAgainstCountry(attacker.Country)].killedEnemies += killedAttackers;
-                defender.Country.wars[defender.Country.GetWarAgainstCountry(attacker.Country)].killedLocal += killedDefenders;
+            if (a.Country.IsInWarAgainstCountry(d.Country)) {
+                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedEnemies += killedDefenders;
+                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedLocal += killedAttackers;
+                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedEnemies += killedAttackers;
+                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedLocal += killedDefenders;
             }
         }
     }

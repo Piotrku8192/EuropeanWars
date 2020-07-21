@@ -20,18 +20,18 @@ namespace EuropeanWars.UI.Windows {
         public Text winnerKilledText;
         public Text loserKilledText;
 
-        public void Init(ArmyInfo winner, ArmyInfo loser, ProvinceInfo province, int winnerKilled, int loserKilled) {
-            this.winner = winner;
-            this.loser = loser;
+        public void Init(ArmyGroup winner, ArmyGroup loser, ProvinceInfo province, int winnerKilled, int loserKilled) {
+            this.winner = winner.Armies.First();
+            this.loser = loser.Armies.First();
             this.province = province;
             this.winnerKilled = winnerKilled;
             this.loserKilled = loserKilled;
 
             provinceName.text = province.name;
-            winnerCrest.sprite = winner.Country.crest;
-            loserCrest.sprite = loser.Country.crest;
-            winnerImage.sprite = winner.maxUnits.OrderBy(t => t.Value).Last().Key.image;
-            loserImage.sprite = loser.maxUnits.OrderBy(t => t.Value).Last().Key.image;
+            winnerCrest.sprite = winner.Armies.First().Country.crest;
+            loserCrest.sprite = loser.Armies.First().Country.crest;
+            winnerImage.sprite = winner.Armies.First().maxUnits.OrderBy(t => t.Value).Last().Key.image;
+            loserImage.sprite = loser.Armies.First().maxUnits.OrderBy(t => t.Value).Last().Key.image;
             winnerKilledText.text = winnerKilled.ToString();
             loserKilledText.text = loserKilled.ToString();
         }
