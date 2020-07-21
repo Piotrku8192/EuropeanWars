@@ -26,6 +26,8 @@ namespace EuropeanWars.Core.Army {
         public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
         public bool IsSelected { get; private set; }
 
+        public bool isMoveLocked;
+
         public CountryInfo Country { get; private set; }
         public ProvinceInfo Province { get; private set; }
         public ArmyObject ArmyObject { get; private set; }
@@ -220,6 +222,10 @@ namespace EuropeanWars.Core.Army {
         /// </summary>
         /// <param name="target"></param>
         public void GenerateRoute(ProvinceInfo target) {
+            if (isMoveLocked) {
+                return;
+            }
+
             LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
 
             if (target == Province) {
@@ -245,6 +251,10 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void OnArmyMove(ProvinceInfo newProvince) {
+            if (route.Count < 2) {
+                isMoveLocked = false;
+            }
+
             Province.armies.Remove(this);
             newProvince.armies.Add(this);
 
