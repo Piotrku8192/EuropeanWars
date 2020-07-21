@@ -20,6 +20,7 @@ namespace EuropeanWars.Province {
         public MeshRenderer meshRenderer;
         public MeshCollider meshCollider;
         public Material material;
+        public Material countriesMapMaterial;
 
         private ProvinceInfo provinceInfo;
         private Coroutine selectionCoroutine;
@@ -54,11 +55,27 @@ namespace EuropeanWars.Province {
             }
         }
 
-        public void GenerateProvince(MeshData meshData, Material material, ProvinceInfo provinceInfo) {
+        public void ChangeToCountriesMap() {
+            if (meshRenderer.material != countriesMapMaterial) {
+                meshRenderer.material = countriesMapMaterial;
+            }
+            if (countriesMapMaterial.color != material.color) {
+                countriesMapMaterial.color = material.color;
+            }
+        }
+
+        public void ChangeToProvincesMap() {
+            if (meshRenderer.material != material) {
+                meshRenderer.material = material;
+            }
+        }
+
+        public void GenerateProvince(MeshData meshData, Material material, Material countriesMaterial, ProvinceInfo provinceInfo) {
             this.provinceInfo = provinceInfo;
             filter = gameObject.AddComponent<MeshFilter>();
             meshRenderer = gameObject.AddComponent<MeshRenderer>();
             this.material = material;
+            countriesMapMaterial = countriesMaterial;
             meshRenderer.material = material;
 
             Mesh m = new Mesh();

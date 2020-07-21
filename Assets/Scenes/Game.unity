@@ -529,7 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: 0}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.2784314}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &20393644
@@ -20210,10 +20210,14 @@ MonoBehaviour:
   countryBorderMaterial: {fileID: 2100000, guid: c0f9cc7e0b0fa8044bfe96f2fcb9e428,
     type: 2}
   provinceMaterial: {fileID: 2100000, guid: a6659a86a5b98264b81ee493592670f3, type: 2}
+  countriesMapMaterial: {fileID: 2100000, guid: 61c4c944bba9a3f47bf6c81cb1e6b31a,
+    type: 2}
   waterMaterial: {fileID: 2100000, guid: 9c08ba3a0395c2e48957368ac63fb11e, type: 2}
   mapData:
     provinces: []
     borders: []
+  countriesMapDistance: 300
+  farCountriesMapDistance: 450
 --- !u!222 &1035994466
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35801,7 +35805,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b510deb155efddf49bc1d00839a57356, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 08f3e7ebcc89eb24f837c208631f0c45, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

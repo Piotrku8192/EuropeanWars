@@ -103,7 +103,7 @@ namespace EuropeanWars.UI.Windows {
         public void Update() {
             if (province != null) {
                 if (!province.fogOfWar && province.OccupationCounter.Army != null) {
-                    occupationProgress.text = Mathf.FloorToInt(province.OccupationCounter.Progress) + "%";
+                    occupationProgress.text = Mathf.RoundToInt(province.OccupationCounter.Progress) + "%";
                     occupationProgressBar.fillAmount = province.OccupationCounter.Progress * 0.01f;
                     occupantCrest.sprite = province.OccupationCounter.Army.Country.crest;
                     garnisonSize.text = province.garnison.Sum(t => t.Value).ToString();

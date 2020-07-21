@@ -14,10 +14,14 @@ namespace EuropeanWars.GameMap {
         public Material countryBorderMaterial;
 
         public Material provinceMaterial;
+        public Material countriesMapMaterial;
         public Material waterMaterial;
 
         public MapData mapData;
         public Dictionary<string, List<Border>> borders = new Dictionary<string, List<Border>>();
+
+        public float countriesMapDistance;
+        public float farCountriesMapDistance;
 
         public void Awake() {
             Singleton = this;
@@ -46,7 +50,7 @@ namespace EuropeanWars.GameMap {
                 MapProvince p = go.GetComponent<MapProvince>();
                 p.borders.AddRange(borders[item.color]);
                 ProvinceInfo province = GameInfo.provinces.Where(t => t.Value.color == item.color).FirstOrDefault().Value;
-                p.GenerateProvince(item.mesh, province.isLand ? new Material(provinceMaterial) : waterMaterial, province);
+                p.GenerateProvince(item.mesh, province.isLand ? new Material(provinceMaterial) : waterMaterial, new Material(countriesMapMaterial), province);
                 province.mapProvince = p;
 
                 //TODO: Delete this temporary code plz!

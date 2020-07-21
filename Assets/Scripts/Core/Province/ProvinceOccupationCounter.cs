@@ -80,7 +80,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         private void FindNewOccupant() {
-            SetArmy(province.armies.Where(t => province.Country.IsInWarAgainstCountry(t.Country)).FirstOrDefault());
+            SetArmy(province.armies.Where(t => province.Country.IsInWarAgainstCountry(t.Country) && t.route.Count == 0).FirstOrDefault());
         }
 
         private void OnAttackersEmpty() {

@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Data;
 using EuropeanWars.GameMap;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ namespace EuropeanWars {
 
         private void Update()
         {
+            bool b = playerCam.orthographicSize > MapGenerator.Singleton.farCountriesMapDistance;
+
             Vector3 p = transform.position + (new Vector3(Input.GetAxis("Horizontal"),
                 Input.GetAxis("Vertical"), 0) * Time.deltaTime * speed);
             transform.position = new Vector3(Mathf.Clamp(p.x, 0, 2400), Mathf.Clamp(p.y, -2400, 0), p.z);
@@ -35,6 +38,17 @@ namespace EuropeanWars {
                     playerCam.orthographicSize - Input.mouseScrollDelta.y * scaleSpeed, minScope, maxScope);
             }
             playerCam.transform.localPosition = new Vector3(pos.x, pos.y, -10);
+
+            if (playerCam.orthographicSize > MapGenerator.Singleton.farCountriesMapDistance && !b) {
+                foreach (var item in GameInfo.provinces) {
+                    item.Value.mapProvince?.ChangeToCountriesMap();
+                }
+            }
+            else if (playerCam.orthographicSize <= MapGenerator.Singleton.farCountriesMapDistance && b) {
+                foreach (var item in GameInfo.provinces) {
+                    item.Value.mapProvince?.ChangeToProvincesMap();
+                }
+            }
         }
     }
 

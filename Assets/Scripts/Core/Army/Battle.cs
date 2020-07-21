@@ -49,11 +49,17 @@ namespace EuropeanWars.Core.Army {
             else if (killedDefenders >= killedAttackers) {
                 OnAttackerWin();
                 ProvinceInfo[] ps = defender.Country.provinces.Where(t => t != province).ToArray();
+                if (ps.Length == 0) {
+                    ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                }
                 defender.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
             }
             else if (killedAttackers > killedDefenders) {
                 OnDefenderWin();
                 ProvinceInfo[] ps = attacker.Country.provinces.Where(t => t != province).ToArray();
+                if (ps.Length == 0) {
+                    ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                }
                 attacker.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
             }
         }
