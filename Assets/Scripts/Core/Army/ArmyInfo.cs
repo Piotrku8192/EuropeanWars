@@ -270,7 +270,7 @@ namespace EuropeanWars.Core.Army {
 
             var a = Province.armies.Where(t => t.Country.IsInWarAgainstCountry(Country)); //TODO: Add uprisings
             if (a.Count() > 0) {
-                new Battle(new ArmyGroup(new ArmyInfo[1] { this } ), new ArmyGroup(a.ToArray()), Province);
+                new Battle(new BattleArmyGroup(new ArmyInfo[1] { this } ), new BattleArmyGroup(a.ToArray()), Province);
             }
         }
     }

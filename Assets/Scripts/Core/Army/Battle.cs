@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace EuropeanWars.Core.Army {
     public class Battle {
-        private readonly ArmyGroup attackers;
-        private readonly ArmyGroup defenders;
+        private readonly BattleArmyGroup attackers;
+        private readonly BattleArmyGroup defenders;
         private readonly ProvinceInfo province;
         private readonly ArmyAttackCounter attackCounter;
 
@@ -16,7 +16,7 @@ namespace EuropeanWars.Core.Army {
 
         private bool ended;
 
-        public Battle(ArmyGroup attacker, ArmyGroup defender, ProvinceInfo province) {
+        public Battle(BattleArmyGroup attacker, BattleArmyGroup defender, ProvinceInfo province) {
             this.attackers = attacker;
             this.defenders = defender;
             this.province = province;
@@ -58,7 +58,7 @@ namespace EuropeanWars.Core.Army {
             }
             else if (killedDefenders >= killedAttackers) {
                 OnAttackersWin();
-                foreach (var item in attackers.Armies) {
+                foreach (var item in defenders.Armies) {
                     ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
                     if (ps.Length == 0) {
                         ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
@@ -69,7 +69,7 @@ namespace EuropeanWars.Core.Army {
             }
             else if (killedAttackers > killedDefenders) {
                 OnDefendersWin();
-                foreach (var item in defenders.Armies) {
+                foreach (var item in attackers.Armies) {
                     ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
                     if (ps.Length == 0) {
                         ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
@@ -81,28 +81,24 @@ namespace EuropeanWars.Core.Army {
         }
 
         private void OnAttackersWin() {
-            ArmyInfo a = attackers.Armies.First();
-            ArmyInfo d = defenders.Armies.First();
-
-            if (a.Country == GameInfo.PlayerCountry || d.Country == GameInfo.PlayerCountry) {
+            if (attackers.Armies.Any(t => t.Country == GameInfo.PlayerCountry) || defenders.Armies.Any(t => t.Country == GameInfo.PlayerCountry)) {
                 BattleResultWindowSpawner.Singleton.Spawn(attackers, defenders, province, killedAttackers, killedDefenders);
             }
 
-            if (a.Country.IsInWarAgainstCountry(d.Country)) {
-                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedEnemies += killedDefenders;
-                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedLocal += killedAttackers;
-                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedEnemies += killedAttackers;
-                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedLocal += killedDefenders;
-            }
+            UpdateWarStats();
         }
 
         private void OnDefendersWin() {
-            ArmyInfo a = attackers.Armies.First();
-            ArmyInfo d = defenders.Armies.First();
-
-            if (a.Country == GameInfo.PlayerCountry || d.Country == GameInfo.PlayerCountry) {
+            if (attackers.Armies.Any(t => t.Country == GameInfo.PlayerCountry) || defenders.Armies.Any(t => t.Country == GameInfo.PlayerCountry)) {
                 BattleResultWindowSpawner.Singleton.Spawn(defenders, attackers, province, killedDefenders, killedAttackers);
             }
+
+            UpdateWarStats();
+        }
+
+        private void UpdateWarStats() {
+            ArmyInfo a = attackers.Armies.First();
+            ArmyInfo d = defenders.Armies.First();
 
             if (a.Country.IsInWarAgainstCountry(d.Country)) {
                 a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedEnemies += killedDefenders;
