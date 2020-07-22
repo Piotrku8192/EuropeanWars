@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Province;
+using EuropeanWars.Core.War;
 using EuropeanWars.UI.Windows;
 using System;
 using System.Linq;
@@ -101,10 +102,15 @@ namespace EuropeanWars.Core.Army {
             ArmyInfo d = defenders.Armies.First();
 
             if (a.Country.IsInWarAgainstCountry(d.Country)) {
-                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedEnemies += killedDefenders;
-                a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)].killedLocal += killedAttackers;
-                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedEnemies += killedAttackers;
-                d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)].killedLocal += killedDefenders;
+                WarCountryInfo ai = a.Country.wars[a.Country.GetWarAgainstCountry(d.Country)];
+                WarCountryInfo di = d.Country.wars[d.Country.GetWarAgainstCountry(a.Country)];
+                ai.killedEnemies += killedDefenders;
+                ai.killedLocal += killedAttackers;
+                di.killedEnemies += killedAttackers;
+                di.killedLocal += killedDefenders;
+
+                ai.ChangeWarScore(Mathf.RoundToInt((killedDefenders - killedAttackers) * GameStatistics.battleWarScoreChangeModifier));
+                di.ChangeWarScore(Mathf.RoundToInt((killedAttackers - killedDefenders) * GameStatistics.battleWarScoreChangeModifier));
             }
         }
     }

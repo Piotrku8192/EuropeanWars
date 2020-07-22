@@ -38,7 +38,7 @@ namespace EuropeanWars.Core.War {
             if (!enemyOccupatedProvinces.Contains(province)
                 && province.Country == country && party.Enemies.ContainsCountry(province.NationalCountry)) {
                 enemyOccupatedProvinces.Add(province);
-                WarScore += province.taxation;
+                WarScore = Mathf.Clamp(WarScore + province.taxation, -CountryScoreCost, party.Enemies.PartyScoreCost);
                 party.Enemies.countries[province.NationalCountry].AddLocalOccupatedProvince(province);
 
                 UpdateDynamicPeaceDealOnAddEnemyProvince(province);
@@ -52,7 +52,7 @@ namespace EuropeanWars.Core.War {
         public void RemoveEnemyOccupatedProvince(ProvinceInfo province) {
             if (enemyOccupatedProvinces.Contains(province) && province.Country == province.NationalCountry) {
                 enemyOccupatedProvinces.Remove(province);
-                WarScore -= province.taxation;
+                WarScore = Mathf.Clamp(WarScore - province.taxation, -CountryScoreCost, party.Enemies.PartyScoreCost);
                 if (party.Enemies.countries.ContainsKey(province.NationalCountry)) {
                     party.Enemies.countries[province.NationalCountry]?.RemoveLocalOccupatedProvince(province);
                 }
@@ -69,7 +69,7 @@ namespace EuropeanWars.Core.War {
             if (!localOccupatedProvinces.Contains(province) 
                 && province.NationalCountry == country && party.Enemies.ContainsCountry(province.Country)) {
                 localOccupatedProvinces.Add(province);
-                WarScore -= province.taxation;
+                WarScore = Mathf.Clamp(WarScore - province.taxation, -CountryScoreCost, party.Enemies.PartyScoreCost);
             }
         }
 
@@ -80,8 +80,12 @@ namespace EuropeanWars.Core.War {
         public void RemoveLocalOccupatedProvince(ProvinceInfo province) {
             if (localOccupatedProvinces.Contains(province) && province.Country == province.NationalCountry && province.Country == country) {
                 localOccupatedProvinces.Remove(province);
-                WarScore += province.taxation;
+                WarScore = Mathf.Clamp(WarScore + province.taxation, -CountryScoreCost, party.Enemies.PartyScoreCost);
             }
+        }
+
+        public void ChangeWarScore(int i) {
+            WarScore = Mathf.Clamp(WarScore + i, -CountryScoreCost, party.Enemies.PartyScoreCost);
         }
 
         private void UpdateDynamicPeaceDealOnAddEnemyProvince(ProvinceInfo province) {
