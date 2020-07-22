@@ -79,7 +79,9 @@ namespace EuropeanWars.Core.Army {
 
         private void UpdateBlackStatus() {
             BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country) && !Country.IsInWarAgainstCountry(Province.Country);
-            isMoveLocked = route.Count < 2;
+            if (route.Count < 2) {
+                isMoveLocked = false;
+            }
         }
 
         private int GetArtilleries() {

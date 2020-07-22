@@ -55,12 +55,15 @@ namespace EuropeanWars.Province {
             }
         }
 
+        public void Update() {
+            if (countriesMapMaterial.color != material.color) {
+                countriesMapMaterial.color = material.color;
+            }
+        }
+
         public void ChangeToCountriesMap() {
             if (meshRenderer.material != countriesMapMaterial) {
                 meshRenderer.material = countriesMapMaterial;
-            }
-            if (countriesMapMaterial.color != material.color) {
-                countriesMapMaterial.color = material.color;
             }
         }
 
