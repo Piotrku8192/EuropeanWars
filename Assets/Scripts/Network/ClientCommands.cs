@@ -15,6 +15,7 @@ using System.Reflection;
 using UnityEngine.UI;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.War;
+using EuropeanWars.Audio;
 
 namespace EuropeanWars.Network {
     public static class ClientCommands {
@@ -65,6 +66,8 @@ namespace EuropeanWars.Network {
             foreach (var item in GameInfo.provinces) {
                 item.Value.RefreshFogOfWar();
             }
+
+            MusicManager.Singleton.audioSource.Stop();
         }
 
         #endregion

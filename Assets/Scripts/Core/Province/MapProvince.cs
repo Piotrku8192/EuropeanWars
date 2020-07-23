@@ -79,7 +79,7 @@ namespace EuropeanWars.Province {
             meshRenderer = gameObject.AddComponent<MeshRenderer>();
             this.material = material;
             countriesMapMaterial = countriesMaterial;
-            meshRenderer.material = material;
+            meshRenderer.material = countriesMaterial;
 
             Mesh m = new Mesh();
             List<Vector3> verts = new List<Vector3>();
