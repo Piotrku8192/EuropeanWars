@@ -62,6 +62,11 @@ namespace EuropeanWars.Core.Data {
 
                 GameInfo.Initialize();
 
+                //Generate armies
+                foreach (var item in gameData.armies) {
+                    ArmyInfo a = new ArmyInfo(item);
+                }
+
                 NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
                 msg.Write((ushort)1);
                 Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
@@ -95,6 +100,7 @@ namespace EuropeanWars.Core.Data {
             gameData.countries = JsonConvert.DeserializeObject<CountryData[]>(File.ReadAllText(path + "\\countries.json"));
             gameData.provinces = JsonConvert.DeserializeObject<ProvinceData[]>(File.ReadAllText(path + "\\provinces.json"));
             gameData.units = JsonConvert.DeserializeObject<UnitData[]>(File.ReadAllText(path + "\\units.json"));
+            gameData.armies = JsonConvert.DeserializeObject<ArmyData[]>(File.ReadAllText(path + "\\armies.json"));
             gameData.map = File.ReadAllText(path + "\\map");
             File.WriteAllText(path + "\\gameData", DataConverter.ToString(gameData));
         }

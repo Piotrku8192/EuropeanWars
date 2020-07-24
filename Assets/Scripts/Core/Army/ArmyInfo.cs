@@ -1,12 +1,13 @@
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
-using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -35,12 +36,39 @@ namespace EuropeanWars.Core.Army {
 
         public Queue<ProvinceInfo> route = new Queue<ProvinceInfo>();
 
-
         public ArmyInfo(UnitToRecruit unit) {
             units.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
             maxUnits.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
             Country = unit.country;
             Province = unit.province;
+            Country.armies.Add(this);
+            Province.armies.Add(this);
+            id = nextId;
+            GameInfo.armies.Add(id, this);
+            nextId++;
+
+            ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
+            TimeManager.onDayElapsed += ArmyObject.CountMovement;
+            TimeManager.onDayElapsed += UpdateBlackStatus;
+            TimeManager.onMonthElapsed += ReinforcementArmy;
+        }
+
+        public ArmyInfo(ArmyData army) {
+            for (int i = 0; i < army.unitsT.Length; i++) {
+                units.Add(GameInfo.units[army.unitsT[i]], army.unitsS[i]);
+            }
+            for (int i = 0; i < army.maxUnitsT.Length; i++) {
+                maxUnits.Add(GameInfo.units[army.maxUnitsT[i]], army.maxUnitsS[i]);
+            }
+            Country = GameInfo.countries[army.country];
+            Province = GameInfo.provincesByColor[army.province];
+
+            foreach (var item in army.route) {
+                route.Enqueue(GameInfo.provincesByColor[item]);
+            }
+            BlackStatus = army.blackStatus;
+            isMoveLocked = army.isMovingLocked;
+
             Country.armies.Add(this);
             Province.armies.Add(this);
             id = nextId;

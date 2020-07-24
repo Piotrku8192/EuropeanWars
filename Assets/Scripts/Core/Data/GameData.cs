@@ -2,6 +2,7 @@
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
+using EuropeanWars.Core.Data.DataClasses;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
@@ -22,6 +23,7 @@ namespace EuropeanWars.Core.Data {
         public CultureData[] cultures;
         public BuildingData[] buildings;
         public UnitData[] units;
+        public ArmyData[] armies;
         public string map;
 
         public void FillGameInfo() {
