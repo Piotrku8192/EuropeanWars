@@ -29,19 +29,21 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void Update() {
-            size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
-            artillerySize.text = army.Artilleries.ToString();
-            UpdateScale();
-            UpdateColor();
-            blackStatusImage.SetActive(army.BlackStatus);
+            if (GameInfo.gameStarted) {
+                size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
+                artillerySize.text = army.Artilleries.ToString();
+                UpdateScale();
+                UpdateColor();
+                blackStatusImage.SetActive(army.BlackStatus);
 
-            if (army.Province.OccupationCounter?.Army == army) {
-                occupationProgress.SetActive(true);
-                occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
-                occupationProgressText.text = Mathf.RoundToInt(army.Province.OccupationCounter.Progress) + "%";
-            }
-            else {
-                occupationProgress.SetActive(false);
+                if (army.Province.OccupationCounter?.Army == army) {
+                    occupationProgress.SetActive(true);
+                    occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
+                    occupationProgressText.text = Mathf.RoundToInt(army.Province.OccupationCounter.Progress) + "%";
+                }
+                else {
+                    occupationProgress.SetActive(false);
+                }
             }
         }
 

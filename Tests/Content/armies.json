@@ -1,0 +1,134 @@
+[
+  {
+    "province": "F1F914",
+    "country": 1,
+    "unitsT": [ 1, 2, 6, 4, 8, 69 ],
+    "unitsS": [ 2000, 1470, 1000, 600, 300, 20 ],
+    "maxUnitsT": [ 1, 2, 6, 4, 8, 69 ],
+    "maxUnitsS": [ 2000, 1470, 1000, 600, 300, 20 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "A42280",
+    "country": 1,
+    "unitsT": [ 1, 11, 12, 69, 70 ],
+    "unitsS": [ 150, 200, 300, 20, 10 ],
+    "maxUnitsT": [ 1, 11, 12, 69, 70 ],
+    "maxUnitsS": [ 150, 200, 300, 20, 10 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "264080",
+    "country": 1,
+    "unitsT": [ 1, 8, 69 ],
+    "unitsS": [ 200, 160, 20 ],
+    "maxUnitsT": [ 1, 8, 69 ],
+    "maxUnitsS": [ 200, 160, 20 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "954E40",
+    "country": 3,
+    "unitsT": [ 19, 21, 26, 69, 70, 71 ],
+    "unitsS": [ 20, 32000, 15000, 200, 100, 25 ],
+    "maxUnitsT": [ 19, 21, 26, 69, 70, 71 ],
+    "maxUnitsS": [ 20, 32000, 15000, 200, 100, 25 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "2E2C40",
+    "country": 3,
+    "unitsT": [ 19, 21, 26, 69, 70, 71 ],
+    "unitsS": [ 20, 16000, 9000, 100, 50, 25 ],
+    "maxUnitsT": [ 19, 21, 26, 69, 70, 71 ],
+    "maxUnitsS": [ 20, 16000, 9000, 100, 50, 25 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "AA6E00",
+    "country": 2,
+    "unitsT": [ 69, 70, 14, 31, 32, 33, 30 ],
+    "unitsS": [ 100, 50, 10000, 5000, 1650, 2500, 5000 ],
+    "maxUnitsT": [ 69, 70, 14, 31, 32, 33, 30 ],
+    "maxUnitsS": [ 100, 50, 10000, 5000, 1650, 2500, 5000 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "2A74C0",
+    "country": 2,
+    "unitsT": [ 71, 14, 31, 33, 30 ],
+    "unitsS": [ 5, 500, 5000, 2500, 5000 ],
+    "maxUnitsT": [ 71, 14, 31, 33, 30 ],
+    "maxUnitsS": [ 5, 500, 5000, 2500, 5000 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "132CFF",
+    "country": 16,
+    "unitsT": [ 15, 12, 11, 13, 16, 69, 70, 71 ],
+    "unitsS": [ 2400, 6000, 1000, 500, 160, 100, 50, 25 ],
+    "maxUnitsT": [ 15, 12, 11, 13, 16, 69, 70, 71 ],
+    "maxUnitsS": [ 2400, 6000, 1000, 500, 160, 100, 50, 25 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "108CC0",
+    "country": 5,
+    "unitsT": [ 63 ],
+    "unitsS": [ 400 ],
+    "maxUnitsT": [ 63 ],
+    "maxUnitsS": [ 400 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "056CC0",
+    "country": 4,
+    "unitsT": [ 4, 12, 11, 70, 69 ],
+    "unitsS": [ 2700, 1200, 2800, 50, 200 ],
+    "maxUnitsT": [ 4, 12, 11, 70, 69 ],
+    "maxUnitsS": [ 2700, 1200, 2800, 50, 200 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "802240",
+    "country": 4,
+    "unitsT": [ 4, 12, 11, 16, 70, 69, 71 ],
+    "unitsS": [ 4200, 2400, 3300, 160, 30, 220, 5 ],
+    "maxUnitsT": [ 4, 12, 11, 16, 70, 69, 71 ],
+    "maxUnitsS": [ 4200, 2400, 3300, 160, 30, 220, 5 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  },
+  {
+    "province": "002C40",
+    "country": 8,
+    "unitsT": [ 51, 47, 48, 49, 50, 71 ],
+    "unitsS": [ 1000, 1000, 1800, 90, 1200, 25 ],
+    "maxUnitsT": [ 51, 47, 48, 49, 50, 71 ],
+    "maxUnitsS": [ 1000, 1000, 1800, 90, 1200, 25 ],
+    "route": [],
+    "blackStatus": false,
+    "isMovingLocked": false
+  }
+]
