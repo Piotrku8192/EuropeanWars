@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,5 +10,9 @@ namespace EuropeanWars.MainMenu {
         public void ChangeScene(int id) {
             SceneManager.LoadScene(id);
         }   
+
+        public void QuitApplication() {
+            Application.Quit();
+        }
     }
 }

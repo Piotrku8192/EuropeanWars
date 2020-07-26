@@ -234,7 +234,7 @@ namespace EuropeanWars.Core.Country {
 
 		#region Recrutation
 		public void EnqueueUnitToRecruite(UnitInfo info, ProvinceInfo province, int count) {
-			if (province.Country == this 
+			if (province.Country == this
 				&& manpower >= info.recruitSize * count
 				&& gold >= info.recruitCost * count
 				&& province.buildings.Contains(info.recruitBuilding)
