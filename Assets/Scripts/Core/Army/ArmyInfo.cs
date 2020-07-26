@@ -1,3 +1,4 @@
+using EuropeanWars.Audio;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Pathfinding;
@@ -223,6 +224,8 @@ namespace EuropeanWars.Core.Army {
                 IsSelected = true;
                 ArmyObject.selectionOutline.gameObject.SetActive(true);
                 SelectedArmyWindow.Singleton.AddArmy(this);
+                MusicManager.Singleton.audioEffectsSource.clip = MusicManager.Singleton.effects[0];
+                MusicManager.Singleton.audioEffectsSource.Play();
             }
         }
 

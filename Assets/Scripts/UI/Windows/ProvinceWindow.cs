@@ -86,7 +86,9 @@ namespace EuropeanWars.UI.Windows {
                 for (int i = 0; i < 10; i++) {
                     buildings[i].UpdateButton(province.buildings[i]);
                 }
-                builder.SetWindowActive(false);
+                if (activateWindow) {
+                    builder.SetWindowActive(false);
+                }
 
                 bool b = GameInfo.PlayerCountry == province.Country;
                 upgradeButton.interactable = b;

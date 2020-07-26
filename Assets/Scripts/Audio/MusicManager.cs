@@ -9,6 +9,9 @@ namespace EuropeanWars.Audio {
         public List<AudioClip> clips = new List<AudioClip>();
         public AudioSource audioSource;
 
+        public List<AudioClip> effects = new List<AudioClip>();
+        public AudioSource audioEffectsSource;
+
         private bool isCreated;
         private System.Random rng;
 

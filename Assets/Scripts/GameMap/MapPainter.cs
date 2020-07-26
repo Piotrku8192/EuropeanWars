@@ -124,7 +124,7 @@ namespace EuropeanWars.GameMap {
                     province.RefreshFogOfWar();
                 }
                 else {
-                    province.SetFogOfWar(false);
+                    province.mapProvince.material.SetFloat("_FogOfWar", 0);
                 }
             }
 
