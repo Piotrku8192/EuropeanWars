@@ -19,6 +19,11 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void OnClick() {
+            if (ProvinceWindow.Singleton.selectedBuildingSlot == slotId && ProvinceWindow.Singleton.builder.builderWindow.activeInHierarchy) {
+                ProvinceWindow.Singleton.builder.SetWindowActive(false);
+                return;
+            }
+
             if (ProvinceWindow.Singleton.province.Country == GameInfo.PlayerCountry) {
                 if (building.id == 0) { 
                     ProvinceWindow.Singleton.SelectBuildingSlot(slotId);

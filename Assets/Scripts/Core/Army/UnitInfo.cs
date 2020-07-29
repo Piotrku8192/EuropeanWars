@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Data;
+using EuropeanWars.Core.Language;
 using UnityEngine;
 
 namespace EuropeanWars.Core.Army {
@@ -23,7 +24,6 @@ namespace EuropeanWars.Core.Army {
         public UnitInfo(UnitData data) {
             this.data = data;
             id = data.id;
-            name = data.name; //TODO: Make this from language.
             type = (UnitType)data.type;
             recruitSize = data.recruitSize;
             recruitCost = data.recruitCost;
@@ -43,7 +43,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void UpdateLanguage() {
-            //TODO: Yes, you know what you should do
+            name = LanguageDictionary.language["UnitName-" + id];
         }
     }
 }

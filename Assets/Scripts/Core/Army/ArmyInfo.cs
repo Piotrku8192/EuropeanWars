@@ -147,6 +147,7 @@ namespace EuropeanWars.Core.Army {
             TimeManager.onMonthElapsed -= ReinforcementArmy;
             ArmyObject.StopAllCoroutines();
             ArmySpawner.Singleton.DestroyArmy(ArmyObject);
+            Province.RefreshFogOfWarInRegion();
         }
 
         public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
