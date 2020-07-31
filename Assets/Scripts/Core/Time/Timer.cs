@@ -10,6 +10,7 @@ namespace EuropeanWars.Core.Time {
         public Text date;
         public Button[] buttons = new Button[6];
         public int speed = 0;
+        public int lastSpeed;
 
         private float time;
 
