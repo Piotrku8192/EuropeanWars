@@ -66,6 +66,7 @@ namespace EuropeanWars.Network {
             foreach (var item in GameInfo.provinces) {
                 item.Value.RefreshFogOfWar();
             }
+            GameInfo.UnselectProvince();
 
             MusicManager.Singleton.audioSource.Stop();
         }
