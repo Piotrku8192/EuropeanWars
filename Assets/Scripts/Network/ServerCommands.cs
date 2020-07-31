@@ -92,7 +92,7 @@ namespace EuropeanWars.Network {
 
         [Command(256)]
         public static void Pause(NetIncomingMessage message) {
-            if (Core.Time.Timer.Singleton.speed == 0) {
+            if (Core.Time.Timer.Singleton.speed == 0 && Core.Time.Timer.Singleton.lastSpeed > 0) {
                 Core.Time.Timer.Singleton.ServerSetSpeed(Core.Time.Timer.Singleton.lastSpeed);
             }
             else {
