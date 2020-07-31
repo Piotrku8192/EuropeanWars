@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.AI;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
@@ -29,6 +30,8 @@ namespace EuropeanWars.Core {
 
         public static Dictionary<int, ArmyInfo> armies = new Dictionary<int, ArmyInfo>();
 
+        public static Dictionary<CountryInfo, CountryAI> countryAIs = new Dictionary<CountryInfo, CountryAI>();
+
         public static ProvinceInfo SelectedProvince { get; private set; }
         public static CountryInfo PlayerCountry { get; private set; }
         public static bool gameStarted;
@@ -50,6 +53,7 @@ namespace EuropeanWars.Core {
             }
             foreach (var item in countries) {
                 item.Value.Initialize();
+                countryAIs.Add(item.Value, new BoomerCountryAI(item.Value));
             }
             foreach (var item in units) {
                 item.Value.Initialize();
