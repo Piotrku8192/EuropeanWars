@@ -94,7 +94,8 @@ namespace EuropeanWars.UI.Windows {
                 upgradeButton.interactable = b;
                 devastateButton.interactable = b;
                 fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
-                    && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any();
+                    && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any()
+                    && !province.Country.IsInWarAgainstCountry(GameInfo.PlayerCountry);
 
                 if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                     occupationWindow.SetActive(true);

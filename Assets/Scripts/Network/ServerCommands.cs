@@ -92,11 +92,17 @@ namespace EuropeanWars.Network {
 
         [Command(256)]
         public static void Pause(NetIncomingMessage message) {
-            Core.Time.Timer.Singleton.speed = 0;
+            if (Core.Time.Timer.Singleton.speed == 0) {
+                Core.Time.Timer.Singleton.ServerSetSpeed(Core.Time.Timer.Singleton.lastSpeed);
+            }
+            else {
+                Core.Time.Timer.Singleton.lastSpeed = Core.Time.Timer.Singleton.speed;
+                Core.Time.Timer.Singleton.speed = 0;
 
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)258);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+                NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+                msg.Write((ushort)258);
+                Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+            }
         }
 
         #endregion

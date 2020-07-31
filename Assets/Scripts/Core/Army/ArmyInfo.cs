@@ -88,7 +88,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         private void ReinforcementArmy() {
-            if (Province.claimators.Contains(Country)) {
+            if (Province.claimators.Contains(Country) && Province.Country == Country) {
                 int avaiable = Mathf.Clamp(Province.taxation * 100, 0, Country.manpower);
                 UnitInfo[] ks = units.Keys.ToArray();
                 foreach (var item in ks) {

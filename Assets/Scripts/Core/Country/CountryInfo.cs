@@ -162,7 +162,8 @@ namespace EuropeanWars.Core.Country {
 
 		public void EnqueFabricateClaim(ProvinceInfo province) {
 			if (!claimedProvinces.Contains(province) && !toClaim.ContainsKey(province)
-				&& province.neighbours.Where(t => t.NationalCountry == this).Any() && province.isInteractive) {
+				&& province.neighbours.Where(t => t.NationalCountry == this).Any() && province.isInteractive
+				&& !IsInWarAgainstCountry(province.NationalCountry)) {
 				toClaim.Add(province, province.taxation * 10);
 
 				if (ProvinceWindow.Singleton.province == province) {
