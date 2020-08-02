@@ -148,7 +148,7 @@ namespace EuropeanWars.UI.Windows {
             }
 
             foreach (var item in provinces) {
-                item.MergeArmies(item.armies.Where(t => t.IsSelected).ToArray());
+                item.MergeArmiesRequest(item.armies.Where(t => t.IsSelected).ToArray());
             }
         }
 

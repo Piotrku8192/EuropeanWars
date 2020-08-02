@@ -150,12 +150,21 @@ namespace EuropeanWars.Core.Army {
             Province.RefreshFogOfWarInRegion();
         }
 
-        public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
+        public void MoveUnitToOtherArmyRequest(UnitInfo unit, ArmyInfo targetArmy, int count) {
             if (targetArmy != null && Province == targetArmy.Province) {
                 int c = units[unit];
                 int mc = maxUnits[unit];
                 RemoveUnitRequest(unit, count);
                 targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+            }
+        }
+
+        public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
+            if (targetArmy != null && Province == targetArmy.Province) {
+                int c = units[unit];
+                int mc = maxUnits[unit];
+                RemoveUnit(unit, count);
+                targetArmy.AddUnit(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
             }
         }
 
@@ -199,7 +208,7 @@ namespace EuropeanWars.Core.Army {
                     units.Remove(unit);
                     maxUnits.Remove(unit);
                     if (units.Count == 0) {
-                        Delete();
+                        DeleteLocal();
                     }
 
                     if (selectedArmies.Contains(this)) {

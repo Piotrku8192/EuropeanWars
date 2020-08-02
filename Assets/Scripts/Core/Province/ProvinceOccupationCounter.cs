@@ -88,7 +88,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         private void OnAttackersEmpty() {
-            Army.Delete();
+            Army.DeleteLocal();
             FindNewOccupant();
         }
 

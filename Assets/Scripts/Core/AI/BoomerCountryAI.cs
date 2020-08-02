@@ -1,7 +1,9 @@
 ﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
+using EuropeanWars.Core.War;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace EuropeanWars.Core.AI {
             BuildBuildings();
             RecruitArmies();
             MakeClaims();
+            MoveArmies();
+            DeclareWars();
         }
 
         protected override void OnYearElapsed() {
@@ -83,12 +87,58 @@ namespace EuropeanWars.Core.AI {
             }
         }
 
+        private void MoveArmies() {
+            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t => !country.provinces.Contains(t)).ToList();
+
+            List<ProvinceInfo> targetProvinces = new List<ProvinceInfo>();
+
+            if (country.wars.Count > 0) {
+                foreach (var item in country.wars) {
+                    foreach (var enemy in item.Value.party.Enemies.countries) {
+                        targetProvinces.AddRange(enemy.Key.provinces.Where(t => t.neighbours.Any(x => x.Country == country)));
+                    }
+                }
+            }
+
+            foreach (var item in country.armies) {
+                if (item.isMoveLocked || item.Province.OccupationCounter.Army == item) {
+                    continue;
+                }
+
+                if (item.BlackStatus) {
+                    item.GenerateRoute(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
+                    item.isMoveLocked = true;
+                }
+                else if (occupatedProvinces.Count > 0) {
+                    item.GenerateRoute(occupatedProvinces[0]);
+                    item.isMoveLocked = true;
+                    occupatedProvinces.RemoveAt(0);
+                }
+                else if (targetProvinces.Count > 0) {
+                    item.GenerateRoute(targetProvinces[0]);
+                    item.isMoveLocked = true;
+                    targetProvinces.RemoveAt(0);
+                }
+            }
+        }
+
         private void MakeClaims() {
             foreach (var item in country.nationalProvinces) {
                 foreach (var n in item.neighbours) {
-                    if (!country.friends.Contains(n.NationalCountry) && !country.claimedProvinces.Contains(n)) {
+                    if (!country.friends.Contains(n.NationalCountry)) {
                         country.EnqueFabricateClaim(n);
+                        if (country.toClaim.Count > country.maxClaimsAtOneTime) {
+                            return;
+                        }
                     }
+                }
+            }
+        }
+
+        private void DeclareWars() { //TEMPORARY!!!
+            foreach (var item in country.claimedProvinces) {
+                if (!country.IsInWarAgainstCountry(item.NationalCountry) && country.manpower > item.NationalCountry.manpower && country.wars.Count < 5) {
+                    DiplomacyManager.DeclareWar(new ConquestWarReason(item), country, item.NationalCountry);
                 }
             }
         }

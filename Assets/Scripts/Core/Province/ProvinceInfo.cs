@@ -228,10 +228,20 @@ namespace EuropeanWars.Core.Province {
         }
         #endregion
 
-        public void MergeArmies(ArmyInfo[] armies) {
+        public void MergeArmiesRequest(ArmyInfo[] armies) {
             if (armies.Length > 1) {
                 for (int i = 1; i < armies.Length; i++) {
                     foreach (var unit in armies[i].units) {
+                        armies[i].MoveUnitToOtherArmyRequest(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
+                    }
+                }
+            }
+        }
+
+        public void MergeArmies(ArmyInfo[] armies) {
+            if (armies.Length > 1) {
+                for (int i = 1; i < armies.Length; i++) {
+                    foreach (var unit in new Dictionary<UnitInfo, int>(armies[i].units)) {
                         armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
                     }
                 }
