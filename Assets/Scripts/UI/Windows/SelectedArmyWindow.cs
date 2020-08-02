@@ -148,14 +148,7 @@ namespace EuropeanWars.UI.Windows {
             }
 
             foreach (var item in provinces) {
-                ArmyInfo[] armies = item.armies.Where(t => t.IsSelected).ToArray();
-                if (armies.Length > 1) {
-                    for (int i = 1; i < armies.Length; i++) {
-                        foreach (var unit in armies[i].units) {
-                            armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
-                        }
-                    }
-                }
+                item.MergeArmies(item.armies.Where(t => t.IsSelected).ToArray());
             }
         }
 

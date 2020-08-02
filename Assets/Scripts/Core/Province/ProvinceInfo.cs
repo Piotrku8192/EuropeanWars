@@ -9,6 +9,7 @@ using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
 using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -148,6 +149,10 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void BuildBuilding(BuildingInfo building, int slot) {
+            if (buildings.Contains(building) && building.id != 0) {
+                return;
+            }
+
             taxation -= buildings[slot].incomeModifier;
             defense -= buildings[slot].defenceModifier;
 
@@ -222,5 +227,15 @@ namespace EuropeanWars.Core.Province {
             }
         }
         #endregion
+
+        public void MergeArmies(ArmyInfo[] armies) {
+            if (armies.Length > 1) {
+                for (int i = 1; i < armies.Length; i++) {
+                    foreach (var unit in armies[i].units) {
+                        armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
+                    }
+                }
+            }
+        }
     }
 }

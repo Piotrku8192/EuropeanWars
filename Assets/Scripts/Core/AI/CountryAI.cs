@@ -9,14 +9,14 @@ namespace EuropeanWars.Core.AI {
             this.country = country;
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onDayElapsed += CheckIfCountryIsPlayer;
-            TimeManager.onYearElapsed += OnMonthElapsed;
+            TimeManager.onMonthElapsed += OnMonthElapsed;
             TimeManager.onYearElapsed += OnYearElapsed;
         }
 
         ~CountryAI() {
             TimeManager.onDayElapsed -= OnDayElapsed;
             TimeManager.onDayElapsed -= CheckIfCountryIsPlayer;
-            TimeManager.onYearElapsed -= OnMonthElapsed;
+            TimeManager.onMonthElapsed -= OnMonthElapsed;
             TimeManager.onYearElapsed -= OnYearElapsed;
         }
 

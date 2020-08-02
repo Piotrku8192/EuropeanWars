@@ -396,7 +396,7 @@ namespace EuropeanWars.Network {
             ProvinceInfo province = GameInfo.provinces[message.ReadInt32()];
             int count = message.ReadInt32();
 
-            country.EnqueueUnitToRecruite(unitInfo, province, count);
+            country.EnqueueUnitToRecruit(unitInfo, province, count);
         }
 
         [Command(2049)]

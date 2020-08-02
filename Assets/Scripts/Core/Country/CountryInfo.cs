@@ -62,8 +62,8 @@ namespace EuropeanWars.Core.Country {
 
 		//Diplomacy
 		public int prestige;
-		public CountryInfo[] friends;
-		public CountryInfo[] enemies;
+		public List<CountryInfo> friends = new List<CountryInfo>();
+		public List<CountryInfo> enemies = new List<CountryInfo>();
 		public Dictionary<CountryInfo, int> relations = new Dictionary<CountryInfo, int>();
 		public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
 		public Dictionary<CountryInfo, Alliance> alliances = new Dictionary<CountryInfo, Alliance>();
@@ -87,15 +87,23 @@ namespace EuropeanWars.Core.Country {
 		public void Initialize() {
 			crest = GameInfo.gfx["Country-" + id];
 			religion = GameInfo.religions[data.religion];
+			buildings = GameInfo.buildings.Values.ToList();
 			UpdateLanguage();
 			TimeManager.onDayElapsed += OnDayElapsed;
 			TimeManager.onMonthElapsed += OnMonthElapsed;
 			TimeManager.onYearElapsed += OnYearElapsed;
 
-			gold = 4000;
+			gold = 40000;
             foreach (var item in data.squads) {
 				units.Add(GameInfo.units[item]);
             }
+
+            foreach (var item in data.friends) {
+				friends.Add(GameInfo.countries[item]);
+            }
+			foreach (var item in data.enemies) {
+				enemies.Add(GameInfo.countries[item]);
+			}
 		}
 		public void UpdateLanguage() {
 			name = LanguageDictionary.language["CountryName-" + id.ToString()];
@@ -234,8 +242,9 @@ namespace EuropeanWars.Core.Country {
 		#endregion
 
 		#region Recrutation
-		public void EnqueueUnitToRecruite(UnitInfo info, ProvinceInfo province, int count) {
-			if (province.Country == this
+		public void EnqueueUnitToRecruit(UnitInfo info, ProvinceInfo province, int count) {
+			if (count > 0
+				&& province.Country == this
 				&& manpower >= info.recruitSize * count
 				&& gold >= info.recruitCost * count
 				&& province.buildings.Contains(info.recruitBuilding)
