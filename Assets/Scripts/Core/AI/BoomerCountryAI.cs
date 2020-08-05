@@ -3,6 +3,7 @@ using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
+using EuropeanWars.Core.Time;
 using EuropeanWars.Core.War;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace EuropeanWars.Core.AI {
             MakeClaims();
             MoveArmies();
             DeclareWars();
+            PeaceWars();
         }
 
         protected override void OnYearElapsed() {
@@ -101,13 +103,22 @@ namespace EuropeanWars.Core.AI {
                 }
             }
 
+            //Delete armies if country doesn't exist.
+            if (country.nationalProvinces.Count == 0) {
+                foreach (var item in country.armies) {
+                    item.Delete();
+                }
+            }
+
             foreach (var item in country.armies) {
                 if (item.isMoveLocked || item.Province.OccupationCounter.Army == item) {
                     continue;
                 }
 
                 if (item.BlackStatus) {
-                    item.GenerateRouteRequest(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
+                    if (country.provinces.Count > 0) {
+                        item.GenerateRouteRequest(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
+                    }
                 }
                 else if (occupatedProvinces.Count > 0) {
                     item.GenerateRouteRequest(occupatedProvinces[0]);
@@ -139,6 +150,22 @@ namespace EuropeanWars.Core.AI {
             foreach (var item in country.claimedProvinces) {
                 if (!country.IsInWarAgainstCountry(item.NationalCountry) && country.manpower > item.NationalCountry.manpower && country.wars.Count < 5) {
                     DeclareWar(item.NationalCountry, 0); //TODO: Change it to something better.
+                }
+            }
+        }
+
+        private void PeaceWars() {
+            foreach (var item in country.wars) {
+                if (TimeManager.year - item.Key.startYear > 10 || item.Value.PercentWarScore > 20) {
+                    PeaceDeal peaceDeal = new PeaceDeal(item.Key, item.Value, item.Value.party.Enemies.major);
+                    foreach (var e in peaceDeal.senderElements) {
+                        if (e.Value is ProvincePeaceDealElement) {
+                            if (peaceDeal.UsedWarScore + e.Value.WarScoreCost <= item.Value.PercentWarScore) {
+                                peaceDeal.SelectSenderElement(e.Value);
+                            }
+                        }
+                    }
+                    peaceDeal.SendRequest();
                 }
             }
         }

@@ -109,7 +109,7 @@ namespace EuropeanWars.Core.Army {
         public void CountMovement() {
             try {
                 if (!isMovementCoroutineExecuting) {
-                    StartCoroutine(CountMovementCoroutine());
+                    StartCoroutine(CountMovementCoroutine(50));
                 }
             }
             catch {
@@ -117,22 +117,23 @@ namespace EuropeanWars.Core.Army {
             }
         }
 
-        private IEnumerator CountMovementCoroutine() {
+        private IEnumerator CountMovementCoroutine(int iterations) {
             isMovementCoroutineExecuting = true;
             if (army.route.Count > 1) {
                 Vector3 x = transform.position;
                 Vector3 y = new Vector3(army.route.ToArray()[1].x, army.route.ToArray()[1].y);
 
-                if (x == y) {
+                if (x == y && army.Province != army.route.ToArray()[1]) {
+                    army.OnArmyMove(army.route.ToArray()[1]);
                     army.route.Dequeue();
                     if (army.Country == GameInfo.PlayerCountry) {
                         DrawRoute(army.route.ToArray());
                     }
                 }
 
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < iterations; i++) {
                     yield return new WaitForFixedUpdate();
-                    transform.position = Vector3.MoveTowards(transform.position, y, army.AverageSpeed * .03f);
+                    transform.position = Vector3.MoveTowards(transform.position, y, army.AverageSpeed * GameStatistics.armySpeedModifier);
                     if (army.Country == GameInfo.PlayerCountry) {
                         try {
                             lineRenderer.SetPosition(0, transform.position);
@@ -144,7 +145,7 @@ namespace EuropeanWars.Core.Army {
 
                     if (Vector3.Distance(transform.position, y) < Vector3.Distance(new Vector2(army.Province.x, army.Province.y), y) * 0.5f) {
                         if (army.route.Count > 1 && army.Province != army.route.ToArray()[1]) {
-                            army.OnArmyMove(army.route.ToArray()[1]);
+                            
                         }
                     }
                 }
