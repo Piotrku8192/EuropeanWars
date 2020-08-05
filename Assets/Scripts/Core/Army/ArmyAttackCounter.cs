@@ -36,7 +36,7 @@ namespace EuropeanWars.Core.Army {
             Dictionary<UnitInfo, int> defendersToKill = new Dictionary<UnitInfo, int>();
             Dictionary<UnitInfo, int> attackersToKill = new Dictionary<UnitInfo, int>();
 
-            foreach (var item in defenders.OrderBy(t => t.Key.type)) {
+            foreach (var item in defenders.OrderBy(t => t.Key.type).ThenBy(t => t.Key.id)) {
                 if (attackersAttack <= 0) {
                     break;
                 }
@@ -49,7 +49,7 @@ namespace EuropeanWars.Core.Army {
                 }
             }
 
-            foreach (var item in attackers.OrderBy(t => t.Key.type)) {
+            foreach (var item in attackers.OrderBy(t => t.Key.type).ThenBy(t => t.Key.id)) {
                 if (defendersAttack <= 0) {
                     break;
                 }

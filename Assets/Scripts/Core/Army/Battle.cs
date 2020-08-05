@@ -65,7 +65,7 @@ namespace EuropeanWars.Core.Army {
                         ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
                     }
                     item.isMoveLocked = false;
-                    item.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
+                    item.GenerateRoute(ps.OrderBy(t => t.taxation).First());
                     item.isMoveLocked = true;
                 }
             }
@@ -77,7 +77,7 @@ namespace EuropeanWars.Core.Army {
                         ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
                     }
                     item.isMoveLocked = false;
-                    item.GenerateRoute(ps[GameInfo.random.Next(0, ps.Count() - 1)]);
+                    item.GenerateRoute(ps.OrderBy(t => t.taxation).First());
                     item.isMoveLocked = true;
                 }
             }

@@ -22,6 +22,8 @@ namespace EuropeanWars.Core.Army {
 
         public float scale;
 
+        private bool isMovementCoroutineExecuting;
+
         public void Initialize(ArmyInfo army) {
             this.army = army;
             crest.sprite = army.Country.crest;
@@ -106,7 +108,9 @@ namespace EuropeanWars.Core.Army {
 
         public void CountMovement() {
             try {
-                StartCoroutine(CountMovementCoroutine());
+                if (!isMovementCoroutineExecuting) {
+                    StartCoroutine(CountMovementCoroutine());
+                }
             }
             catch {
 
@@ -114,6 +118,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         private IEnumerator CountMovementCoroutine() {
+            isMovementCoroutineExecuting = true;
             if (army.route.Count > 1) {
                 Vector3 x = transform.position;
                 Vector3 y = new Vector3(army.route.ToArray()[1].x, army.route.ToArray()[1].y);
@@ -127,7 +132,7 @@ namespace EuropeanWars.Core.Army {
 
                 for (int i = 0; i < 100; i++) {
                     yield return new WaitForFixedUpdate();
-                    transform.position = Vector3.MoveTowards(transform.position, y, army.AverageSpeed * .007f);
+                    transform.position = Vector3.MoveTowards(transform.position, y, army.AverageSpeed * .03f);
                     if (army.Country == GameInfo.PlayerCountry) {
                         try {
                             lineRenderer.SetPosition(0, transform.position);
@@ -144,6 +149,8 @@ namespace EuropeanWars.Core.Army {
                     }
                 }
             }
+
+            isMovementCoroutineExecuting = false;
         }
     }
 }

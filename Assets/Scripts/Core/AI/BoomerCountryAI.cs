@@ -49,7 +49,7 @@ namespace EuropeanWars.Core.AI {
                     }
                 }
                 if (b.Count() > 0) {
-                    p?.BuildBuilding(p.buildings.Any(t => t.id == 1) ? b[GameInfo.random.Next(0, b.Count() - 1)] : GameInfo.buildings[1], slot);
+                    BuildBuildingInSlot(p.buildings.Any(t => t.id == 1) ? b[GameInfo.random.Next(0, b.Count() - 1)] : GameInfo.buildings[1], p, slot);
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace EuropeanWars.Core.AI {
                         country.gold / (u.recruitCost == 0 ? 1 : u.recruitCost)
                         });
                     if (count > 0) {
-                        country.EnqueueUnitToRecruit(u,
+                        RecruitArmy(u,
                             ps[GameInfo.random.Next(0, ps.Length - 1)],
                             count);
                     }
@@ -83,12 +83,13 @@ namespace EuropeanWars.Core.AI {
             }
 
             foreach (var item in provinces) {
-                item.MergeArmies(item.armies.Where(t => !t.isMoveLocked).ToArray());
+                item.MergeArmiesRequest(item.armies.Where(t => t.Country == country).ToArray());
             }
         }
 
         private void MoveArmies() {
-            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t => !country.provinces.Contains(t)).ToList();
+            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t => 
+            !country.provinces.Contains(t) || (t.OccupationCounter.Progress > 0 && t.OccupationCounter.Army?.Country != country)).ToList();
 
             List<ProvinceInfo> targetProvinces = new List<ProvinceInfo>();
 
@@ -106,30 +107,29 @@ namespace EuropeanWars.Core.AI {
                 }
 
                 if (item.BlackStatus) {
-                    item.GenerateRoute(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
-                    item.isMoveLocked = true;
+                    item.GenerateRouteRequest(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
                 }
                 else if (occupatedProvinces.Count > 0) {
-                    item.GenerateRoute(occupatedProvinces[0]);
-                    item.isMoveLocked = true;
+                    item.GenerateRouteRequest(occupatedProvinces[0]);
                     occupatedProvinces.RemoveAt(0);
                 }
                 else if (targetProvinces.Count > 0) {
-                    item.GenerateRoute(targetProvinces[0]);
-                    item.isMoveLocked = true;
+                    item.GenerateRouteRequest(targetProvinces[0]);
                     targetProvinces.RemoveAt(0);
                 }
             }
         }
 
         private void MakeClaims() {
+            int i = 0;
             foreach (var item in country.nationalProvinces) {
                 foreach (var n in item.neighbours) {
-                    if (!country.friends.Contains(n.NationalCountry)) {
-                        country.EnqueFabricateClaim(n);
-                        if (country.toClaim.Count > country.maxClaimsAtOneTime) {
+                    if (n.isLand && n.isInteractive && !country.friends.Contains(n.NationalCountry)) {
+                        if (i > country.maxClaimsAtOneTime) {
                             return;
                         }
+                        FabricateClaim(n);
+                        i++;
                     }
                 }
             }
@@ -138,7 +138,7 @@ namespace EuropeanWars.Core.AI {
         private void DeclareWars() { //TEMPORARY!!!
             foreach (var item in country.claimedProvinces) {
                 if (!country.IsInWarAgainstCountry(item.NationalCountry) && country.manpower > item.NationalCountry.manpower && country.wars.Count < 5) {
-                    DiplomacyManager.DeclareWar(new ConquestWarReason(item), country, item.NationalCountry);
+                    DeclareWar(item.NationalCountry, 0); //TODO: Change it to something better.
                 }
             }
         }

@@ -16,6 +16,7 @@ using UnityEngine.UI;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.War;
 using EuropeanWars.Audio;
+using EuropeanWars.Core.AI;
 
 namespace EuropeanWars.Network {
     public static class ClientCommands {
@@ -67,6 +68,14 @@ namespace EuropeanWars.Network {
                 item.Value.RefreshFogOfWar();
             }
             GameInfo.UnselectProvince();
+            
+            if (Client.Singleton.IsHost) {
+                foreach (var item in GameInfo.countries) {
+                    if (item.Value.id > 0) {
+                        GameInfo.countryAIs.Add(item.Value, new BoomerCountryAI(item.Value));
+                    }
+                }
+            }
 
             MusicManager.Singleton.audioSource.Stop();
         }
@@ -404,7 +413,9 @@ namespace EuropeanWars.Network {
             int id = message.ReadInt32();
             int target = message.ReadInt32();
 
-            GameInfo.armies[id].GenerateRoute(GameInfo.provinces[target]);
+            if (GameInfo.armies.ContainsKey(id)) {
+                GameInfo.armies[id].GenerateRoute(GameInfo.provinces[target]);
+            }
         }
 
         [Command(2050)]
