@@ -83,7 +83,7 @@ namespace EuropeanWars.Core.Province {
             }
         }
 
-        private void FindNewOccupant() {
+        public void FindNewOccupant() {
             SetArmy(province.armies.FirstOrDefault(t => province.Country.IsInWarAgainstCountry(t.Country) && !t.route.Any(x => x != province)));
         }
 

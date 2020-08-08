@@ -113,6 +113,12 @@ namespace EuropeanWars.Core.War {
                     }
                 }
 
+                foreach (var item in country.country.armies) {
+                    if (item.Province.OccupationCounter.Army == item) {
+                        item.Province.OccupationCounter.FindNewOccupant();
+                    }
+                }
+
                 foreach (var item in GameInfo.provinces) {
                     item.Value.RefreshFogOfWar();
                 }
