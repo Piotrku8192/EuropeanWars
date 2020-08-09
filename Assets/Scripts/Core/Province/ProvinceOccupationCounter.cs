@@ -29,6 +29,8 @@ namespace EuropeanWars.Core.Province {
             Progress = 0;
             daysToNext = daysBetweenAttacks;
             attackCounter = null;
+            areAttackersEmpty = false;
+            areDefendersEmpty = false;
         }
 
         private void SetArmy(ArmyInfo army) {

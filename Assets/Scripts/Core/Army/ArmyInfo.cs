@@ -82,13 +82,8 @@ namespace EuropeanWars.Core.Army {
             TimeManager.onMonthElapsed += ReinforcementArmy;
         }
 
-        ~ArmyInfo() {
-            TimeManager.onDayElapsed -= UpdateBlackStatus;
-            TimeManager.onMonthElapsed -= ReinforcementArmy;
-        }
-
         private void ReinforcementArmy() {
-            if (Province.claimators.Contains(Country) && Province.Country == Country) {
+            if (Province.NationalCountry == Country) {
                 int avaiable = Mathf.Clamp(Province.taxation * GameStatistics.provinceIncomeArmyReinforcementModifier, 0, Country.manpower);
                 UnitInfo[] ks = units.Keys.ToArray();
                 foreach (var item in ks) {
@@ -145,8 +140,13 @@ namespace EuropeanWars.Core.Army {
             TimeManager.onDayElapsed -= ArmyObject.CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
             TimeManager.onMonthElapsed -= ReinforcementArmy;
-            ArmyObject.StopAllCoroutines();
-            ArmySpawner.Singleton.DestroyArmy(ArmyObject);
+            try {
+                ArmyObject.StopAllCoroutines();
+                ArmySpawner.Singleton.DestroyArmy(ArmyObject);
+            }
+            catch {
+
+            }
             Province.RefreshFogOfWarInRegion();
         }
 
@@ -270,8 +270,6 @@ namespace EuropeanWars.Core.Army {
                 return;
             }
 
-            LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
-
             if (target == Province) {
                 route.Clear();
                 route.Enqueue(target);
@@ -280,8 +278,12 @@ namespace EuropeanWars.Core.Army {
                 }
                 ArmyObject.StopAllCoroutines();
                 ArmyObject.transform.position = new Vector3(Province.x, Province.y);
+                ArmyObject.isMovementCoroutineExecuting = false;
+
                 return;
             }
+
+            LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
             ProvinceInfo[] r = pathfinder.FindPath(target);
             if (r != null) {
                 route.Clear();

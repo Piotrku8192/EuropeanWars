@@ -23753,7 +23753,6 @@ GameObject:
   - component: {fileID: 1279984211}
   - component: {fileID: 1279984210}
   - component: {fileID: 1279984209}
-  - component: {fileID: 1279984214}
   m_Layer: 8
   m_Name: ProvinceWindow
   m_TagString: Untagged
@@ -23874,20 +23873,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279984207}
   m_CullTransparentMesh: 0
---- !u!114 &1279984214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1279984207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 877f1150dfd9b8b41b20a50b4d123d32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: "<color=#ff0000>Dzie\u0144 dobry</color>\nJestem tutaj jako opis hehe ;)\nMo\u017Cesz
-    zrobi\u0107 ze mn\u0105 tylko to aby mnie przeczyta\u0107 xD"
 --- !u!1 &1281375438
 GameObject:
   m_ObjectHideFlags: 0

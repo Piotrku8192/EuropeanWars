@@ -132,15 +132,13 @@ namespace EuropeanWars.Core.AI {
         }
 
         private void MakeClaims() {
-            int i = 0;
             foreach (var item in country.nationalProvinces) {
                 foreach (var n in item.neighbours) {
                     if (n.isLand && n.isInteractive && !country.friends.Contains(n.NationalCountry)) {
-                        if (i > country.maxClaimsAtOneTime) {
+                        if (country.toClaim.Count >= country.maxClaimsAtOneTime) {
                             return;
                         }
                         FabricateClaim(n);
-                        i++;
                     }
                 }
             }

@@ -22,7 +22,7 @@ namespace EuropeanWars.Core.Army {
 
         public float scale;
 
-        private bool isMovementCoroutineExecuting;
+        public bool isMovementCoroutineExecuting;
 
         public void Initialize(ArmyInfo army) {
             this.army = army;
@@ -109,7 +109,7 @@ namespace EuropeanWars.Core.Army {
         public void CountMovement() {
             try {
                 if (!isMovementCoroutineExecuting) {
-                    StartCoroutine(CountMovementCoroutine(50));
+                    StartCoroutine(CountMovementCoroutine(10));
                 }
             }
             catch {

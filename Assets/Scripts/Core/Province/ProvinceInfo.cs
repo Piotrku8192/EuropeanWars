@@ -114,6 +114,14 @@ namespace EuropeanWars.Core.Province {
                 if (nationalCountry) {
                     Country.nationalProvinces.Remove(this);
                 }
+
+                foreach (var item in new List<UnitToRecruit>(Country.toRecruit)) {
+                    if (item.province == this) {
+                        Country.gold += item.unitInfo.recruitCost * item.count;
+                        Country.manpower += item.unitInfo.recruitSize * item.count;
+                        Country.toRecruit.Remove(item);
+                    }
+                }
             }
             Country = country;
             Country.provinces.Add(this);
@@ -221,8 +229,8 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void SetFogOfWar(bool b) {
-            fogOfWar = b;
-            if (mapProvince) {
+            fogOfWar = false; //b;
+            if (mapProvince && MapPainter.mapMode == MapMode.Countries) {
                 mapProvince.material.SetFloat("_FogOfWar", b ? 1 : 0);
             }
         }
