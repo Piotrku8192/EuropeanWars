@@ -4,6 +4,8 @@ using EuropeanWars.Core.Province;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Roy_T.AStar.Graphs;
+using Roy_T.AStar.Paths;
 
 namespace EuropeanWars.Core.Pathfinding {
     public class LandArmyPathfinder : IPathfinder {
@@ -22,6 +24,7 @@ namespace EuropeanWars.Core.Pathfinding {
             }
 
             ProvinceInfo[] path = GetPath((new ProvinceInfo[1] { army.Province }, 0), province, 10).Item1;
+
             return path;
         }
 

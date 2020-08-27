@@ -161,7 +161,7 @@ namespace EuropeanWars.Core.Province {
                 return;
             }
 
-            taxation -= buildings[slot].incomeModifier;
+            buildingsIncome -= buildings[slot].incomeModifier;
             defense -= buildings[slot].defenceModifier;
 
             Country.gold -= building.cost;
