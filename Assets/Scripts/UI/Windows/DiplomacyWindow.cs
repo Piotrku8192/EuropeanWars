@@ -1,5 +1,4 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core;
+﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.War;

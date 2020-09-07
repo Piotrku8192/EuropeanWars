@@ -19,19 +19,20 @@ namespace EuropeanWars.UI {
         }
 
         public void Update() {
-            if (!IsPointerOverUIElement()) {
+            if (!IsPointerOverUIElement() || description == null) {
                 transform.localScale = new Vector3();
                 text.gameObject.SetActive(false);
                 text.text = "";
             }
             else if (description != null) {
+                transform.position = Input.mousePosition;
+
                 transform.localScale = new Vector3(1, 1, 1);
                 text.gameObject.SetActive(true);
                 text.text = description.text;
                 //rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x,
                 //    lineHeight * (Mathf.FloorToInt(text.text.Length / lineLength) + 1) + padding);
 
-                transform.position = Input.mousePosition;
                 if (transform.position.x + rectTransform.sizeDelta.x > Screen.width
                     && transform.position.y - rectTransform.sizeDelta.y < 0) {
                     rectTransform.pivot = new Vector2(1, 0);

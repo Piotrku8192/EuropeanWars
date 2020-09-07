@@ -20,6 +20,7 @@ namespace EuropeanWars.UI.Windows {
         public Text provinceName;
         public CountryButton countryCrest;
         public Image religion;
+        public DescriptionText religionDescription;
         public Image terrainImage;
 
         public Text tax;
@@ -65,7 +66,18 @@ namespace EuropeanWars.UI.Windows {
                 this.province = province;
                 provinceName.text = province.name;
                 countryCrest.SetCountry(province.Country);
+
                 religion.sprite = province.religion.image;
+                string s = "";
+                for (int i = 1; i < province.religionFollowers.Length; i++) {
+                    if (province.religionFollowers[i] > 0) {
+                        Color32 c = GameInfo.religions[i].color;
+                        s += $"{(s == "" ? "" : "\n")}<color=#{c.r:X}{c.g:X}{c.b:X}>" +
+                            $"{GameInfo.religions[i].name}: {province.religionFollowers[i]}%</color>";
+                    }
+                }
+                religionDescription.text = s;
+
                 //TODO: Add: terrainImage = ...
                 tax.text = province.taxation.ToString();
                 buildingsIncome.text = province.buildingsIncome.ToString();

@@ -6,6 +6,7 @@ using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Network;
+using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
@@ -58,6 +59,8 @@ namespace EuropeanWars.Core {
             foreach (var item in units) {
                 item.Value.Initialize();
             }
+
+            TranslatedDescriptionsLibrary.Singleton.UpdateLanguage();
         }
 
         public static void SetPlayerCountry(CountryInfo country) {

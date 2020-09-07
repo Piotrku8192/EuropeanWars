@@ -435,7 +435,10 @@ namespace EuropeanWars.Network {
             int unit = message.ReadInt32();
             int count = message.ReadInt32();
 
+            if (GameInfo.armies.ContainsKey(army)) {
             GameInfo.armies[army].RemoveUnit(GameInfo.units[unit], count);
+
+            }
         }
 
         [Command(2052)]
