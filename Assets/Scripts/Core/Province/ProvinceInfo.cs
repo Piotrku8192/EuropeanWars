@@ -9,6 +9,7 @@ using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
 using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -87,7 +88,6 @@ namespace EuropeanWars.Core.Province {
             religion = GameInfo.religions[data.religion];
             culture = GameInfo.cultures[data.culture];
             OccupationCounter = new ProvinceOccupationCounter(this);
-            UpdateLanguage();
 
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onMonthElapsed += OnMonthElapsed;
@@ -112,6 +112,14 @@ namespace EuropeanWars.Core.Province {
                 Country.provinces.Remove(this);
                 if (nationalCountry) {
                     Country.nationalProvinces.Remove(this);
+                }
+
+                foreach (var item in new List<UnitToRecruit>(Country.toRecruit)) {
+                    if (item.province == this) {
+                        Country.gold += item.unitInfo.recruitCost * item.count;
+                        Country.manpower += item.unitInfo.recruitSize * item.count;
+                        Country.toRecruit.Remove(item);
+                    }
                 }
             }
             Country = country;
@@ -148,7 +156,11 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void BuildBuilding(BuildingInfo building, int slot) {
-            taxation -= buildings[slot].incomeModifier;
+            if (buildings.Contains(building) && building.id != 0) {
+                return;
+            }
+
+            buildingsIncome -= buildings[slot].incomeModifier;
             defense -= buildings[slot].defenceModifier;
 
             Country.gold -= building.cost;
@@ -216,11 +228,31 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void SetFogOfWar(bool b) {
-            fogOfWar = b;
-            if (mapProvince) {
+            fogOfWar = false; //b;
+            if (mapProvince && MapPainter.mapMode == MapMode.Countries) {
                 mapProvince.material.SetFloat("_FogOfWar", b ? 1 : 0);
             }
         }
         #endregion
+
+        public void MergeArmiesRequest(ArmyInfo[] armies) {
+            if (armies.Length > 1) {
+                for (int i = 1; i < armies.Length; i++) {
+                    foreach (var unit in armies[i].units) {
+                        armies[i].MoveUnitToOtherArmyRequest(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
+                    }
+                }
+            }
+        }
+
+        public void MergeArmies(ArmyInfo[] armies) {
+            if (armies.Length > 1) {
+                for (int i = 1; i < armies.Length; i++) {
+                    foreach (var unit in new Dictionary<UnitInfo, int>(armies[i].units)) {
+                        armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
+                    }
+                }
+            }
+        }
     }
 }

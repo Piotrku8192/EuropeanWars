@@ -199,10 +199,14 @@ namespace EuropeanWars.Core.War {
             }
 
             foreach (var item in selectedSenderElements) {
-                senderElements[item].Execute();
+                if (senderElements.ContainsKey(item)) {
+                    senderElements[item].Execute();
+                }
             }
             foreach (var item in selectedReceiverElements) {
-                receiverElements[item].Execute();
+                if (receiverElements.ContainsKey(item)) {
+                    receiverElements[item].Execute();
+                }
             }
         }
     }

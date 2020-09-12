@@ -26,7 +26,6 @@ namespace EuropeanWars.Core.Building {
 
         public void Initialize() {
             image = GameInfo.gfx["Building-" + id];
-            UpdateLanguage();
         }
 
         public void UpdateLanguage() {

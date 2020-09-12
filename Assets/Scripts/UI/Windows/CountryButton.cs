@@ -6,10 +6,12 @@ namespace EuropeanWars.UI.Windows {
     public class CountryButton : MonoBehaviour {
         public Image crest;
         public CountryInfo country;
+        public DescriptionText description;
 
         public void SetCountry(CountryInfo country) {
             this.country = country;
             crest.sprite = country.crest;
+            description.text = country.name;
         }
 
         public void OnClick() {

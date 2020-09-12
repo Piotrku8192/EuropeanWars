@@ -19,7 +19,6 @@ namespace EuropeanWars.Core.Religion {
 
         public void Initialize() {
             image = GameInfo.gfx["Religion-" + id];
-            UpdateLanguage();
         }
 
         public void UpdateLanguage() {

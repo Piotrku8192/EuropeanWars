@@ -4,7 +4,6 @@ using EuropeanWars.Core.Province;
 using EuropeanWars.UI.Lobby;
 using Lidgren.Network;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
@@ -116,7 +115,7 @@ namespace EuropeanWars.Network {
             BuildingInfo b = GameInfo.buildings[building];
             ProvinceInfo p = GameInfo.provinces[province];
 
-            if (p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId && b.CanBuildInProvince(p)) {
+            if ((p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId || !p.Country.isPlayer) && b.CanBuildInProvince(p)) {
                 NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
                 msg.Write((ushort)512);
                 msg.Write(building);
@@ -131,7 +130,7 @@ namespace EuropeanWars.Network {
             int province = message.ReadInt32();
             ProvinceInfo p = GameInfo.provinces[province];
 
-            if (p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId) {
+            if (p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId || !p.Country.isPlayer) {
                 NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
                 msg.Write((ushort)513);
                 msg.Write(province);
@@ -144,7 +143,7 @@ namespace EuropeanWars.Network {
             int province = message.ReadInt32();
             ProvinceInfo p = GameInfo.provinces[province];
 
-            if (p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId) {
+            if (p.Country.id == Server.Singleton.clients[message.SenderConnection].countryId || !p.Country.isPlayer) {
                 NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
                 msg.Write((ushort)514);
                 msg.Write(province);

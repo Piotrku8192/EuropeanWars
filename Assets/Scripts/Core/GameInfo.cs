@@ -1,9 +1,13 @@
-﻿using EuropeanWars.Core.Army;
+﻿using EuropeanWars.Core.AI;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
+using EuropeanWars.Network;
+using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
@@ -28,6 +32,8 @@ namespace EuropeanWars.Core {
         public static Dictionary<int, UnitInfo> units = new Dictionary<int, UnitInfo>();
 
         public static Dictionary<int, ArmyInfo> armies = new Dictionary<int, ArmyInfo>();
+
+        public static Dictionary<CountryInfo, CountryAI> countryAIs = new Dictionary<CountryInfo, CountryAI>();
 
         public static ProvinceInfo SelectedProvince { get; private set; }
         public static CountryInfo PlayerCountry { get; private set; }
@@ -54,6 +60,34 @@ namespace EuropeanWars.Core {
             foreach (var item in units) {
                 item.Value.Initialize();
             }
+
+            ChangeLanguage(0);
+        }
+
+        public static void ChangeLanguage(int id) {
+            LanguageDictionary.language = LanguageDictionary.languages[id];
+
+            foreach (var item in buildings) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in religions) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in cultures) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in provinces) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in countries) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in units) {
+                item.Value.UpdateLanguage();
+            }
+
+            TranslatedDescriptionsLibrary.Singleton.UpdateLanguage();
+            DiplomacyWindow.Singleton.UpdateLanguage();
         }
 
         public static void SetPlayerCountry(CountryInfo country) {

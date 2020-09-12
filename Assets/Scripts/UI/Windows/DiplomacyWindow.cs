@@ -1,5 +1,4 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core;
+﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.War;
@@ -23,6 +22,10 @@ namespace EuropeanWars.UI.Windows {
 
         public void Awake() {
             Singleton = this;
+        }
+
+        public void UpdateLanguage() {
+            countryWindow.UpdateLanguage();
         }
 
         public void UpdateWindow(CountryInfo country) {

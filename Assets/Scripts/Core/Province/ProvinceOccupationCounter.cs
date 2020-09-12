@@ -29,6 +29,8 @@ namespace EuropeanWars.Core.Province {
             Progress = 0;
             daysToNext = daysBetweenAttacks;
             attackCounter = null;
+            areAttackersEmpty = false;
+            areDefendersEmpty = false;
         }
 
         private void SetArmy(ArmyInfo army) {
@@ -83,12 +85,12 @@ namespace EuropeanWars.Core.Province {
             }
         }
 
-        private void FindNewOccupant() {
+        public void FindNewOccupant() {
             SetArmy(province.armies.FirstOrDefault(t => province.Country.IsInWarAgainstCountry(t.Country) && !t.route.Any(x => x != province)));
         }
 
         private void OnAttackersEmpty() {
-            Army.Delete();
+            Army.DeleteLocal();
             FindNewOccupant();
         }
 

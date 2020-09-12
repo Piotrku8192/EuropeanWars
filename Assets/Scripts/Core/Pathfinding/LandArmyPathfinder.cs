@@ -4,6 +4,8 @@ using EuropeanWars.Core.Province;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Roy_T.AStar.Graphs;
+using Roy_T.AStar.Paths;
 
 namespace EuropeanWars.Core.Pathfinding {
     public class LandArmyPathfinder : IPathfinder {
@@ -22,6 +24,7 @@ namespace EuropeanWars.Core.Pathfinding {
             }
 
             ProvinceInfo[] path = GetPath((new ProvinceInfo[1] { army.Province }, 0), province, 10).Item1;
+
             return path;
         }
 
@@ -34,8 +37,8 @@ namespace EuropeanWars.Core.Pathfinding {
 
             foreach (var item in path.Item1.Last().neighbours) {
                 if (IsMoveable(item) && !path.Item1.Contains(item)) {
-                    int c = Mathf.FloorToInt(Vector2.Distance(new Vector2(path.Item1.Last().x, path.Item1.Last().y), new Vector2(item.x, item.y)) +
-                    Vector2.Distance(new Vector2(item.x, item.y), new Vector2(end.x, end.y)));
+                    int c = path.Item2 + //Vector2.Distance(new Vector2(path.Item1.Last().x, path.Item1.Last().y), new Vector2(item.x, item.y)) +
+                    (int)Vector2.Distance(new Vector2(item.x, item.y), new Vector2(end.x, end.y));
 
                     if (item == end) {
                         return (new List<ProvinceInfo>(path.Item1) { item }.ToArray(), path.Item2 + c); 

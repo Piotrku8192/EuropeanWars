@@ -1,6 +1,7 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.GameMap;
 using System;
@@ -62,7 +63,7 @@ namespace EuropeanWars.UI {
                 selectedUnit = unit;
                 unitName.text = unit.name;
                 unitImage.sprite = unit.image;
-                type.text = unit.type.ToString();
+                type.text = LanguageDictionary.language[unit.type.ToString()];
                 attack.text = unit.attack.ToString();
                 health.text = unit.health.ToString();
                 speed.text = unit.speed.ToString();

@@ -9,7 +9,7 @@ namespace EuropeanWars.Network {
         public NetClient c;
         public string serverAddress;
         public int serverPort = 7777;
-        public bool isHost;
+        public bool IsHost => Server.Singleton != null;
 
         private bool created = false;
 
@@ -33,8 +33,6 @@ namespace EuropeanWars.Network {
         }
 
         public void Start() {
-            isHost = Server.Singleton != null;
-
             NetPeerConfiguration config = new NetPeerConfiguration("ew");
             config.Port = Random.Range(2048, 30000);
             c = new NetClient(config);

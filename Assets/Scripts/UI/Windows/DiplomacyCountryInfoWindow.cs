@@ -2,6 +2,7 @@
 using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Network;
 using Lidgren.Network;
 using UnityEngine;
@@ -18,6 +19,31 @@ namespace EuropeanWars.UI.Windows {
         public DeclareWarWindow declareWarWindow;
 
         public CountryInfo country;
+
+        public void UpdateLanguage() {
+            foreach (var item in dipActionButtons) {
+                Text t = item.GetComponentInChildren<Text>();
+                switch (item.action) {
+                    case DiplomacyAction.CreateAlliance:
+                        t.text = LanguageDictionary.language["MakeAlliance"];
+                        break;
+                    case DiplomacyAction.DeleteAlliance:
+                        t.text = LanguageDictionary.language["DeleteAlliance"];
+                        break;
+                    case DiplomacyAction.CreateMilitaryAccess:
+                        t.text = LanguageDictionary.language["MillitaryAccess"];
+                        break;
+                    case DiplomacyAction.DeleteMilitaryAccess:
+                        t.text = LanguageDictionary.language["DeleteMillitaryAccess"];
+                        break;
+                    case DiplomacyAction.DeclareWar:
+                        t.text = LanguageDictionary.language["DeclareWar"];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
 
         public void UpdateWindow(CountryInfo country) {
             declareWarWindow.ResetAndDisable();
