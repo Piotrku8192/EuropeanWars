@@ -88,7 +88,6 @@ namespace EuropeanWars.Core.Country {
 			crest = GameInfo.gfx["Country-" + id];
 			religion = GameInfo.religions[data.religion];
 			buildings = GameInfo.buildings.Values.ToList();
-			UpdateLanguage();
 			TimeManager.onDayElapsed += OnDayElapsed;
 			TimeManager.onMonthElapsed += OnMonthElapsed;
 			TimeManager.onYearElapsed += OnYearElapsed;

@@ -3,6 +3,7 @@ using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Network;
@@ -60,7 +61,33 @@ namespace EuropeanWars.Core {
                 item.Value.Initialize();
             }
 
+            ChangeLanguage(0);
+        }
+
+        public static void ChangeLanguage(int id) {
+            LanguageDictionary.language = LanguageDictionary.languages[id];
+
+            foreach (var item in buildings) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in religions) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in cultures) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in provinces) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in countries) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in units) {
+                item.Value.UpdateLanguage();
+            }
+
             TranslatedDescriptionsLibrary.Singleton.UpdateLanguage();
+            DiplomacyWindow.Singleton.UpdateLanguage();
         }
 
         public static void SetPlayerCountry(CountryInfo country) {

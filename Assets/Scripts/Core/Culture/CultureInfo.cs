@@ -17,7 +17,6 @@ namespace EuropeanWars.Core.Culture {
         }
 
         public void Initialize() {
-            UpdateLanguage();
         }
 
         public void UpdateLanguage() {

@@ -38,8 +38,6 @@ namespace EuropeanWars.Core.Army {
         public void Initialize() {
             image = GameInfo.gfx[data.image];
             recruitBuilding = GameInfo.buildings[data.recruitBuilding];
-
-            UpdateLanguage();
         }
 
         public void UpdateLanguage() {

@@ -24,6 +24,10 @@ namespace EuropeanWars.UI.Windows {
             Singleton = this;
         }
 
+        public void UpdateLanguage() {
+            countryWindow.UpdateLanguage();
+        }
+
         public void UpdateWindow(CountryInfo country) {
             UIManager.Singleton.CloseAllWindows();
             window.SetActive(true);

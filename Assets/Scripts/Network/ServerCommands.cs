@@ -4,7 +4,6 @@ using EuropeanWars.Core.Province;
 using EuropeanWars.UI.Lobby;
 using Lidgren.Network;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 

@@ -88,7 +88,6 @@ namespace EuropeanWars.Core.Province {
             religion = GameInfo.religions[data.religion];
             culture = GameInfo.cultures[data.culture];
             OccupationCounter = new ProvinceOccupationCounter(this);
-            UpdateLanguage();
 
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onMonthElapsed += OnMonthElapsed;
