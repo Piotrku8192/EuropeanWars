@@ -19,11 +19,24 @@ namespace EuropeanWars.Core.Pathfinding {
         }
 
         public ProvinceInfo[] FindPath(ProvinceInfo province) {
+            foreach (var item in GameInfo.provinces) {
+                item.Value.node.Movable = IsMoveable(item.Value);
+            }
+
             if (!IsMoveable(province)) {
                 return null;
             }
 
-            ProvinceInfo[] path = GetPath((new ProvinceInfo[1] { army.Province }, 0), province, 10).Item1;
+            PathFinder pathFinder = new PathFinder();
+            Path p = pathFinder.FindPath(army.Province.node, province.node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(1));
+
+            ProvinceInfo[] path = new ProvinceInfo[p.Edges.Count + 1];
+            path[0] = army.Province;
+            for (int i = 1; i < p.Edges.Count + 1; i++) {
+                path[i] = GameInfo.provinces.First(t => t.Value.node == p.Edges[i - 1].End).Value;
+            }
+
+            //ProvinceInfo[] path = GetPath((new ProvinceInfo[1] { army.Province }, 0), province, 10).Item1;
 
             return path;
         }

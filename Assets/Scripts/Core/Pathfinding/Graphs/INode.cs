@@ -8,5 +8,6 @@ namespace Roy_T.AStar.Graphs
         Position Position { get; }
         IList<IEdge> Incoming { get; }
         IList<IEdge> Outgoing { get; }
+        bool Movable { get; set; }
     }
 }

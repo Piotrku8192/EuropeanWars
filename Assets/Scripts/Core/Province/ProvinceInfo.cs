@@ -9,6 +9,7 @@ using EuropeanWars.Core.Time;
 using EuropeanWars.GameMap;
 using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
+using Roy_T.AStar.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace EuropeanWars.Core.Province {
 
         public readonly int id;
         public readonly string color;
+
+        public readonly INode node;
+
         public bool isLand;
 
         public float x, y;
@@ -36,6 +40,8 @@ namespace EuropeanWars.Core.Province {
         public bool fogOfWar;
 
         public List<ProvinceInfo> neighbours = new List<ProvinceInfo>();
+
+
         public CountryInfo Country { get; private set; }
         public CountryInfo NationalCountry { get; private set; }
         public List<CountryInfo> claimators = new List<CountryInfo>();
@@ -67,6 +73,8 @@ namespace EuropeanWars.Core.Province {
             isTradeCity = d.isTradeCity;
             isTradeRoute = d.isTradeRoute;
 
+            node = new Node(new Roy_T.AStar.Primitives.Position(x, y));
+
             GameInfo.provincesByColor.Add(color, this);
         }
 
@@ -80,6 +88,21 @@ namespace EuropeanWars.Core.Province {
             //        neighbours.Add(GameInfo.provinces[data.neighbours[i]]);
             //    }
             //}
+
+            foreach (var item in neighbours) {
+                IEdge i = item.node.Incoming.FirstOrDefault(t => t.Start == node);
+                IEdge o = item.node.Outgoing.FirstOrDefault(t => t.End == node);
+
+                if (i != null && o != null) {
+                    node.Incoming.Add(o);
+                    node.Outgoing.Add(i);
+                }
+                else {
+                    node.Outgoing.Add(new Edge(node, item.node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(1)));
+                    node.Incoming.Add(new Edge(item.node, node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(1)));
+                }
+            }
+
             garnison.Add(GameInfo.units[0], taxation * 100); //TODO: Change it to garnison = data.garnison; or something
 
             for (int i = 0; i < 10; i++) {

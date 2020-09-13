@@ -57,16 +57,18 @@ namespace Roy_T.AStar.Paths
 
                 foreach (var edge in current.Node.Outgoing)
                 {
-                    var oppositeNode = edge.End;
-                    var costSoFar = current.DurationSoFar + edge.TraversalDuration;
+                    if (edge.End.Movable) {
+                        var oppositeNode = edge.End;
+                        var costSoFar = current.DurationSoFar + edge.TraversalDuration;
 
-                    if (this.Nodes.TryGetValue(oppositeNode, out var node))
-                    {
-                        this.UpdateExistingNode(goal, maximumVelocity, current, edge, oppositeNode, costSoFar, node);
-                    }
-                    else
-                    {
-                        this.InsertNode(oppositeNode, edge, goal, costSoFar, maximumVelocity);
+                        if (this.Nodes.TryGetValue(oppositeNode, out var node))
+                        {
+                            this.UpdateExistingNode(goal, maximumVelocity, current, edge, oppositeNode, costSoFar, node);
+                        }
+                        else
+                        {
+                            this.InsertNode(oppositeNode, edge, goal, costSoFar, maximumVelocity);
+                        }
                     }
                 }
             }
