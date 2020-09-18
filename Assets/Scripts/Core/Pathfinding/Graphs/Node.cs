@@ -18,6 +18,8 @@ namespace Roy_T.AStar.Graphs
 
         public Position Position { get; }
 
+        public bool Movable { get; set; }
+
         public void Connect(INode node, Velocity traversalVelocity)
         {
             var edge = new Edge(this, node, traversalVelocity);

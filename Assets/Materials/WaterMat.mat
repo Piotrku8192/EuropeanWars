@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WaterMat
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 3e66cf9b7be48a04582ffc9f3a4c789f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -48,11 +48,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GrassTex:
-        m_Texture: {fileID: 2800000, guid: 98a61579f35ea054dadc2a3240488155, type: 3}
+        m_Texture: {fileID: 2800000, guid: e228475c40b6745468786b10f081a488, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeightMapTex:
-        m_Texture: {fileID: 2800000, guid: 3ae611a7c5b382e49b0584029ff74f0b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4698737b69c5b194f8c03a8cc78ec487, type: 3}
         m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -64,7 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapTex:
-        m_Texture: {fileID: 2800000, guid: 920f6f2d65b0b6944a5f99bd4991bb9e, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 10, y: 10}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -76,11 +76,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RocksTex:
-        m_Texture: {fileID: 2800000, guid: e228475c40b6745468786b10f081a488, type: 3}
+        m_Texture: {fileID: 2800000, guid: 6605d30c37dc9a9408aeb7d3a125cb34, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SnowTex:
-        m_Texture: {fileID: 2800000, guid: 4cafafd683dfb6040b48acd5e5ea58d3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8c85c1dc629ff204fbfcca59471b5123, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
@@ -90,31 +90,31 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableExternalAlpha: 0
-    - _FogOfWar: 1
+    - _FogOfWar: 0
     - _FogOfWarAlpha: 0
-    - _FogOfWarRepeat: 0.5
+    - _FogOfWarRepeat: 1.02
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GrassIntensity: 0.3
+    - _GrassIntensity: 1
     - _GrassRepeat: 1
-    - _GroundRepeat: 0.1
-    - _LightAdd: 0.4
-    - _LightMin: 0.4
+    - _GroundRepeat: -0.49
+    - _LightAdd: 1.26
+    - _LightMin: 0.404
     - _Metallic: 0
     - _Mode: 0
     - _MountEndHeight: 1
-    - _MountStartHeight: 0.66
+    - _MountStartHeight: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RocksIntensity: 0.3
-    - _RocksRepeat: 1
+    - _RocksIntensity: 1
+    - _RocksRepeat: 1.91
     - _Scale: 0.5
     - _SmoothnessTextureChannel: 0
-    - _SnowEndHeight: 0.66
-    - _SnowIntensity: 0.3
+    - _SnowEndHeight: 1
+    - _SnowIntensity: 1
     - _SnowRepeat: 1
-    - _SnowStartHeight: 0.33
+    - _SnowStartHeight: 0.563
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0

@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EuropeanWars.Core.Army;
 using System.Threading;
+using System.Diagnostics;
 
 namespace EuropeanWars.Core.Data {
     public class DataLoader : MonoBehaviour
@@ -55,11 +56,9 @@ namespace EuropeanWars.Core.Data {
                     tex.LoadImage(item.Value);
                     GameInfo.gfx.Add(item.Key, Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2()));
                 }
-
                 MapData m = DataConverter.FromJson<MapData>(gameData.map);
                 MapGenerator.Singleton.mapData = m;
                 MapGenerator.Singleton.GenerateMap();
-
                 GameInfo.Initialize();
 
                 //Generate armies

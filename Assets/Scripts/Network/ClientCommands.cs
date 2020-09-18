@@ -425,7 +425,9 @@ namespace EuropeanWars.Network {
             int count = message.ReadInt32();
             int maxCount = message.ReadInt32();
 
-            GameInfo.armies[army].AddUnit(GameInfo.units[unit], count, maxCount);
+            if (GameInfo.armies.ContainsKey(army)) {
+                GameInfo.armies[army].AddUnit(GameInfo.units[unit], count, maxCount);
+            }
         }
 
 
