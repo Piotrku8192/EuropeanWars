@@ -29,6 +29,8 @@ namespace EuropeanWars.Core.Army {
         public bool IsSelected { get; private set; }
 
         public bool isMoveLocked;
+        public int movingforDays;
+        public int daysToMove;
 
         public CountryInfo Country { get; private set; }
         public ProvinceInfo Province { get; private set; }
@@ -49,7 +51,7 @@ namespace EuropeanWars.Core.Army {
             nextId++;
 
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
-            TimeManager.onDayElapsed += ArmyObject.CountMovement;
+            TimeManager.onDayElapsed += CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
             TimeManager.onMonthElapsed += ReinforcementArmy;
         }
@@ -77,9 +79,42 @@ namespace EuropeanWars.Core.Army {
             nextId++;
 
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
-            TimeManager.onDayElapsed += ArmyObject.CountMovement;
+            TimeManager.onDayElapsed += CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
             TimeManager.onMonthElapsed += ReinforcementArmy;
+        }
+
+        private void CountMovement() {
+            if (route.Count > 1) {
+                ProvinceInfo[] ra = route.ToArray();
+                movingforDays++;
+                if (movingforDays >= daysToMove) {
+                    route.Dequeue();
+                    ra = route.ToArray();
+                    movingforDays = 0;
+                    daysToMove = 0;
+                    OnArmyMove(ra[0]);
+                    if (ra.Length > 2) {
+                        daysToMove = Mathf.CeilToInt(Vector2.Distance(
+                            new Vector2(ra[0].x, ra[0].y), new Vector2(ra[1].x, ra[1].y))) / (AverageSpeed == 0 ? 1 : AverageSpeed);
+                    }
+
+                    if (Country == GameInfo.PlayerCountry) {
+                        ArmyObject.DrawRoute(route.ToArray());
+                    }
+                }
+                Vector2 pos = new Vector2(ra[0].x, ra[0].y);
+                if (ra.Length > 1) {
+                    pos = Vector2.Lerp(pos, new Vector2(ra[1].x, ra[1].y), 
+                        movingforDays / (float)(daysToMove == 0 ? 1 : daysToMove));
+                }
+                if (ArmyObject) {
+                    ArmyObject.transform.position = pos;
+                    if (Country == GameInfo.PlayerCountry) {
+                        ArmyObject.lineRenderer.SetPosition(0, pos);
+                    }
+                }
+            }
         }
 
         private void ReinforcementArmy() {
@@ -137,7 +172,7 @@ namespace EuropeanWars.Core.Army {
             GameInfo.armies.Remove(id);
             Country.armies.Remove(this);
             Province.armies.Remove(this);
-            TimeManager.onDayElapsed -= ArmyObject.CountMovement;
+            TimeManager.onDayElapsed -= CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
             TimeManager.onMonthElapsed -= ReinforcementArmy;
             try {

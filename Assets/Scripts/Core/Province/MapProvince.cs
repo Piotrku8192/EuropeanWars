@@ -62,7 +62,7 @@ namespace EuropeanWars.Province {
         }
 
         public void ChangeToCountriesMap() {
-            if (meshRenderer.material != countriesMapMaterial) {
+            if (meshRenderer.material != countriesMapMaterial && provinceInfo.isLand) {
                 meshRenderer.material = countriesMapMaterial;
             }
         }
@@ -79,7 +79,7 @@ namespace EuropeanWars.Province {
             meshRenderer = gameObject.AddComponent<MeshRenderer>();
             this.material = material;
             countriesMapMaterial = countriesMaterial;
-            meshRenderer.material = countriesMaterial;
+            meshRenderer.material = provinceInfo.isLand ? countriesMaterial : material;
 
             Mesh m = new Mesh();
             List<Vector3> verts = new List<Vector3>();
