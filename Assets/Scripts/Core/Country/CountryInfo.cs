@@ -125,6 +125,8 @@ namespace EuropeanWars.Core.Country {
 			int lastGold = gold;
 
 			//Calculate income
+			CalculateTradeModifier();
+
 			taxationIncome = 0;
 			buildingsIncome = 0;
 			tradeIncome = 0;
@@ -237,6 +239,34 @@ namespace EuropeanWars.Core.Country {
 				buildingsIncomeModifier += 0.2f;
 				tradeIncomeModifier += 0.2f;
 			}
+		}
+		#endregion
+
+		#region Trade
+		private void CalculateTradeModifier() {
+			int totalCities = GameInfo.provinces.Where(t => t.Value.isTradeCity).Count();
+			int cities = provinces.Where(t => t.isTradeCity).Count();
+			float f = cities / (float)totalCities;
+			float tradeCitiesModifier = 0;
+
+			//TODO: Change static values to settings in GameSettings
+			if (f >= 0.01f && f < 0.05f)
+				tradeCitiesModifier = 0.05f;
+			else if (f >= 0.05f && f < 0.12f)
+				tradeCitiesModifier = 0.1f;
+			else if (f >= 0.12f && f < 0.25f)
+				tradeCitiesModifier = 0.2f;
+			else if (f >= 0.25f && f < 0.45f)
+				tradeCitiesModifier = 0.5f;
+			else if (f >= 0.45f && f < 0.75f)
+				tradeCitiesModifier = 1f;
+			else if (f >= 0.75f)
+				tradeCitiesModifier = 2f;
+
+			tradeIncomeModifier = 1;
+			tradeIncomeModifier += tradeCitiesModifier;
+			tradeIncomeModifier += cities * 0.01f;
+			tradeIncomeModifier += provinces.Where(t => t.isTradeRoute).Count() * 0.005f;
 		}
 		#endregion
 

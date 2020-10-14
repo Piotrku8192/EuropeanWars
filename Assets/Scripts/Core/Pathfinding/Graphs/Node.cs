@@ -16,7 +16,7 @@ namespace Roy_T.AStar.Graphs
         public IList<IEdge> Incoming { get; }
         public IList<IEdge> Outgoing { get; }
 
-        public Position Position { get; }
+        public Position Position { get; set; }
 
         public bool Movable { get; set; }
 
