@@ -339,12 +339,14 @@ namespace EuropeanWars.Network {
                 receiverElements.Add(message.ReadInt32());
             }
 
-            WarInfo w = DiplomacyManager.wars[war];
-            PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
-            deal.ChangeGold(gainedGold / 10);
-            deal.selectedSenderElements.AddRange(senderElements);
-            deal.selectedReceiverElements.AddRange(receiverElements);
-            deal.Execute();
+            if (DiplomacyManager.wars.ContainsKey(war)) {
+                WarInfo w = DiplomacyManager.wars[war];
+                PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+                deal.ChangeGold(gainedGold / 10);
+                deal.selectedSenderElements.AddRange(senderElements);
+                deal.selectedReceiverElements.AddRange(receiverElements);
+                deal.Execute();
+            }
         }
 
         [Command(1037)]

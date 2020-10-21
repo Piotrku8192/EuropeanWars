@@ -88,6 +88,7 @@ namespace EuropeanWars.Core {
 
             TranslatedDescriptionsLibrary.Singleton.UpdateLanguage();
             DiplomacyWindow.Singleton.UpdateLanguage();
+            TradeWindow.Singleton.UpdateLanguage();
         }
 
         public static void SetPlayerCountry(CountryInfo country) {

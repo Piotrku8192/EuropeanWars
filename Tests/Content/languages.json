@@ -854,6 +854,7 @@
     "Description-economy": "Gospodarka",
     "Description-diplomacy": "Dyplomacja",
     "Description-army": "Armia",
+    "Description-trade": "Handel",
     "Attack": "Atak",
     "Defence": "Obrona",
     "Speed": "Mobilność",
@@ -871,7 +872,9 @@
     "MakeAlliance": "Zaproponuj sojusz",
     "DeleteAlliance": "Zerwij sojusz",
     "MillitaryAccess": "Prawo przemarszu",
-    "DeleteMillitaryAccess": "Zerwij prawo przemarszu"
+    "DeleteMillitaryAccess": "Zerwij prawo przemarszu",
+    "Others": "Inne",
+    "TradeModificators": "Modyfikator udziału państwa w handlu: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1728,6 +1731,7 @@
     "Description-economy": "Economy",
     "Description-diplomacy": "Diplomacy",
     "Description-army": "Army",
+    "Description-trade": "Trade",
     "Attack": "Attack",
     "Defence": "Defence",
     "Speed": "Speed",
@@ -1745,6 +1749,8 @@
     "MakeAlliance": "Alliance",
     "DeleteAlliance": "Break alliance",
     "MillitaryAccess": "Millitary access",
-    "DeleteMillitaryAccess": "Break millitary access"
+    "DeleteMillitaryAccess": "Break millitary access",
+    "Others": "Others",
+    "TradeModificators": "World trade receipts modificators: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>"
   }
 ]
