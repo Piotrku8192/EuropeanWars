@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Diplomacy;
+﻿using EuropeanWars.Core.Diplomacy_Old;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,7 +1,7 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Network;
 using Lidgren.Network;

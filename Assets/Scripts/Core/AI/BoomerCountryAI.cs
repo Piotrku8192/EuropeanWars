@@ -1,7 +1,7 @@
 ﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Core.War;
@@ -18,13 +18,13 @@ namespace EuropeanWars.Core.AI {
         protected override void OnDayElapsed() {
             //throw new NotImplementedException();
             MergeArmies();
+            MoveArmies();
         }
 
         protected override void OnMonthElapsed() {
             BuildBuildings();
             RecruitArmies();
             MakeClaims();
-            MoveArmies();
             DeclareWars();
             PeaceWars();
         }

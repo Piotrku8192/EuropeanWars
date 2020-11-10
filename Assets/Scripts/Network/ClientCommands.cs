@@ -2,7 +2,7 @@
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI;

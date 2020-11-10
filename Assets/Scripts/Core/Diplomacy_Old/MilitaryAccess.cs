@@ -5,7 +5,7 @@ using Lidgren.Network;
 using System.Linq;
 using UnityEngine.UI;
 
-namespace EuropeanWars.Core.Diplomacy {
+namespace EuropeanWars.Core.Diplomacy_Old {
     public class MilitaryAccess : DiplomaticRelation {
         public static bool messageSent;
 

@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EuropeanWars.Core.Diplomacy {
+namespace EuropeanWars.Core.Diplomacy_Old {
     public class Alliance : DiplomaticRelation {
         public static bool messageSent;
 

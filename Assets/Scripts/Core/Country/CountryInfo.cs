@@ -2,6 +2,7 @@
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
@@ -64,10 +65,12 @@ namespace EuropeanWars.Core.Country {
 		public int prestige;
 		public List<CountryInfo> friends = new List<CountryInfo>();
 		public List<CountryInfo> enemies = new List<CountryInfo>();
-		public Dictionary<CountryInfo, int> relations = new Dictionary<CountryInfo, int>();
 		public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
+		public Dictionary<CountryInfo, CountryRelation> relations = new Dictionary<CountryInfo, CountryRelation>();
+
+		//TODO: Delete
 		public Dictionary<CountryInfo, Alliance> alliances = new Dictionary<CountryInfo, Alliance>();
-		public Dictionary<CountryInfo, MilitaryAccess> militaryAccesses= new Dictionary<CountryInfo, MilitaryAccess>();
+		public Dictionary<CountryInfo, MilitaryAccess> militaryAccesses = new Dictionary<CountryInfo, MilitaryAccess>();
 
 		//Technology and stuff
 		public List<BuildingInfo> buildings = new List<BuildingInfo>();

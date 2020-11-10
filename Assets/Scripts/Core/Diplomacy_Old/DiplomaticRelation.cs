@@ -2,7 +2,7 @@
 using EuropeanWars.Core.Time;
 using System.Collections.Generic;
 
-namespace EuropeanWars.Core.Diplomacy {
+namespace EuropeanWars.Core.Diplomacy_Old {
     public class DiplomaticRelation {
         public List<CountryInfo> countries = new List<CountryInfo>();
         public string name;

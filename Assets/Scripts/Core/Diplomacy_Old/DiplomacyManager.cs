@@ -2,7 +2,7 @@
 using EuropeanWars.Core.War;
 using System.Collections.Generic;
 
-namespace EuropeanWars.Core.Diplomacy {
+namespace EuropeanWars.Core.Diplomacy_Old {
     public static class DiplomacyManager {
         public static Dictionary<int, WarInfo> wars = new Dictionary<int, WarInfo>();
         public static List<MilitaryAccess> militaryAccesses = new List<MilitaryAccess>();
@@ -36,13 +36,6 @@ namespace EuropeanWars.Core.Diplomacy {
         public static void DeclareWar(WarReason warReason, CountryInfo attacker, CountryInfo defender) {
             WarInfo war = new WarInfo(warReason, attacker, defender);
             wars.Add(war.id, war);
-        }
-
-        public static void SetRelationsWithCountry(CountryInfo country, CountryInfo _country, int v) {
-            if (country.relations.ContainsKey(_country) && _country.relations.ContainsKey(country)) {
-                _country.relations[country] = v;
-                country.relations[_country] = v;
-            }
         }
     }
 }
