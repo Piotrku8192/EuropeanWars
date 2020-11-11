@@ -151,6 +151,7 @@ namespace EuropeanWars.Network {
 
         #region Diplomacy (1024-2047)
 
+        //TODO: Remove this:
         #region Alliance
         [Command(1024)]
         public static void AllianceRequest(NetIncomingMessage message) {
@@ -258,6 +259,8 @@ namespace EuropeanWars.Network {
             MilitaryAccess.DeleteAccessClient(access, s);
         }
         #endregion
+
+        //EndRemove
 
         #region Claims
         [Command(1032)]
@@ -396,6 +399,35 @@ namespace EuropeanWars.Network {
             }
         }
         #endregion
+
+        [Command(1039)]
+        public static void ChangeRelationState(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            sender.relations[receiver].ChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation);
+        }
+
+        [Command(1040)]
+        public static void ChangeRelationStateRequest(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            sender.relations[receiver].TryChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation, sender, receiver);
+        }
+
+        [Command(1041)]
+        public static void ChangeRelationStateDelice(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            if (sender == GameInfo.PlayerCountry) {
+                //TODO: Show delice window.
+            }
+        }
 
         #endregion
 

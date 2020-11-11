@@ -1,4 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Network;
+using Lidgren.Network;
 using System;
 
 namespace EuropeanWars.Core.Diplomacy {
@@ -24,7 +26,7 @@ namespace EuropeanWars.Core.Diplomacy {
             this.relations = new bool[Enum.GetValues(typeof(DiplomaticRelation)).Length];
         }
 
-        public void ChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
+        public void TryChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
             if (!sender.isPlayer && !receiver.isPlayer) {
                 if (GameInfo.countryAIs[receiver].IsDiplomaticRelationChangeAccepted(relation, sender)) {
                     ChangeRelationState(relation);
@@ -32,7 +34,12 @@ namespace EuropeanWars.Core.Diplomacy {
             }
             else if (sender.isPlayer && !receiver.isPlayer) {
                 if (GameInfo.countryAIs[receiver].IsDiplomaticRelationChangeAccepted(relation, sender)) {
-                    //Send to all players that they must change relation state.
+                    NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                    msg.Write((ushort)1039);
+                    msg.Write(sender.id);
+                    msg.Write(receiver.id);
+                    msg.Write((int)relation);
+                    Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
                 }
             }
             else if (!sender.isPlayer && receiver.isPlayer) {
@@ -41,11 +48,21 @@ namespace EuropeanWars.Core.Diplomacy {
                 }
             }
             else {
-                //Send request to other player and if he accepted send to all as in situatuion above
+                if (GameInfo.PlayerCountry == receiver) {
+                    //Show communicate to player, if accepted send to all
+                }
+                else {
+                    NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                    msg.Write((ushort)1040);
+                    msg.Write(sender.id);
+                    msg.Write(receiver.id);
+                    msg.Write((int)relation);
+                    Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+                }
             }
         }
 
-        void ChangeRelationState(DiplomaticRelation relation) {
+        public void ChangeRelationState(DiplomaticRelation relation) {
             //TODO: Add switch and additional actions in this place
             relations[(int)relation] = !relations[(int)relation];
         }
