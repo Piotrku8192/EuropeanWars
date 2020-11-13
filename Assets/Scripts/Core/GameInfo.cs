@@ -40,7 +40,8 @@ namespace EuropeanWars.Core {
         public static bool gameStarted;
 
         public static void Initialize() {
-            random = new System.Random(69); //hahaha very funny seed lol ~PZFN 20.07.2020 20:40 ;) (im stupid man i guess)
+            //random = new System.Random(69); //hahaha very funny seed lol ~PZFN 20.07.2020 20:40 ;) (im stupid man i guess)
+            random = new System.Random(729);
 
             foreach (var item in buildings) {
                 item.Value.Initialize();
