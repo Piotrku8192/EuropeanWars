@@ -5,7 +5,7 @@ namespace Roy_T.AStar.Graphs
 {
     public interface INode
     {
-        Position Position { get; }
+        Position Position { get; set; }
         IList<IEdge> Incoming { get; }
         IList<IEdge> Outgoing { get; }
         bool Movable { get; set; }

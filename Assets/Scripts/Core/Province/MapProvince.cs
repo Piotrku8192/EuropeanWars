@@ -105,6 +105,7 @@ namespace EuropeanWars.Province {
                     max.y = v.y;
                 }
             }
+            //TODO: Maybe do something with that
             provinceInfo.x = Mathf.Lerp(min.x, max.x, 0.5f);
             provinceInfo.y = Mathf.Lerp(min.y, max.y, 0.5f);
 

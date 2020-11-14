@@ -2,7 +2,7 @@
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI;
@@ -151,6 +151,7 @@ namespace EuropeanWars.Network {
 
         #region Diplomacy (1024-2047)
 
+        //TODO: Remove this:
         #region Alliance
         [Command(1024)]
         public static void AllianceRequest(NetIncomingMessage message) {
@@ -259,6 +260,8 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        //EndRemove
+
         #region Claims
         [Command(1032)]
         public static void FabricateClaim(NetIncomingMessage message) {
@@ -339,12 +342,14 @@ namespace EuropeanWars.Network {
                 receiverElements.Add(message.ReadInt32());
             }
 
-            WarInfo w = DiplomacyManager.wars[war];
-            PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
-            deal.ChangeGold(gainedGold / 10);
-            deal.selectedSenderElements.AddRange(senderElements);
-            deal.selectedReceiverElements.AddRange(receiverElements);
-            deal.Execute();
+            if (DiplomacyManager.wars.ContainsKey(war)) {
+                WarInfo w = DiplomacyManager.wars[war];
+                PeaceDeal deal = new PeaceDeal(w, GameInfo.countries[sender].wars[w], GameInfo.countries[receiver].wars[w]);
+                deal.ChangeGold(gainedGold / 10);
+                deal.selectedSenderElements.AddRange(senderElements);
+                deal.selectedReceiverElements.AddRange(receiverElements);
+                deal.Execute();
+            }
         }
 
         [Command(1037)]
@@ -394,6 +399,35 @@ namespace EuropeanWars.Network {
             }
         }
         #endregion
+
+        [Command(1039)]
+        public static void ChangeRelationState(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            sender.relations[receiver].ChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation);
+        }
+
+        [Command(1040)]
+        public static void ChangeRelationStateRequest(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            sender.relations[receiver].TryChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation, sender, receiver);
+        }
+
+        [Command(1041)]
+        public static void ChangeRelationStateDelice(NetIncomingMessage message) {
+            CountryInfo sender = GameInfo.countries[message.ReadInt32()];
+            CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
+            int relation = message.ReadInt32();
+
+            if (sender == GameInfo.PlayerCountry) {
+                //TODO: Show delice window.
+            }
+        }
 
         #endregion
 

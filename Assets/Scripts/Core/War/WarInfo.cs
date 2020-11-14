@@ -1,6 +1,6 @@
 ﻿using Boo.Lang;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI.Windows;
 

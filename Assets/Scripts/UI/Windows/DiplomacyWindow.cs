@@ -1,6 +1,6 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.War;
 using System.Collections.Generic;
 using UnityEngine;

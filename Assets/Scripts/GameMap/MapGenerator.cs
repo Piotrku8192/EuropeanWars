@@ -32,30 +32,34 @@ namespace EuropeanWars.GameMap {
                 GameObject go = new GameObject(item.firstProvince + item.secondProvince, typeof(Border));
                 go.transform.SetParent(transform);
                 Border b = go.GetComponent<Border>();
-                b.GenerateBorder(item);
+                if (GameInfo.provincesByColor.ContainsKey(item.firstProvince) && GameInfo.provincesByColor.ContainsKey(item.firstProvince)) {
+                    b.GenerateBorder(item);
+                    if (!borders.ContainsKey(b.province1.color)) {
+                        borders.Add(b.province1.color, new List<Border>());
+                    }
+                    if (!borders.ContainsKey(b.province2.color)) {
+                        borders.Add(b.province2.color, new List<Border>());
+                    }
+                    borders[b.province1.color].Add(b);
+                    borders[b.province2.color].Add(b);
+                }
 
-                if (!borders.ContainsKey(b.province1.color)) {
-                    borders.Add(b.province1.color, new List<Border>());
-                }
-                if (!borders.ContainsKey(b.province2.color)) {
-                    borders.Add(b.province2.color, new List<Border>());
-                }
-                borders[b.province1.color].Add(b);
-                borders[b.province2.color].Add(b);
             }
 
             foreach (var item in mapData.provinces) {
-                GameObject go = new GameObject(item.color, typeof(MapProvince));
-                go.transform.SetParent(transform);
-                MapProvince p = go.GetComponent<MapProvince>();
-                p.borders.AddRange(borders[item.color]);
-                ProvinceInfo province = GameInfo.provinces.Where(t => t.Value.color == item.color).FirstOrDefault().Value;
-                p.GenerateProvince(item.mesh, province.isLand ? new Material(provinceMaterial) : waterMaterial, new Material(countriesMapMaterial), province);
-                province.mapProvince = p;
+                if (borders.ContainsKey(item.color)) {
+                    GameObject go = new GameObject(item.color, typeof(MapProvince));
+                    go.transform.SetParent(transform);
+                    MapProvince p = go.GetComponent<MapProvince>();
+                    p.borders.AddRange(borders[item.color]);
+                    ProvinceInfo province = GameInfo.provinces.Where(t => t.Value.color == item.color).FirstOrDefault().Value;
+                    p.GenerateProvince(item.mesh, province.isLand ? new Material(provinceMaterial) : waterMaterial, new Material(countriesMapMaterial), province);
+                    province.mapProvince = p;
 
-                //TODO: Delete this temporary code plz!
-                foreach (var b in p.borders) {
-                    province.neighbours.Add(b.province1 == province ? b.province2 : b.province1);
+                    //TODO: Delete this temporary code plz!
+                    foreach (var b in p.borders) {
+                        province.neighbours.Add(b.province1 == province ? b.province2 : b.province1);
+                    }
                 }
             }
         }

@@ -22,7 +22,7 @@ namespace EuropeanWars.Core.Province {
         public readonly int id;
         public readonly string color;
 
-        public readonly INode node;
+        public INode Node { get; private set; }
 
         public bool isLand;
 
@@ -34,13 +34,13 @@ namespace EuropeanWars.Core.Province {
         public int taxation;
         public int buildingsIncome;
         public int tradeIncome;
+
         public bool isInteractive;
         public bool isActive;
 
         public bool fogOfWar;
 
         public List<ProvinceInfo> neighbours = new List<ProvinceInfo>();
-
 
         public CountryInfo Country { get; private set; }
         public CountryInfo NationalCountry { get; private set; }
@@ -51,12 +51,13 @@ namespace EuropeanWars.Core.Province {
         public CultureInfo culture;
         public int defense;
         public Dictionary<UnitInfo, int> garnison = new Dictionary<UnitInfo, int>();
-        public bool isTradeCity;
-        public bool isTradeRoute;
         public BuildingInfo[] buildings = new BuildingInfo[10];
 
         public List<ArmyInfo> armies = new List<ArmyInfo>();
         public ProvinceOccupationCounter OccupationCounter { get; private set; }
+
+        public bool isTradeCity;
+        public bool isTradeRoute;
 
         public ProvinceInfo(ProvinceData d) {
             this.data = d;
@@ -73,8 +74,7 @@ namespace EuropeanWars.Core.Province {
             isTradeCity = d.isTradeCity;
             isTradeRoute = d.isTradeRoute;
 
-            node = new Node(new Roy_T.AStar.Primitives.Position(x, y));
-
+            Node = new Node(new Roy_T.AStar.Primitives.Position(x, y));
             GameInfo.provincesByColor.Add(color, this);
         }
 
@@ -89,17 +89,20 @@ namespace EuropeanWars.Core.Province {
             //    }
             //}
 
+            Node.Position = new Roy_T.AStar.Primitives.Position(x, y);
             foreach (var item in neighbours) {
-                IEdge i = item.node.Incoming.FirstOrDefault(t => t.Start == node);
-                IEdge o = item.node.Outgoing.FirstOrDefault(t => t.End == node);
+                IEdge i = item.Node.Incoming.FirstOrDefault(t => t.Start == Node);
+                IEdge o = item.Node.Outgoing.FirstOrDefault(t => t.End == Node);
 
+                //float distance = Vector2.Distance(new Vector2(x, y), new Vector2(item.x, item.y));
+                //Debug.Log(distance);
                 if (i != null && o != null) {
-                    node.Incoming.Add(o);
-                    node.Outgoing.Add(i);
+                    Node.Incoming.Add(o);
+                    Node.Outgoing.Add(i);
                 }
                 else {
-                    node.Outgoing.Add(new Edge(node, item.node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(1)));
-                    node.Incoming.Add(new Edge(item.node, node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(1)));
+                    Node.Outgoing.Add(new Edge(Node, item.Node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(2)));
+                    Node.Incoming.Add(new Edge(item.Node, Node, Roy_T.AStar.Primitives.Velocity.FromMetersPerSecond(2)));
                 }
             }
 
@@ -111,6 +114,17 @@ namespace EuropeanWars.Core.Province {
             religion = GameInfo.religions[data.religion];
             culture = GameInfo.cultures[data.culture];
             OccupationCounter = new ProvinceOccupationCounter(this);
+
+            //Initialize tradeIncome
+            if (isTradeCity) {
+                tradeIncome = taxation * 3;
+            }
+            else if (isTradeRoute && taxation >= 6) {
+                tradeIncome = 10;
+            }
+            else {
+                tradeIncome = 0;
+            }
 
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onMonthElapsed += OnMonthElapsed;

@@ -392,6 +392,48 @@ namespace EuropeanWars.Network {
         }
         #endregion
 
+        [Command(1039)]
+        public static void ChangeRelationState(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int relation = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1039);
+            msg.Write(sender);
+            msg.Write(receiver);
+            msg.Write(relation);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1040)]
+        public static void ChangeRelationStateRequest(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int relation = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1040);
+            msg.Write(sender);
+            msg.Write(receiver);
+            msg.Write(relation);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        [Command(1041)]
+        public static void ChangeRelationStateDelice(NetIncomingMessage message) {
+            int sender = message.ReadInt32();
+            int receiver = message.ReadInt32();
+            int relation = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1041);
+            msg.Write(sender);
+            msg.Write(receiver);
+            msg.Write(relation);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         #endregion
 
         #region Army (2048-3071)

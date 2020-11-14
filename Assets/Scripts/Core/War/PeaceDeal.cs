@@ -1,5 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
