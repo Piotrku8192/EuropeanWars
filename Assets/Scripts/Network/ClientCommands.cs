@@ -287,7 +287,7 @@ namespace EuropeanWars.Network {
             CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
             int relation = message.ReadInt32();
 
-            sender.relations[receiver].ChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation);
+            sender.relations[receiver].ChangeRelationState((DiplomaticRelation)relation);
         }
 
         [Command(1040)]
@@ -296,7 +296,7 @@ namespace EuropeanWars.Network {
             CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
             int relation = message.ReadInt32();
 
-            sender.relations[receiver].TryChangeRelationState((Core.Diplomacy.DiplomaticRelation)relation, sender, receiver);
+            sender.relations[receiver].ProcessRequest((Core.Diplomacy.DiplomaticRelation)relation, sender, receiver);
         }
 
         [Command(1041)]

@@ -132,7 +132,7 @@ namespace EuropeanWars.Core.War {
                 window.acceptText.text = "Zaakceptuj";
                 window.deliceText.text = "Odrzuć";
                 window.title.text = "Propozycja pokoju";
-                string description = $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
+                string description = GainedGold == 0 ? "" : $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
                 foreach (var item in selectedSenderElements) {
                     description += senderElements[item].Name + "\n";
                 }
