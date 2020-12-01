@@ -5,7 +5,6 @@ using EuropeanWars.UI;
 using EuropeanWars.UI.Windows;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace EuropeanWars.GameMap {
     public enum MapMode {
@@ -64,8 +63,8 @@ namespace EuropeanWars.GameMap {
                 case MapMode.Terrain:
                     break;
                 case MapMode.Recrutation:
-                    color = province.claimators.Contains(GameInfo.PlayerCountry) 
-                        && province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding) 
+                    color = province.claimators.Contains(GameInfo.PlayerCountry)
+                        && province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding)
                         && province.Country == GameInfo.PlayerCountry ? Color.green
                         : province.Country == GameInfo.PlayerCountry ? Color.gray : Color.black;
                     break;

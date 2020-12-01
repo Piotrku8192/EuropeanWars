@@ -1,13 +1,10 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct Position : IEquatable<Position>
-    {
+namespace Roy_T.AStar.Primitives {
+    public struct Position : IEquatable<Position> {
         public static Position Zero => new Position(0, 0);
 
-        public Position(float x, float y)
-        {
+        public Position(float x, float y) {
             this.X = x;
             this.Y = y;
         }

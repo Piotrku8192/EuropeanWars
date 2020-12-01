@@ -1,7 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
-using System;
-using UnityEngine;
 
 namespace EuropeanWars.Core.Army {
     public class UnitToRecruit {

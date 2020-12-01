@@ -188,120 +188,6 @@ namespace EuropeanWars.Network {
 
         #region Diplomacy (1024-2047)
 
-        #region Alliance
-        [Command(1024)]
-        public static void AllianceRequest(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1024);
-            msg.Write(sender);
-            msg.Write(receiver);
-            if (Server.Singleton.clients.Where(t => t.Value.countryId == receiver).Any()) {
-                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
-            }
-        }
-
-        [Command(1025)]
-        public static void AcceptAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1025);
-            msg.Write(sender);
-            msg.Write(receiver);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
-        }
-
-        [Command(1026)]
-        public static void DeliceAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1026);
-            msg.Write(sender);
-            msg.Write(receiver);
-
-            if (Server.Singleton.clients.Where(t => t.Value.countryId == sender).Any()) {
-                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == sender).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
-            }
-        }
-
-        [Command(1027)]
-        public static void DeleteAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-            int s = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1027);
-            msg.Write(sender);
-            msg.Write(receiver);
-            msg.Write(s);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
-        }
-        #endregion
-
-        #region MilitaryAccess
-        [Command(1028)]
-        public static void AccessRequest(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1028);
-            msg.Write(sender);
-            msg.Write(receiver);
-            if (Server.Singleton.clients.Where(t => t.Value.countryId == receiver).Any()) {
-                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
-            }
-        }
-
-        [Command(1029)]
-        public static void AcceptAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1029);
-            msg.Write(sender);
-            msg.Write(receiver);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
-        }
-
-        [Command(1030)]
-        public static void DeliceAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1030);
-            msg.Write(sender);
-            msg.Write(receiver);
-
-            if (Server.Singleton.clients.Where(t => t.Value.countryId == sender).Any()) {
-                Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => t.Value.countryId == sender).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
-            }
-        }
-
-        [Command(1031)]
-        public static void DeleteAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-            int s = message.ReadInt32();
-
-            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
-            msg.Write((ushort)1031);
-            msg.Write(sender);
-            msg.Write(receiver);
-            msg.Write(s);
-            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
-        }
-        #endregion
-
         #region Claims
         [Command(1032)]
         public static void FabricateClaim(NetIncomingMessage message) {
@@ -375,7 +261,7 @@ namespace EuropeanWars.Network {
             NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
             msg.Write((ushort)1037);
             msg.Write(b);
-            Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t => 
+            Server.Singleton.s.SendMessage(msg, Server.Singleton.clients.Where(t =>
             t.Value.countryId == receiver).FirstOrDefault().Key, NetDeliveryMethod.ReliableOrdered);
         }
 

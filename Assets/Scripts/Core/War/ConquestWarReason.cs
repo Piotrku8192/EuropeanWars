@@ -1,6 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
-using System;
 
 namespace EuropeanWars.Core.War {
     public class ConquestWarReason : WarReason {
@@ -14,7 +14,7 @@ namespace EuropeanWars.Core.War {
         }
 
         public override bool CanInviteCountryToWar(CountryInfo invitator, CountryInfo friend) {
-            return !invitator.IsInWarAgainstCountry(friend) && invitator.alliances.ContainsKey(friend); //TODO: Add || invitator.vassals.Contains(friend) when vassals are implemented
+            return !invitator.IsInWarAgainstCountry(friend) && invitator.relations[friend].relations[(int)DiplomaticRelation.Alliance]; //TODO: Add || invitator.vassals.Contains(friend) when vassals are implemented
         }
     }
 }

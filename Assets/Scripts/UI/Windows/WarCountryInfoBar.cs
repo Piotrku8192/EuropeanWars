@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class WarCountryInfoBar : MonoBehaviour{
+    public class WarCountryInfoBar : MonoBehaviour {
         public WarCountryInfo country;
         public CountryButton countryButton;
         public Text countryName;

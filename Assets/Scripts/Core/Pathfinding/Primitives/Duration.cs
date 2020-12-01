@@ -1,13 +1,10 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct Duration : IComparable<Duration>, IEquatable<Duration>
-    {
+namespace Roy_T.AStar.Primitives {
+    public struct Duration : IComparable<Duration>, IEquatable<Duration> {
         public static Duration Zero => new Duration(0);
 
-        private Duration(float seconds)
-        {
+        private Duration(float seconds) {
             this.Seconds = seconds;
         }
 

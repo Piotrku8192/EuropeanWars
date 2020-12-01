@@ -1,6 +1,4 @@
-﻿using EuropeanWars.Core.Pathfinding;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.Core.Army {
@@ -22,23 +20,23 @@ namespace EuropeanWars.Core.Army {
             }
 
             //if (!GameInfo.IsPointerOverUIObject()) {
-                Vector2 point = Controller.Singleton.playerCam.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 point = Controller.Singleton.playerCam.ScreenToWorldPoint(Input.mousePosition);
 
-                if (Input.GetKeyDown(KeyCode.Mouse1) && !isActive) {
-                    isActive = true;
-                    startPoint = point;
-                }
+            if (Input.GetKeyDown(KeyCode.Mouse1) && !isActive) {
+                isActive = true;
+                startPoint = point;
+            }
 
-                if (Input.GetKey(KeyCode.Mouse1) && isActive && point != startPoint) {
-                    Vector2 start = Vector2.Min(point, startPoint);
-                    Vector2 end = Vector2.Max(point, startPoint);
-                    float y = start.y;
-                    start.y = end.y;
-                    end.y = y;
-                    rect.sizeDelta = new Vector2(Mathf.Abs(end.x - start.x), Mathf.Abs(end.y - start.y));
-                    rect.anchoredPosition = start;
-                    image.enabled = true;
-                }
+            if (Input.GetKey(KeyCode.Mouse1) && isActive && point != startPoint) {
+                Vector2 start = Vector2.Min(point, startPoint);
+                Vector2 end = Vector2.Max(point, startPoint);
+                float y = start.y;
+                start.y = end.y;
+                end.y = y;
+                rect.sizeDelta = new Vector2(Mathf.Abs(end.x - start.x), Mathf.Abs(end.y - start.y));
+                rect.anchoredPosition = start;
+                image.enabled = true;
+            }
             //}
 
             if (Input.GetKeyUp(KeyCode.Mouse1) && isActive) {

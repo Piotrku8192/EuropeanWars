@@ -2,9 +2,7 @@
 using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Language;
-using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.GameMap;
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;

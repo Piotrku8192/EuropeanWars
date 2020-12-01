@@ -3,8 +3,7 @@ using Lidgren.Network;
 using UnityEngine;
 
 namespace EuropeanWars.UI.Windows {
-    public class DeleteBuildingWindow : MonoBehaviour
-    {
+    public class DeleteBuildingWindow : MonoBehaviour {
         public int provinceId;
         public int slotId;
 

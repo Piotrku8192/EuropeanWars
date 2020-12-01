@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.Core.Time {
-    public class Timer : MonoBehaviour
-    {
+    public class Timer : MonoBehaviour {
         public static Timer Singleton { get; private set; }
         public Text date;
         public Button[] buttons = new Button[6];

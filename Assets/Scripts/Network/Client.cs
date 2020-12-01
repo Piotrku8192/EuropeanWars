@@ -3,8 +3,7 @@ using System.Net;
 using UnityEngine;
 
 namespace EuropeanWars.Network {
-    public class Client : MonoBehaviour
-    {
+    public class Client : MonoBehaviour {
         public static Client Singleton { get; private set; }
         public NetClient c;
         public string serverAddress;

@@ -1,22 +1,19 @@
-﻿using EuropeanWars.Core;
-using EuropeanWars.Core.Pathfinding;
+﻿using EuropeanWars.Audio;
+using EuropeanWars.Core;
+using EuropeanWars.Core.AI;
+using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
+using EuropeanWars.Core.War;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using UnityEngine.UI;
-using EuropeanWars.Core.Army;
-using EuropeanWars.Core.War;
-using EuropeanWars.Audio;
-using EuropeanWars.Core.AI;
 
 namespace EuropeanWars.Network {
     public static class ClientCommands {
@@ -68,7 +65,7 @@ namespace EuropeanWars.Network {
                 item.Value.RefreshFogOfWar();
             }
             GameInfo.UnselectProvince();
-            
+
             if (Client.Singleton.IsHost) {
                 foreach (var item in GameInfo.countries) {
                     if (item.Value.id > 0) {
@@ -151,117 +148,6 @@ namespace EuropeanWars.Network {
 
         #region Diplomacy (1024-2047)
 
-        //TODO: Remove this:
-        #region Alliance
-        [Command(1024)]
-        public static void AllianceRequest(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            Alliance.AllianceRequestClient(GameInfo.countries[sender], GameInfo.countries[receiver]);
-        }
-
-        [Command(1025)]
-        public static void AcceptAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            Alliance alliance = new Alliance();
-            alliance.countries.Add(GameInfo.countries[sender]);
-            alliance.countries.Add(GameInfo.countries[receiver]);
-
-            Alliance.CreateAllianceClient(alliance);
-        }
-
-        [Command(1026)]
-        public static void DeliceAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            //TODO: Implement translation
-            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
-                countries = new List<Core.Country.CountryInfo>() {
-                    GameInfo.countries[sender],
-                    GameInfo.countries[receiver]
-                }
-            }, true);
-            win.title.text = "Odrzucono sojusz";
-            win.description.text = "Państwo, któremu zaproponowaliśmy sojusz odrzuciło naszą propozycję!";
-            win.acceptText.text = "Ok";
-            win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
-
-            Alliance.messageSent = false;
-        }
-
-        [Command(1027)]
-        public static void DeleteAlliance(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-            int s = message.ReadInt32();
-
-            Alliance alliance = DiplomacyManager.alliances.Where(t => t.countries.Contains(GameInfo.countries[sender])
-            && t.countries.Contains(GameInfo.countries[receiver])).FirstOrDefault();
-
-            Alliance.DeleteAllianceClient(alliance, s);
-        }
-        #endregion
-
-        #region MilitaryAccess
-        [Command(1028)]
-        public static void AccessRequest(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            MilitaryAccess.AccessRequestClient(GameInfo.countries[sender], GameInfo.countries[receiver]);
-        }
-
-        [Command(1029)]
-        public static void AcceptAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            MilitaryAccess access = new MilitaryAccess();
-            access.countries.Add(GameInfo.countries[sender]);
-            access.countries.Add(GameInfo.countries[receiver]);
-
-            MilitaryAccess.CreateAccessClient(access);
-        }
-
-        [Command(1030)]
-        public static void DeliceAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-
-            //TODO: Implement translation
-            var win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
-                countries = new List<Core.Country.CountryInfo>() {
-                    GameInfo.countries[sender],
-                    GameInfo.countries[receiver]
-                }
-            }, true);
-            win.title.text = "Odrzucono prawo przemarszu";
-            win.description.text = "Państwo, któremu zaproponowaliśmy prawo przemarszu odrzuciło naszą propozycję!";
-            win.acceptText.text = "Ok";
-            win.deliceText.GetComponentInParent<Button>().gameObject.SetActive(false);
-
-            MilitaryAccess.messageSent = false;
-        }
-
-        [Command(1031)]
-        public static void DeleteAccess(NetIncomingMessage message) {
-            int sender = message.ReadInt32();
-            int receiver = message.ReadInt32();
-            int s = message.ReadInt32();
-
-            MilitaryAccess access = DiplomacyManager.militaryAccesses.Where(t => t.countries.Contains(GameInfo.countries[sender])
-            && t.countries.Contains(GameInfo.countries[receiver])).FirstOrDefault();
-
-            MilitaryAccess.DeleteAccessClient(access, s);
-        }
-        #endregion
-
-        //EndRemove
-
         #region Claims
         [Command(1032)]
         public static void FabricateClaim(NetIncomingMessage message) {
@@ -289,8 +175,8 @@ namespace EuropeanWars.Network {
             CountryInfo i = GameInfo.countries[inviter];
             CountryInfo c = GameInfo.countries[country];
 
-            if (i.alliances.ContainsKey(c)) {
-                Alliance.DeleteAllianceClient(i.alliances[c], inviter);
+            if (i.relations[c].relations[(int)DiplomaticRelation.Alliance]) {
+                i.relations[c].ChangeRelationState(DiplomaticRelation.Alliance);
             }
         }
 
@@ -313,8 +199,7 @@ namespace EuropeanWars.Network {
 
                 if (d == GameInfo.PlayerCountry) {
                     //TODO: Implement translation
-                    DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
-                        countries = new List<CountryInfo>() { a, d } }, true);
+                    DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(a, d, true);
                     win.title.text = "Wojna!";
                     win.description.text = "Nasz niedaleki sąsiad wypowiedział nam wojnę!";
                     win.acceptText.text = "Ok";
@@ -385,12 +270,8 @@ namespace EuropeanWars.Network {
             int receiver = message.ReadInt32();
 
             if (sender == GameInfo.PlayerCountry.id) {
-                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
-                    countries = new List<CountryInfo>() {
-                        GameInfo.countries[sender], GameInfo.countries[receiver]
-                    }
-                },
-                true);
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(GameInfo.countries[sender], GameInfo.countries[receiver], true);
+
                 //TODO: translations!!!!
                 window.title.text = "Odrzucono propozycję pokoju!";
                 window.description.text = $"Państwo {GameInfo.countries[receiver].name} odrzuciło naszą propozycję pokoju.";
@@ -472,7 +353,7 @@ namespace EuropeanWars.Network {
             int count = message.ReadInt32();
 
             if (GameInfo.armies.ContainsKey(army)) {
-            GameInfo.armies[army].RemoveUnit(GameInfo.units[unit], count);
+                GameInfo.armies[army].RemoveUnit(GameInfo.units[unit], count);
 
             }
         }

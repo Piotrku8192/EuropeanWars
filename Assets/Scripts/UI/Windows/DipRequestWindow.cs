@@ -1,4 +1,4 @@
-﻿using EuropeanWars.Core.Diplomacy_Old;
+﻿using EuropeanWars.Core.Country;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +11,9 @@ namespace EuropeanWars.UI.Windows {
         public Text acceptText;
         public Text deliceText;
 
-        public DiplomaticRelation relation;
+        public CountryInfo c1;
+        public CountryInfo c2;
+
         public bool isNotification;
 
         public delegate void OnAccept();
@@ -21,23 +23,17 @@ namespace EuropeanWars.UI.Windows {
 
         public void Init(bool isNotification = false) {
             this.isNotification = isNotification;
-            senderCrest.SetCountry(relation.countries[0]);
-            receiverCrest.SetCountry(relation.countries[1]);
+            senderCrest.SetCountry(c1);
+            receiverCrest.SetCountry(c2);
             //TODO: Fill title and description with translated content.
         }
 
         public void Accept() {
-            if (!isNotification) {
-                DiplomacyManager.AcceptRelation(relation);
-            }
             onAccept?.Invoke();
             Destroy(gameObject);
         }
 
         public void Delice() {
-            if (!isNotification) {
-                DiplomacyManager.DeliceRelation(relation);
-            }
             onDelice?.Invoke();
             Destroy(gameObject);
         }

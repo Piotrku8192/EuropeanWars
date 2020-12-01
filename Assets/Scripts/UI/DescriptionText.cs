@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace EuropeanWars.UI {
     public class DescriptionText : MonoBehaviour, IPointerEnterHandler {

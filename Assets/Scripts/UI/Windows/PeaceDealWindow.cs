@@ -1,7 +1,5 @@
-﻿using EuropeanWars.Core.Country;
-using EuropeanWars.Core.War;
+﻿using EuropeanWars.Core.War;
 using EuropeanWars.GameMap;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,7 +88,7 @@ namespace EuropeanWars.UI.Windows {
             Destroy(receiverElements[element].gameObject);
             receiverElements.Remove(element);
         }
-        
+
         private void ClearElements() {
             foreach (var item in senderElements) {
                 Destroy(item.Value.gameObject);

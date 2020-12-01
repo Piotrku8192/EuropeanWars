@@ -12,7 +12,7 @@ namespace EuropeanWars.UI.Windows {
         public Outline movingOutline;
 
         public bool isSelected;
-        
+
         public void SetArmy(ArmyInfo army) {
             this.army = army;
         }
@@ -37,8 +37,8 @@ namespace EuropeanWars.UI.Windows {
 
                 movingOutline.enabled = army == SelectedArmyWindow.Singleton.MovingArmy;
                 if (SelectedArmyWindow.Singleton.SelectedArmy != null) {
-                    movingOutline.gameObject.SetActive(army != SelectedArmyWindow.Singleton.SelectedArmy 
-                        && army != SelectedArmyWindow.Singleton.MovingArmy 
+                    movingOutline.gameObject.SetActive(army != SelectedArmyWindow.Singleton.SelectedArmy
+                        && army != SelectedArmyWindow.Singleton.MovingArmy
                         && army.Province == SelectedArmyWindow.Singleton.SelectedArmy.Province);
                 }
             }

@@ -3,6 +3,7 @@ using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Data;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Core.Time;
@@ -10,7 +11,6 @@ using EuropeanWars.GameMap;
 using EuropeanWars.Province;
 using EuropeanWars.UI.Windows;
 using Roy_T.AStar.Graphs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -252,9 +252,9 @@ namespace EuropeanWars.Core.Province {
 
         public bool IsFow() {
             return !(Country == GameInfo.PlayerCountry
-                || GameInfo.PlayerCountry.alliances.ContainsKey(Country)
-                || armies.Where(t => t.Country == GameInfo.PlayerCountry 
-                || GameInfo.PlayerCountry.alliances.ContainsKey(t.Country)).Any());
+                || GameInfo.PlayerCountry.relations[Country].relations[(int)DiplomaticRelation.Alliance]
+                || armies.Where(t => t.Country == GameInfo.PlayerCountry
+                || GameInfo.PlayerCountry.relations[t.Country].relations[(int)DiplomaticRelation.Alliance]).Any());
         }
 
         public void SetFogOfWarInRegion(bool b) {
@@ -265,7 +265,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void SetFogOfWar(bool b) {
-            fogOfWar = false; //b;
+            fogOfWar = b;
             if (mapProvince && MapPainter.mapMode == MapMode.Countries) {
                 mapProvince.material.SetFloat("_FogOfWar", b ? 1 : 0);
             }

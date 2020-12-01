@@ -1,28 +1,19 @@
-﻿using EuropeanWars.Core.Pathfinding;
-using EuropeanWars.Core.Building;
-using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Culture;
+﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Language;
-using EuropeanWars.Core.Province;
-using EuropeanWars.Core.Religion;
 using EuropeanWars.GameMap;
 using EuropeanWars.GameMap.Data;
 using EuropeanWars.Network;
 using Lidgren.Network;
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using EuropeanWars.Core.Army;
-using System.Threading;
-using System.Diagnostics;
 
 namespace EuropeanWars.Core.Data {
-    public class DataLoader : MonoBehaviour
-    {
+    public class DataLoader : MonoBehaviour {
         [HideInInspector] public GameData gameData;
         [HideInInspector] public MapData map;
 

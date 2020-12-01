@@ -1,13 +1,10 @@
 ﻿using Roy_T.AStar.Primitives;
 
-namespace Roy_T.AStar.Graphs
-{
-    public sealed class Edge : IEdge
-    {
+namespace Roy_T.AStar.Graphs {
+    public sealed class Edge : IEdge {
         private Velocity traversalVelocity;
 
-        public Edge(INode start, INode end, Velocity traversalVelocity)
-        {
+        public Edge(INode start, INode end, Velocity traversalVelocity) {
             this.Start = start;
             this.End = end;
 
@@ -15,11 +12,9 @@ namespace Roy_T.AStar.Graphs
             this.TraversalVelocity = traversalVelocity;
         }
 
-        public Velocity TraversalVelocity
-        {
+        public Velocity TraversalVelocity {
             get => this.traversalVelocity;
-            set
-            {
+            set {
                 this.traversalVelocity = value;
                 this.TraversalDuration = this.Distance / value;
             }

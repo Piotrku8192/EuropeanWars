@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct Size : IEquatable<Size>
-    {
-        public Size(Distance width, Distance height)
-        {
+namespace Roy_T.AStar.Primitives {
+    public struct Size : IEquatable<Size> {
+        public Size(Distance width, Distance height) {
             this.Width = width;
             this.Height = height;
         }

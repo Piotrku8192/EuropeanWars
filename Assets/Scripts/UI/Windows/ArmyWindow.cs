@@ -1,7 +1,4 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core.Pathfinding;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EuropeanWars.UI {
     public class ArmyWindow : MonoBehaviour {

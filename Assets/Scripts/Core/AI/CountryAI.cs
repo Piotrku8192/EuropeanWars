@@ -4,7 +4,6 @@ using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
-using EuropeanWars.Core.War;
 using EuropeanWars.Network;
 using Lidgren.Network;
 
@@ -36,21 +35,19 @@ namespace EuropeanWars.Core.AI {
 
         protected abstract void OnDayElapsed();
         protected abstract void OnMonthElapsed();
-        protected abstract void OnYearElapsed(); 
+        protected abstract void OnYearElapsed();
 
         public virtual bool IsDiplomaticRelationChangeAccepted(DiplomaticRelation relation, CountryInfo sender) {
             CountryRelation r = country.relations[sender];
             switch (relation) {
                 case DiplomaticRelation.Alliance:
-                    return r.points > 60;
+                    return r.Points > 60;
                 case DiplomaticRelation.MilitaryAccess:
-                    return r.points > 30;
+                    return r.Points > 30;
                 case DiplomaticRelation.TradeAgreament:
-                    return r.points > 40;
+                    return r.Points > 40;
                 case DiplomaticRelation.RoyalMariage:
-                    return r.points > 0;
-                case DiplomaticRelation.Truce:
-                    return true;
+                    return r.Points > 0;
                 default:
                     return false;
             }

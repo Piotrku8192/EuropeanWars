@@ -1,7 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
-using EuropeanWars.GameMap;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,12 +125,14 @@ namespace EuropeanWars.Core.War {
         }
         private void RemoveDiplomaticRelationsOnJoin(CountryInfo country) {
             foreach (var item in Enemies.countries) {
-                if (country.alliances.ContainsKey(item.Key)) {
-                    Alliance.DeleteAllianceClient(country.alliances[item.Key], item.Key.id);
+                CountryRelation r = country.relations[item.Key];
+                for (int i = 0; i < r.relations.Length; i++) {
+                    if (r.relations[i]) {
+                        r.ChangeRelationState(i);
+                    }
                 }
-                if (country.militaryAccesses.ContainsKey(item.Key)) {
-                    MilitaryAccess.DeleteAccessClient(country.militaryAccesses[item.Key], item.Key.id);
-                }
+
+                r.ChangePoints(-50);
             }
         }
     }

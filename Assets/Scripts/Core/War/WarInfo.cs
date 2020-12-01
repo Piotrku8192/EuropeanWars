@@ -1,6 +1,5 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
+﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Time;
 using EuropeanWars.UI.Windows;
 
@@ -14,7 +13,7 @@ namespace EuropeanWars.Core.War {
         public readonly int startYear;
         public readonly int startMonth;
         public readonly int startDay;
-        
+
         public readonly WarParty attackers;
         public readonly WarParty defenders;
 

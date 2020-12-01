@@ -14,7 +14,7 @@ namespace EuropeanWars.Core.Army {
         private readonly OnAttackersEmpty onAttackersEmpty;
         private readonly OnDefendersEmpty onDefendersEmpty;
 
-        public ArmyAttackCounter(Dictionary<UnitInfo, int> attackers, Dictionary<UnitInfo, int> defenders, float[] attackersAttackModifier, 
+        public ArmyAttackCounter(Dictionary<UnitInfo, int> attackers, Dictionary<UnitInfo, int> defenders, float[] attackersAttackModifier,
             float[] defendersAttackModifier, OnAttackersEmpty onAttackersEmpty, OnDefendersEmpty onDefendersEmpty) {
             this.attackers = attackers;
             this.defenders = defenders;

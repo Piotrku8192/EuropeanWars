@@ -1,11 +1,9 @@
 ﻿using EuropeanWars.Core;
-using EuropeanWars.Core.Data;
 using EuropeanWars.GameMap;
 using UnityEngine;
 
 namespace EuropeanWars {
-    public class Controller : MonoBehaviour
-    {
+    public class Controller : MonoBehaviour {
         public static Controller Singleton { get; private set; }
         public Camera playerCam;
         public float speed;
@@ -14,18 +12,15 @@ namespace EuropeanWars {
         public float armiesDistance;
         public float fogOfWarDistance;
 
-        private void Awake()
-        {
+        private void Awake() {
             Singleton = this;
         }
 
-        private void Start()
-        {
+        private void Start() {
             playerCam = GetComponent<Camera>();
         }
 
-        private void Update()
-        {
+        private void Update() {
             bool b = playerCam.orthographicSize > MapGenerator.Singleton.farCountriesMapDistance;
 
             Vector3 p = transform.position + (new Vector3(Input.GetAxis("Horizontal"),

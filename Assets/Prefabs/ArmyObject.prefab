@@ -517,6 +517,7 @@ MonoBehaviour:
   occupationProgressBar: {fileID: 8929468562227662725}
   occupationProgressText: {fileID: 5415924438599425145}
   scale: 0.06
+  isMovementCoroutineExecuting: 0
 --- !u!120 &2967329220650058882
 LineRenderer:
   m_ObjectHideFlags: 0

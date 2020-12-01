@@ -1,7 +1,6 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
-using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Network;
 using Lidgren.Network;
@@ -11,8 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class ProvinceWindow : MonoBehaviour
-    {
+    public class ProvinceWindow : MonoBehaviour {
         public static ProvinceWindow Singleton { get; private set; }
 
         public GameObject provinceWindow;

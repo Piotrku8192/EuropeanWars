@@ -66,7 +66,7 @@ namespace EuropeanWars.Core.War {
         /// </summary>
         /// <param name="province"></param>
         public void AddLocalOccupatedProvince(ProvinceInfo province) {
-            if (!localOccupatedProvinces.Contains(province) 
+            if (!localOccupatedProvinces.Contains(province)
                 && province.NationalCountry == country && party.Enemies.ContainsCountry(province.Country)) {
                 localOccupatedProvinces.Add(province);
                 WarScore = Mathf.Clamp(WarScore - province.taxation, -CountryScoreCost, party.Enemies.PartyScoreCost);

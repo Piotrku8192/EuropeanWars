@@ -1,6 +1,6 @@
-﻿using EuropeanWars.Core.Province;
+﻿using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Province;
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -84,7 +84,7 @@ namespace EuropeanWars.Core.Army {
             else if (GameInfo.PlayerCountry.IsInWarWithCountry(army.Country)) {
                 color = Color.blue;
             }
-            else if (GameInfo.PlayerCountry.alliances.ContainsKey(army.Country)) {
+            else if (GameInfo.PlayerCountry.relations[army.Country].relations[(int)DiplomaticRelation.Alliance]) {
                 color = Color.cyan;
             }
 
@@ -92,7 +92,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void DrawRoute(ProvinceInfo[] route) {
-            try { 
+            try {
                 lineRenderer.positionCount = route.Length;
                 lineRenderer.SetPosition(0, transform.position);
 

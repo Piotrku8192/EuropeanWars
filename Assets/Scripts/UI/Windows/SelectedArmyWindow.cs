@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class SelectedArmyWindow : MonoBehaviour
-    {
+    public class SelectedArmyWindow : MonoBehaviour {
         public static SelectedArmyWindow Singleton { get; private set; }
 
         public GameObject windowObject;
@@ -81,7 +80,7 @@ namespace EuropeanWars.UI.Windows {
                 movingUnitsObject.SetActive(false);
                 windowObject.SetActive(false);
                 SelectedArmy = null;
-                
+
                 return;
             }
 

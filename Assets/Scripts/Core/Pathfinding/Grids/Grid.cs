@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Roy_T.AStar.Graphs;
+﻿using Roy_T.AStar.Graphs;
 using Roy_T.AStar.Primitives;
+using System;
+using System.Collections.Generic;
 
-namespace Roy_T.AStar.Grids
-{
-    public sealed class Grid
-    {
+namespace Roy_T.AStar.Grids {
+    public sealed class Grid {
         private readonly Node[,] Nodes;
 
-        public static Grid CreateGridWithLateralConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity)
-        {
+        public static Grid CreateGridWithLateralConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity) {
             CheckArguments(gridSize, cellSize, traversalVelocity);
 
             var grid = new Grid(gridSize, cellSize);
@@ -20,8 +17,7 @@ namespace Roy_T.AStar.Grids
             return grid;
         }
 
-        public static Grid CreateGridWithDiagonalConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity)
-        {
+        public static Grid CreateGridWithDiagonalConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity) {
             CheckArguments(gridSize, cellSize, traversalVelocity);
 
             var grid = new Grid(gridSize, cellSize);
@@ -31,8 +27,7 @@ namespace Roy_T.AStar.Grids
             return grid;
         }
 
-        public static Grid CreateGridWithLateralAndDiagonalConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity)
-        {
+        public static Grid CreateGridWithLateralAndDiagonalConnections(GridSize gridSize, Size cellSize, Velocity traversalVelocity) {
             CheckArguments(gridSize, cellSize, traversalVelocity);
 
             var grid = new Grid(gridSize, cellSize);
@@ -43,93 +38,75 @@ namespace Roy_T.AStar.Grids
             return grid;
         }
 
-        public static Grid CreateGridFrom2DArrayOfNodes(Node[,] nodes)
-        {
+        public static Grid CreateGridFrom2DArrayOfNodes(Node[,] nodes) {
             return new Grid(nodes);
         }
 
-        private static void CheckGridSize(GridSize gridSize)
-        {
-            if (gridSize.Columns < 1)
-            {
+        private static void CheckGridSize(GridSize gridSize) {
+            if (gridSize.Columns < 1) {
                 throw new ArgumentOutOfRangeException(
                     nameof(gridSize), $"Argument {nameof(gridSize.Columns)} is {gridSize.Columns} but should be >= 1");
             }
 
-            if (gridSize.Rows < 1)
-            {
+            if (gridSize.Rows < 1) {
                 throw new ArgumentOutOfRangeException(
                     nameof(gridSize), $"Argument {nameof(gridSize.Rows)} is {gridSize.Rows} but should be >= 1");
             }
         }
 
-        private static void CheckArguments(GridSize gridSize, Size cellSize, Velocity defaultSpeed)
-        {
+        private static void CheckArguments(GridSize gridSize, Size cellSize, Velocity defaultSpeed) {
             CheckGridSize(gridSize);
 
 
-            if (cellSize.Width <= Distance.Zero)
-            {
+            if (cellSize.Width <= Distance.Zero) {
                 throw new ArgumentOutOfRangeException(
                     nameof(cellSize), $"Argument {nameof(cellSize.Width)} is {cellSize.Width} but should be > {Distance.Zero}");
             }
 
-            if (cellSize.Height <= Distance.Zero)
-            {
+            if (cellSize.Height <= Distance.Zero) {
                 throw new ArgumentOutOfRangeException(
                     nameof(cellSize), $"Argument {nameof(cellSize.Height)} is {cellSize.Height} but should be > {Distance.Zero}");
             }
 
-            if (defaultSpeed.MetersPerSecond <= 0.0f)
-            {
+            if (defaultSpeed.MetersPerSecond <= 0.0f) {
                 throw new ArgumentOutOfRangeException(
                     nameof(defaultSpeed), $"Argument {nameof(defaultSpeed)} is {defaultSpeed} but should be > 0.0 m/s");
             }
         }
 
-        private Grid(Node[,] nodes)
-        {
+        private Grid(Node[,] nodes) {
             this.GridSize = new GridSize(nodes.GetLength(0), nodes.GetLength(1));
             CheckGridSize(this.GridSize);
             this.Nodes = nodes;
         }
 
-        private Grid(GridSize gridSize, Size cellSize)
-        {
+        private Grid(GridSize gridSize, Size cellSize) {
             this.GridSize = gridSize;
             this.Nodes = new Node[gridSize.Columns, gridSize.Rows];
 
             this.CreateNodes(cellSize);
         }
 
-        private void CreateNodes(Size cellSize)
-        {
-            for (var x = 0; x < this.Columns; x++)
-            {
-                for (var y = 0; y < this.Rows; y++)
-                {
+        private void CreateNodes(Size cellSize) {
+            for (var x = 0; x < this.Columns; x++) {
+                for (var y = 0; y < this.Rows; y++) {
                     this.Nodes[x, y] = new Node(Position.FromOffset(cellSize.Width * x, cellSize.Height * y));
                 }
             }
         }
 
-        private void CreateLateralConnections(Velocity defaultSpeed)
-        {
-            for (var x = 0; x < this.Columns; x++)
-            {
-                for (var y = 0; y < this.Rows; y++)
-                {
+        private void CreateLateralConnections(Velocity defaultSpeed) {
+            for (var x = 0; x < this.Columns; x++) {
+                for (var y = 0; y < this.Rows; y++) {
                     var node = this.Nodes[x, y];
 
-                    if (x < this.Columns - 1)
-                    {
+                    if (x < this.Columns - 1) {
                         var eastNode = this.Nodes[x + 1, y];
                         node.Connect(eastNode, defaultSpeed);
                         eastNode.Connect(node, defaultSpeed);
                     }
 
-                    if (y < this.Rows - 1)
-                    {
+                    if (y < this.Rows - 1) {
                         var southNode = this.Nodes[x, y + 1];
                         node.Connect(southNode, defaultSpeed);
                         southNode.Connect(node, defaultSpeed);
@@ -138,23 +115,18 @@ namespace Roy_T.AStar.Grids
             }
         }
 
-        private void CreateDiagonalConnections(Velocity defaultSpeed)
-        {
-            for (var x = 0; x < this.Columns; x++)
-            {
-                for (var y = 0; y < this.Rows; y++)
-                {
+        private void CreateDiagonalConnections(Velocity defaultSpeed) {
+            for (var x = 0; x < this.Columns; x++) {
+                for (var y = 0; y < this.Rows; y++) {
                     var node = this.Nodes[x, y];
 
-                    if (x < this.Columns - 1 && y < this.Rows - 1)
-                    {
+                    if (x < this.Columns - 1 && y < this.Rows - 1) {
                         var southEastNode = this.Nodes[x + 1, y + 1];
                         node.Connect(southEastNode, defaultSpeed);
                         southEastNode.Connect(node, defaultSpeed);
                     }
 
-                    if (x > 0 && y < this.Rows - 1)
-                    {
+                    if (x > 0 && y < this.Rows - 1) {
                         var southWestNode = this.Nodes[x - 1, y + 1];
                         node.Connect(southWestNode, defaultSpeed);
                         southWestNode.Connect(node, defaultSpeed);
@@ -171,14 +143,11 @@ namespace Roy_T.AStar.Grids
 
         public INode GetNode(GridPosition position) => this.Nodes[position.X, position.Y];
 
-        public IReadOnlyList<INode> GetAllNodes()
-        {
+        public IReadOnlyList<INode> GetAllNodes() {
             var list = new List<INode>(this.Columns * this.Rows);
 
-            for (var x = 0; x < this.Columns; x++)
-            {
-                for (var y = 0; y < this.Rows; y++)
-                {
+            for (var x = 0; x < this.Columns; x++) {
+                for (var y = 0; y < this.Rows; y++) {
                     list.Add(this.Nodes[x, y]);
                 }
             }
@@ -186,20 +155,17 @@ namespace Roy_T.AStar.Grids
             return list;
         }
 
-        public void DisconnectNode(GridPosition position)
-        {
+        public void DisconnectNode(GridPosition position) {
             var node = this.Nodes[position.X, position.Y];
 
-            foreach (var outgoingEdge in node.Outgoing)
-            {
+            foreach (var outgoingEdge in node.Outgoing) {
                 var opposite = outgoingEdge.End;
                 opposite.Incoming.Remove(outgoingEdge);
             }
 
             node.Outgoing.Clear();
 
-            foreach (var incomingEdge in node.Incoming)
-            {
+            foreach (var incomingEdge in node.Incoming) {
                 var opposite = incomingEdge.Start;
                 opposite.Outgoing.Remove(incomingEdge);
             }
@@ -207,48 +173,41 @@ namespace Roy_T.AStar.Grids
             node.Incoming.Clear();
         }
 
-        public void RemoveDiagonalConnectionsIntersectingWithNode(GridPosition position)
-        {
+        public void RemoveDiagonalConnectionsIntersectingWithNode(GridPosition position) {
             var left = new GridPosition(position.X - 1, position.Y);
             var top = new GridPosition(position.X, position.Y - 1);
             var right = new GridPosition(position.X + 1, position.Y);
             var bottom = new GridPosition(position.X, position.Y + 1);
 
-            if (this.IsInsideGrid(left) && this.IsInsideGrid(top))
-            {
+            if (this.IsInsideGrid(left) && this.IsInsideGrid(top)) {
                 this.RemoveEdge(left, top);
                 this.RemoveEdge(top, left);
             }
 
-            if (this.IsInsideGrid(top) && this.IsInsideGrid(right))
-            {
+            if (this.IsInsideGrid(top) && this.IsInsideGrid(right)) {
                 this.RemoveEdge(top, right);
                 this.RemoveEdge(right, top);
             }
 
-            if (this.IsInsideGrid(right) && this.IsInsideGrid(bottom))
-            {
+            if (this.IsInsideGrid(right) && this.IsInsideGrid(bottom)) {
                 this.RemoveEdge(right, bottom);
                 this.RemoveEdge(bottom, right);
             }
 
-            if (this.IsInsideGrid(bottom) && this.IsInsideGrid(left))
-            {
+            if (this.IsInsideGrid(bottom) && this.IsInsideGrid(left)) {
                 this.RemoveEdge(bottom, left);
                 this.RemoveEdge(left, bottom);
             }
         }
 
-        public void RemoveEdge(GridPosition from, GridPosition to)
-        {
+        public void RemoveEdge(GridPosition from, GridPosition to) {
             var fromNode = this.Nodes[from.X, from.Y];
             var toNode = this.Nodes[to.X, to.Y];
 
             fromNode.Disconnect(toNode);
         }
 
-        public void AddEdge(GridPosition from, GridPosition to, Velocity traversalVelocity)
-        {
+        public void AddEdge(GridPosition from, GridPosition to, Velocity traversalVelocity) {
             var fromNode = this.Nodes[from.X, from.Y];
             var toNode = this.Nodes[to.X, to.Y];
 

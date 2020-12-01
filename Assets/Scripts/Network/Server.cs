@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace EuropeanWars.Network {
-    public class Server : MonoBehaviour
-    {
+    public class Server : MonoBehaviour {
         public static Server Singleton { get; private set; }
         public NetServer s;
         public int serverPort = 7777;

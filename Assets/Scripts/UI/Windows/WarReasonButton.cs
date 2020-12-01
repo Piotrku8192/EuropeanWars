@@ -1,5 +1,4 @@
 ﻿using EuropeanWars.Core.War;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 

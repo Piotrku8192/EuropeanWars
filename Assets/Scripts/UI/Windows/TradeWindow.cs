@@ -8,8 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class TradeWindow : MonoBehaviour
-    {
+    public class TradeWindow : MonoBehaviour {
         public static TradeWindow Singleton { get; private set; }
 
         public GameObject window;

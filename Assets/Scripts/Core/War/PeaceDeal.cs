@@ -1,9 +1,6 @@
-﻿using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
-using EuropeanWars.Network;
+﻿using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -129,12 +126,7 @@ namespace EuropeanWars.Core.War {
 
         public void ProcessRequest() {
             if (receiver.country == GameInfo.PlayerCountry && SenderWarScore < 99) {
-                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() { 
-                    countries = new List<CountryInfo>() {
-                        sender.country, receiver.country
-                    }
-                },
-                true);
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender.country, receiver.country, true);
 
                 //TODO: translations!!!
                 window.acceptText.text = "Zaakceptuj";
@@ -166,12 +158,7 @@ namespace EuropeanWars.Core.War {
 
         public void Execute() {
             if (war.ContainsCountry(GameInfo.PlayerCountry)) {
-                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(new DiplomaticRelation() {
-                    countries = new List<CountryInfo>() {
-                        sender.country, receiver.country
-                    }
-                },
-                true);
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender.country, receiver.country, true);
 
                 //TODO: translations!!!
                 window.acceptText.text = "Ok";

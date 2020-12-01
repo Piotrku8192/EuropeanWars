@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct Velocity : IComparable<Velocity>, IEquatable<Velocity>
-    {
-        private Velocity(float metersPerSecond)
-        {
+namespace Roy_T.AStar.Primitives {
+    public struct Velocity : IComparable<Velocity>, IEquatable<Velocity> {
+        private Velocity(float metersPerSecond) {
             this.MetersPerSecond = metersPerSecond;
         }
 

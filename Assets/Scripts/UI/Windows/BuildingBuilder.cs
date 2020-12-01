@@ -1,12 +1,10 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Province;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace EuropeanWars.UI.Windows {
-    public class BuildingBuilder : MonoBehaviour
-    {
+    public class BuildingBuilder : MonoBehaviour {
         public BuildBuildingButton prefab;
         public GameObject builderWindow;
         public GameObject content;

@@ -1,13 +1,10 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct GridPosition : IEquatable<GridPosition>
-    {
+namespace Roy_T.AStar.Primitives {
+    public struct GridPosition : IEquatable<GridPosition> {
         public static GridPosition Zero => new GridPosition(0, 0);
 
-        public GridPosition(int x, int y)
-        {
+        public GridPosition(int x, int y) {
             this.X = x;
             this.Y = y;
         }

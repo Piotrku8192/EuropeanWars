@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class EconomyWindow : MonoBehaviour
-    {
+    public class EconomyWindow : MonoBehaviour {
         public static EconomyWindow Singleton { get; private set; }
 
         public GameObject window;
@@ -24,7 +23,7 @@ namespace EuropeanWars.UI.Windows {
         public Text defenceModifier;
         public Text reparationsValue;
         public Text reparationsModifier;
-        
+
         public Text loans;
         public Text balance;
 

@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.MainMenu {
-    public class BackgroundLerp : MonoBehaviour
-    {
+    public class BackgroundLerp : MonoBehaviour {
         public List<Sprite> backgrounds = new List<Sprite>();
         public float bgTime;
         public float changeTime;

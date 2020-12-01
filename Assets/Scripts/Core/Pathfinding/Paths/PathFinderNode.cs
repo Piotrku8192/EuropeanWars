@@ -1,13 +1,10 @@
-﻿using System;
-using Roy_T.AStar.Graphs;
+﻿using Roy_T.AStar.Graphs;
 using Roy_T.AStar.Primitives;
+using System;
 
-namespace Roy_T.AStar.Paths
-{
-    internal sealed class PathFinderNode : IComparable<PathFinderNode>
-    {
-        public PathFinderNode(INode node, Duration durationSoFar, Duration expectedRemainingTime)
-        {
+namespace Roy_T.AStar.Paths {
+    internal sealed class PathFinderNode : IComparable<PathFinderNode> {
+        public PathFinderNode(INode node, Duration durationSoFar, Duration expectedRemainingTime) {
             this.Node = node;
             this.DurationSoFar = durationSoFar;
             this.ExpectedRemainingTime = expectedRemainingTime;

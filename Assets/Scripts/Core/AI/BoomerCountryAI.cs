@@ -1,11 +1,9 @@
 ﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Core.War;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -90,7 +88,7 @@ namespace EuropeanWars.Core.AI {
         }
 
         private void MoveArmies() {
-            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t => 
+            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t =>
             !country.provinces.Contains(t) || (t.OccupationCounter.Progress > 0 && t.OccupationCounter.Army?.Country != country)).ToList();
 
             List<ProvinceInfo> targetProvinces = new List<ProvinceInfo>();
@@ -106,7 +104,7 @@ namespace EuropeanWars.Core.AI {
             //Delete armies if country doesn't exist.
             if (country.nationalProvinces.Count == 0) {
                 foreach (var item in country.armies) {
-                    item.Delete();
+                    item.DeleteLocal();
                 }
             }
 

@@ -6,8 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Lobby {
-    public class LobbyManager : MonoBehaviour
-    {
+    public class LobbyManager : MonoBehaviour {
         public static LobbyManager Singleton { get; private set; }
 
         public Image crest;
@@ -26,7 +25,7 @@ namespace EuropeanWars.UI.Lobby {
 
         public void Start() {
             readyIcon.color = Color.red;
-            
+
         }
 
         public void SelectCountry(CountryInfo c) {

@@ -1,11 +1,11 @@
 ﻿using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
+using Roy_T.AStar.Paths;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Roy_T.AStar.Graphs;
-using Roy_T.AStar.Paths;
 
 namespace EuropeanWars.Core.Pathfinding {
     public class LandArmyPathfinder : IPathfinder {
@@ -54,7 +54,7 @@ namespace EuropeanWars.Core.Pathfinding {
                     (int)Vector2.Distance(new Vector2(item.x, item.y), new Vector2(end.x, end.y));
 
                     if (item == end) {
-                        return (new List<ProvinceInfo>(path.Item1) { item }.ToArray(), path.Item2 + c); 
+                        return (new List<ProvinceInfo>(path.Item1) { item }.ToArray(), path.Item2 + c);
                     }
 
                     provinces.Add((c, item));
@@ -87,7 +87,7 @@ namespace EuropeanWars.Core.Pathfinding {
                 && province.isInteractive
                 && (army.BlackStatus
                 || province.Country == country
-                || country.militaryAccesses.ContainsKey(province.Country))
+                || country.relations[province.Country].relations[(int)DiplomaticRelation.MilitaryAccess])
                 || country.IsInWarAgainstCountry(province.Country);
         }
     }

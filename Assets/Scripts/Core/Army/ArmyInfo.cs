@@ -1,6 +1,7 @@
 using EuropeanWars.Audio;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Data;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
@@ -8,7 +9,6 @@ using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using UnityEngine;
 
@@ -105,7 +105,7 @@ namespace EuropeanWars.Core.Army {
                 }
                 Vector2 pos = new Vector2(ra[0].x, ra[0].y);
                 if (ra.Length > 1) {
-                    pos = Vector2.Lerp(pos, new Vector2(ra[1].x, ra[1].y), 
+                    pos = Vector2.Lerp(pos, new Vector2(ra[1].x, ra[1].y),
                         movingforDays / (float)(daysToMove == 0 ? 1 : daysToMove));
                 }
                 if (ArmyObject) {
@@ -137,7 +137,8 @@ namespace EuropeanWars.Core.Army {
         }
 
         private void UpdateBlackStatus() {
-            BlackStatus = Country != Province.Country && !Country.militaryAccesses.ContainsKey(Province.Country) && !Country.IsInWarAgainstCountry(Province.Country);
+            BlackStatus = Country != Province.Country && !Country.relations[Province.Country].relations[(int)DiplomaticRelation.MilitaryAccess]
+                && !Country.IsInWarAgainstCountry(Province.Country);
             if (route.Count < 2) {
                 isMoveLocked = false;
             }
@@ -339,7 +340,7 @@ namespace EuropeanWars.Core.Army {
             Province.armies.Remove(this);
             newProvince.armies.Add(this);
 
-            if (Country == GameInfo.PlayerCountry || GameInfo.PlayerCountry.alliances.ContainsKey(Country)) {
+            if (Country == GameInfo.PlayerCountry || GameInfo.PlayerCountry.relations[Country].relations[(int)DiplomaticRelation.Alliance]) {
                 Province.RefreshFogOfWarInRegion();
                 newProvince.SetFogOfWarInRegion(false);
             }
@@ -348,7 +349,7 @@ namespace EuropeanWars.Core.Army {
 
             var a = Province.armies.Where(t => t.Country.IsInWarAgainstCountry(Country)); //TODO: Add uprisings
             if (a.Count() > 0) {
-                new Battle(new BattleArmyGroup(new ArmyInfo[1] { this } ), new BattleArmyGroup(a.ToArray()), Province);
+                new Battle(new BattleArmyGroup(new ArmyInfo[1] { this }), new BattleArmyGroup(a.ToArray()), Province);
             }
         }
     }

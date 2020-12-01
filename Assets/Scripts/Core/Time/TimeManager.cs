@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace EuropeanWars.Core.Time {
+﻿namespace EuropeanWars.Core.Time {
     public class TimeManager {
         public static readonly int[] daysInMonths = new int[12] {
             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -44,8 +40,8 @@ namespace EuropeanWars.Core.Time {
                 lateOnYearElapsed?.Invoke();
             }
 
-            Timer.Singleton.date.text = ((day < 10) ? "0" : "") + day.ToString() 
-                + "." + ((month < 10) ? "0" : "") + month.ToString() 
+            Timer.Singleton.date.text = ((day < 10) ? "0" : "") + day.ToString()
+                + "." + ((month < 10) ? "0" : "") + month.ToString()
                 + "." + year.ToString();
         }
     }

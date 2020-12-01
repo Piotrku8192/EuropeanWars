@@ -5,11 +5,8 @@ using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
-using EuropeanWars.GameMap;
-using EuropeanWars.GameMap.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace EuropeanWars.Core.Data {
     [Serializable]

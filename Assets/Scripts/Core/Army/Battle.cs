@@ -1,7 +1,6 @@
 ﻿using EuropeanWars.Core.Province;
 using EuropeanWars.Core.War;
 using EuropeanWars.UI.Windows;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -44,7 +43,7 @@ namespace EuropeanWars.Core.Army {
             foreach (var item in defenders.Armies) {
                 if (item.Size <= 0) {
                     item.DeleteLocal();
-                } 
+                }
             }
             foreach (var item in attackers.Armies) {
                 if (item.Size <= 0) {

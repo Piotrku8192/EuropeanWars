@@ -38,7 +38,7 @@ namespace EuropeanWars.Core.Province {
             if (army != null) {
                 Army = army;
                 attackCounter = new ArmyAttackCounter(Army.units, province.garnison, GameStatistics.occupantArmyAttackModifier,
-                    GameStatistics.occupatedArmyAttackModifier, () => areAttackersEmpty = true, () => areDefendersEmpty = true); 
+                    GameStatistics.occupatedArmyAttackModifier, () => areAttackersEmpty = true, () => areDefendersEmpty = true);
                 if (ProvinceWindow.Singleton.province == province) {
                     ProvinceWindow.Singleton.UpdateWindow(province);
                 }
@@ -63,8 +63,8 @@ namespace EuropeanWars.Core.Province {
                         province.Country.wars[war].killedEnemies += killedAttackers;
                         province.Country.wars[war].killedLocal += killedDefenders;
 
-                        army.Country.wars[war].killedEnemies += killedDefenders; 
-                        army.Country.wars[war].killedLocal += killedAttackers; 
+                        army.Country.wars[war].killedEnemies += killedDefenders;
+                        army.Country.wars[war].killedLocal += killedAttackers;
                     }
                     daysToNext--;
 

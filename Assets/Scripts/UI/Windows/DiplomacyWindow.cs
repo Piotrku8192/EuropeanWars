@@ -1,8 +1,8 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
-using EuropeanWars.Core.Diplomacy_Old;
 using EuropeanWars.Core.War;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace EuropeanWars.UI.Windows {
@@ -12,13 +12,13 @@ namespace EuropeanWars.UI.Windows {
         public GameObject window;
 
         public Transform countriesListContent;
-        public CountryButton countryButtonPrefab;
+        public CountryBelt countryBeltPrefab;
 
         public DipRequestWindow dipRequestWindowPrefab;
         public WarInvitationWindow warInvitationWindowPrefab;
-        public DiplomacyCountryInfoWindow countryWindow;
+        public CountryInfoWindow countryWindow;
 
-        private Dictionary<CountryInfo, CountryButton> countries = new Dictionary<CountryInfo, CountryButton>();
+        private Dictionary<CountryInfo, CountryBelt> countries = new Dictionary<CountryInfo, CountryBelt>();
 
         public void Awake() {
             Singleton = this;
@@ -33,35 +33,37 @@ namespace EuropeanWars.UI.Windows {
             window.SetActive(true);
 
             foreach (var item in GameInfo.countries) {
-                if (!countries.ContainsKey(item.Value) && item.Value.provinces.Count > 0 && item.Key != 0) {
-                    CountryButton button = Instantiate(countryButtonPrefab, countriesListContent);
-                    button.SetCountry(item.Value);
-                    countries.Add(item.Value, button);
+                if (!countries.ContainsKey(item.Value) && item.Value.nationalProvinces.Count > 0 && item.Key != 0) {
+                    CountryBelt belt = Instantiate(countryBeltPrefab, countriesListContent);
+                    belt.SetCountry(item.Value);
+                    countries.Add(item.Value, belt);
                 }
-                //TODO: Remove countries without territory.
+                else if (countries.ContainsKey(item.Value) && item.Value.nationalProvinces.Count == 0) {
+                    Destroy(countries[item.Value].gameObject);
+                    countries.Remove(item.Value);
+                }
+            }
+
+            foreach (var item in countries) {
+                item.Value.CompareTo(country);
+                item.Value.gameObject.SetActive(item.Key != country);
+            }
+
+            CountryBelt[] sorted = countries.Values.OrderBy(t => t.country.id).ToArray();
+            for (int i = 0; i < sorted.Length; i++) {
+                sorted[i].transform.SetSiblingIndex(i);
             }
 
             countryWindow.UpdateWindow(country);
         }
         public void UpdateWindow() {
-            UIManager.Singleton.CloseAllWindows();
-            window.SetActive(true);
-
-            foreach (var item in GameInfo.countries) {
-                if (!countries.ContainsKey(item.Value) && item.Key > 0) {
-                    CountryButton button = Instantiate(countryButtonPrefab, countriesListContent);
-                    button.SetCountry(item.Value);
-                    countries.Add(item.Value, button);
-                }
-                //TODO: Remove countries without territory.
-            }
-
-            countryWindow.UpdateWindow(GameInfo.PlayerCountry);
+            UpdateWindow(countryWindow.country ?? GameInfo.PlayerCountry);
         }
 
-        public DipRequestWindow SpawnRequest(DiplomaticRelation relation, bool isNotification = false) {
+        public DipRequestWindow SpawnRequest(CountryInfo c1, CountryInfo c2, bool isNotification = false) {
             DipRequestWindow go = Instantiate(dipRequestWindowPrefab, UIManager.Singleton.ui.transform);
-            go.relation = relation;
+            go.c1 = c1;
+            go.c2 = c2;
             go.Init(isNotification);
             return go;
         }

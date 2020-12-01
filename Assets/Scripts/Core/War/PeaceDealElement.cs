@@ -1,5 +1,4 @@
 ﻿using EuropeanWars.Core.Country;
-using System;
 using UnityEngine;
 
 namespace EuropeanWars.Core.War {

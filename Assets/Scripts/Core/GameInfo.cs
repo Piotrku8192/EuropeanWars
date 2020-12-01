@@ -6,7 +6,6 @@ using EuropeanWars.Core.Culture;
 using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
-using EuropeanWars.Network;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
@@ -41,7 +40,7 @@ namespace EuropeanWars.Core {
 
         public static void Initialize() {
             //random = new System.Random(69); //hahaha very funny seed lol ~PZFN 20.07.2020 20:40 ;) (im stupid man i guess)
-            random = new System.Random(729);
+            random = new System.Random(System.DateTime.Now.Millisecond);
 
             foreach (var item in buildings) {
                 item.Value.Initialize();
@@ -94,6 +93,9 @@ namespace EuropeanWars.Core {
 
         public static void SetPlayerCountry(CountryInfo country) {
             PlayerCountry = country;
+            foreach (var item in PlayerCountry.relations) {
+                item.Value.withPlayerCountry = true;
+            }
         }
 
         public static void SelectProvince(ProvinceInfo province) {

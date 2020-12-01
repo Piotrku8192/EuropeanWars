@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Roy_T.AStar.Collections
-{
+namespace Roy_T.AStar.Collections {
     // C# Adaptation of a min heap built for C++ by Robin Thomas
     // Original source code at: https://github.com/robin-thomas/min-heap
 
     internal sealed class MinHeap<T>
-        where T : IComparable<T>
-    {
+        where T : IComparable<T> {
         private readonly List<T> Items;
 
-        public MinHeap()
-        {
+        public MinHeap() {
             this.Items = new List<T>();
         }
 
@@ -20,14 +17,12 @@ namespace Roy_T.AStar.Collections
 
         public T Peek() => this.Items[0];
 
-        public void Insert(T item)
-        {
+        public void Insert(T item) {
             this.Items.Add(item);
             this.SortItem(item);
         }
 
-        public T Extract()
-        {
+        public T Extract() {
             var node = this.Items[0];
 
             this.ReplaceFirstItemWithLastItem();
@@ -36,17 +31,13 @@ namespace Roy_T.AStar.Collections
             return node;
         }
 
-        public void Remove(T item)
-        {
-            if (this.Count < 2)
-            {
+        public void Remove(T item) {
+            if (this.Count < 2) {
                 this.Clear();
             }
-            else
-            {
+            else {
                 var index = this.Items.IndexOf(item);
-                if (index >= 0)
-                {
+                if (index >= 0) {
                     this.Items[index] = this.Items[this.Items.Count - 1];
                     this.Items.RemoveAt(this.Items.Count - 1);
 
@@ -57,26 +48,21 @@ namespace Roy_T.AStar.Collections
 
         public void Clear() => this.Items.Clear();
 
-        private void ReplaceFirstItemWithLastItem()
-        {
+        private void ReplaceFirstItemWithLastItem() {
             this.Items[0] = this.Items[this.Items.Count - 1];
             this.Items.RemoveAt(this.Items.Count - 1);
         }
 
-        private void SortItem(T item)
-        {
+        private void SortItem(T item) {
             var index = this.Items.Count - 1;
 
-            while (HasParent(index))
-            {
+            while (HasParent(index)) {
                 var parentIndex = GetParentIndex(index);
-                if (ItemAIsSmallerThanItemB(item, this.Items[parentIndex]))
-                {
+                if (ItemAIsSmallerThanItemB(item, this.Items[parentIndex])) {
                     this.Items[index] = this.Items[parentIndex];
                     index = parentIndex;
                 }
-                else
-                {
+                else {
                     break;
                 }
             }
@@ -84,30 +70,24 @@ namespace Roy_T.AStar.Collections
             this.Items[index] = item;
         }
 
-        private void Heapify(int startIndex)
-        {
+        private void Heapify(int startIndex) {
             var bestIndex = startIndex;
 
-            if (this.HasLeftChild(startIndex))
-            {
+            if (this.HasLeftChild(startIndex)) {
                 var leftChildIndex = GetLeftChildIndex(startIndex);
-                if (ItemAIsSmallerThanItemB(this.Items[leftChildIndex], this.Items[bestIndex]))
-                {
+                if (ItemAIsSmallerThanItemB(this.Items[leftChildIndex], this.Items[bestIndex])) {
                     bestIndex = leftChildIndex;
                 }
             }
 
-            if (this.HasRightChild(startIndex))
-            {
+            if (this.HasRightChild(startIndex)) {
                 var rightChildIndex = GetRightChildIndex(startIndex);
-                if (ItemAIsSmallerThanItemB(this.Items[rightChildIndex], this.Items[bestIndex]))
-                {
+                if (ItemAIsSmallerThanItemB(this.Items[rightChildIndex], this.Items[bestIndex])) {
                     bestIndex = rightChildIndex;
                 }
             }
 
-            if (bestIndex != startIndex)
-            {
+            if (bestIndex != startIndex) {
                 var temp = this.Items[bestIndex];
                 this.Items[bestIndex] = this.Items[startIndex];
                 this.Items[startIndex] = temp;

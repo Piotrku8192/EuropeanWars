@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using Roy_T.AStar.Primitives;
+﻿using Roy_T.AStar.Primitives;
+using System.Collections.Generic;
 
-namespace Roy_T.AStar.Graphs
-{
-    public sealed class Node : INode
-    {
-        public Node(Position position)
-        {
+namespace Roy_T.AStar.Graphs {
+    public sealed class Node : INode {
+        public Node(Position position) {
             this.Incoming = new List<IEdge>(0);
             this.Outgoing = new List<IEdge>(0);
 
@@ -20,20 +17,16 @@ namespace Roy_T.AStar.Graphs
 
         public bool Movable { get; set; }
 
-        public void Connect(INode node, Velocity traversalVelocity)
-        {
+        public void Connect(INode node, Velocity traversalVelocity) {
             var edge = new Edge(this, node, traversalVelocity);
             this.Outgoing.Add(edge);
             node.Incoming.Add(edge);
         }
 
-        public void Disconnect(INode node)
-        {
-            for (var i = this.Outgoing.Count - 1; i >= 0; i--)
-            {
+        public void Disconnect(INode node) {
+            for (var i = this.Outgoing.Count - 1; i >= 0; i--) {
                 var edge = this.Outgoing[i];
-                if (edge.End == node)
-                {
+                if (edge.End == node) {
                     this.Outgoing.Remove(edge);
                     node.Incoming.Remove(edge);
                 }

@@ -1,14 +1,10 @@
 ﻿using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Province;
-using EuropeanWars.UI.Windows;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace EuropeanWars.UI.Windows {
-    public class BuildBuildingButton : MonoBehaviour
-    {
+    public class BuildBuildingButton : MonoBehaviour {
         public Image image;
         public Text buildingName;
 

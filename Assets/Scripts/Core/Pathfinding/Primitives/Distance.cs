@@ -1,13 +1,10 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct Distance : IComparable<Distance>, IEquatable<Distance>
-    {
+namespace Roy_T.AStar.Primitives {
+    public struct Distance : IComparable<Distance>, IEquatable<Distance> {
         public static Distance Zero => new Distance(0);
 
-        private Distance(float meters)
-        {
+        private Distance(float meters) {
             this.Meters = meters;
         }
 
@@ -15,8 +12,7 @@ namespace Roy_T.AStar.Primitives
 
         public static Distance FromMeters(float meters) => new Distance(meters);
 
-        public static Distance BeweenPositions(Position a, Position b)
-        {
+        public static Distance BeweenPositions(Position a, Position b) {
             var sX = a.X;
             var sY = a.Y;
             var eX = b.X;

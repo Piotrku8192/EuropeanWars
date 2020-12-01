@@ -1,6 +1,5 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
-using EuropeanWars.Core.Pathfinding;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.War;
 using EuropeanWars.GameMap;
@@ -35,7 +34,7 @@ namespace EuropeanWars.Province {
                     foreach (var item in PeaceDealWindow.Singleton.senderElements) {
                         if (item.Key is ProvincePeaceDealElement p) {
                             if (p.province == provinceInfo) {
-                                item.Value.OnClick();                               
+                                item.Value.OnClick();
                             }
                         }
                     }

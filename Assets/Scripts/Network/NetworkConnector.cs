@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace EuropeanWars.Network {
-    public class NetworkConnector : MonoBehaviour
-    {
+    public class NetworkConnector : MonoBehaviour {
         public InputField address;
 
         public void StartHost() {

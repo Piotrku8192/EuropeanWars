@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace Roy_T.AStar.Primitives
-{
-    public struct GridSize : IEquatable<GridSize>
-    {
-        public GridSize(int columns, int rows)
-        {
+namespace Roy_T.AStar.Primitives {
+    public struct GridSize : IEquatable<GridSize> {
+        public GridSize(int columns, int rows) {
             this.Columns = columns;
             this.Rows = rows;
         }

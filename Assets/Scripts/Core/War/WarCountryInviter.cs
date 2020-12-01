@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace EuropeanWars.Core.War {
             List<CountryInfo> attacks = new List<CountryInfo>();
 
             foreach (var d in defenders) {
-                if (!defenders.Where(t => d.IsInWarAgainstCountry(t)).Any() 
+                if (!defenders.Where(t => d.IsInWarAgainstCountry(t)).Any()
                     && !attackers.Where(t => d.IsInWarAgainstCountry(t)).Any()) {
                     defs.Add(d);
                 }
@@ -51,10 +52,12 @@ namespace EuropeanWars.Core.War {
 
         private CountryInfo[] GetCountryFriends(CountryInfo country, WarParty enemies) {
             List<CountryInfo> result = new List<CountryInfo>();
-            foreach (var item in country.alliances) {
-                if (!item.Key.IsInWarAgainstCountry(country) && !item.Key.IsInWarAgainstCountry(enemies.major.country)) {
-                    if (war.warReason.CanInviteCountryToWar(country, item.Key)) {
-                        result.Add(item.Key);
+            foreach (var item in country.relations) {
+                if (item.Value.relations[(int)DiplomaticRelation.Alliance]) {
+                    if (!item.Key.IsInWarAgainstCountry(country) && !item.Key.IsInWarAgainstCountry(enemies.major.country)) {
+                        if (war.warReason.CanInviteCountryToWar(country, item.Key)) {
+                            result.Add(item.Key);
+                        }
                     }
                 }
             }
