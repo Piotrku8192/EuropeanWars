@@ -1,5 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
-using EuropeanWars.GameMap;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
@@ -48,6 +48,8 @@ namespace EuropeanWars.Core.Diplomacy {
                 foreach (var item in GameInfo.provinces) {
                     item.Value.RefreshFogOfWar();
                 }
+
+                //TODO: Spawn notification with event information
             }
         }
 
@@ -97,11 +99,11 @@ namespace EuropeanWars.Core.Diplomacy {
             DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender, receiver, true);
 
             //TODO: translations!!!
-            window.acceptText.text = "Zaakceptuj";
-            window.deliceText.text = "Odrzuć";
-            window.title.text = "" + relation.ToString();
-            string description = "Zapytanie xD";
-            window.description.text = description;
+            window.acceptText.text = LanguageDictionary.language["Accept"];
+            window.deliceText.text = LanguageDictionary.language["Delice"];
+            window.title.text = LanguageDictionary.language[relation.ToString()];
+            window.description.text = string.Format(
+                LanguageDictionary.language["DiplomaticRequestDescripton"], sender.name, window.title.text);
 
             NetOutgoingMessage acceptMessage = Client.Singleton.c.CreateMessage();
             acceptMessage.Write((ushort)1039);

@@ -66,13 +66,13 @@ namespace EuropeanWars.Network {
             }
             GameInfo.UnselectProvince();
 
-            if (Client.Singleton.IsHost) {
+            //if (Client.Singleton.IsHost) {
                 foreach (var item in GameInfo.countries) {
                     if (item.Value.id > 0) {
                         GameInfo.countryAIs.Add(item.Value, new BoomerCountryAI(item.Value));
                     }
                 }
-            }
+            //}
 
             MusicManager.Singleton.audioSource.Stop();
         }
@@ -188,24 +188,9 @@ namespace EuropeanWars.Network {
             CountryInfo a = GameInfo.countries[attacker];
             CountryInfo d = GameInfo.countries[defender];
 
-            if (a == GameInfo.PlayerCountry) {
-                DiplomacyWindow.Singleton.UpdateWindow();
-            }
-
-            if (!a.IsInWarAgainstCountry(d)) {
-                WarReasonFactory factory = new WarReasonFactory(a, d);
-                WarReason w = factory.GetReasons()[warReason];
-                DiplomacyManager.DeclareWar(w, a, d);
-
-                if (d == GameInfo.PlayerCountry) {
-                    //TODO: Implement translation
-                    DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(a, d, true);
-                    win.title.text = "Wojna!";
-                    win.description.text = "Nasz niedaleki sąsiad wypowiedział nam wojnę!";
-                    win.acceptText.text = "Ok";
-                    win.deliceText.text = "Ok";
-                }
-            }
+            WarReasonFactory factory = new WarReasonFactory(a, d);
+            WarReason w = factory.GetReasons()[warReason];
+            DiplomacyManager.DeclareWar(w, a, d);
         }
 
         [Command(1036)]

@@ -874,7 +874,14 @@
     "MillitaryAccess": "Prawo przemarszu",
     "DeleteMillitaryAccess": "Zerwij prawo przemarszu",
     "Others": "Inne",
-    "TradeModificators": "Modyfikator udziału państwa w handlu: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>"
+    "TradeModificators": "Modyfikator udziału państwa w handlu: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>",
+    "Accept": "Zaakceptuj",
+    "Delice": "Odrzuć",
+    "Alliance": "Sojusz",
+    "RoyalMariage": "Królewski mariaż",
+    "MilitaryAccess": "Prawo przemarszu",
+    "TradeAgreament": "Umowa handlowa",
+    "DiplomaticRequestDescripton": "Państwo {0} zaproponowało nam {1}, powinniśmy zaakceptować to zaproszenie?"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1751,6 +1758,13 @@
     "MillitaryAccess": "Millitary access",
     "DeleteMillitaryAccess": "Break millitary access",
     "Others": "Others",
-    "TradeModificators": "World trade receipts modificators: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>"
+    "TradeModificators": "World trade receipts modificators: \n1% - 5% = <color=#00ff00>+5%</color> \n6% - 12% = <color=#00ff00>+10%</color> \n13% - 25% = <color=#00ff00>+20%</color> \n26% - 45% = <color=#00ff00>+50%</color> \n46% - 75% = <color=#00ff00>+100%</color> \n76% - 100% = <color=#00ff00>+200%</color>",
+    "Accept": "Accept",
+    "Delice": "Delice",
+    "Alliance": "Alliance",
+    "RoyalMariage": "Royal mariage",
+    "MilitaryAccess": "Military access",
+    "TradeAgreament": "Trade agreament",
+    "DiplomaticRequestDescripton": "{0} asked us for {1}, should we accept this invitation?"
   }
 ]

@@ -83,7 +83,7 @@ namespace EuropeanWars.Core.AI {
             }
 
             foreach (var item in provinces) {
-                item.MergeArmiesRequest(item.armies.Where(t => t.Country == country).ToArray());
+                item.MergeArmies(item.armies.Where(t => t.Country == country).ToArray());
             }
         }
 
@@ -103,7 +103,7 @@ namespace EuropeanWars.Core.AI {
 
             //Delete armies if country doesn't exist.
             if (country.nationalProvinces.Count == 0) {
-                foreach (var item in country.armies) {
+                foreach (var item in country.armies.ToArray()) {
                     item.DeleteLocal();
                 }
             }
@@ -115,15 +115,15 @@ namespace EuropeanWars.Core.AI {
 
                 if (item.BlackStatus) {
                     if (country.provinces.Count > 0) {
-                        item.GenerateRouteRequest(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
+                        item.GenerateRoute(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
                     }
                 }
                 else if (occupatedProvinces.Count > 0) {
-                    item.GenerateRouteRequest(occupatedProvinces[0]);
+                    item.GenerateRoute(occupatedProvinces[0]);
                     occupatedProvinces.RemoveAt(0);
                 }
                 else if (targetProvinces.Count > 0) {
-                    item.GenerateRouteRequest(targetProvinces[0]);
+                    item.GenerateRoute(targetProvinces[0]);
                     targetProvinces.RemoveAt(0);
                 }
             }

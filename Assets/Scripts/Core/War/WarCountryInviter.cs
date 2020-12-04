@@ -46,8 +46,11 @@ namespace EuropeanWars.Core.War {
                 DiplomacyWindow.Singleton.SpawnWarInvitation(war, inviter, isAttacker);
             }
             else if (!country.isPlayer) {
-                if (GameInfo.random.Next(0, 10) > 4) {
-                    war.JoinWar(country, isAttacker);//TODO: Invoke bot decision and add if bot agrees
+                if (GameInfo.random.Next(0, 10) > 4) {//TODO: Invoke bot decision and add if bot agrees
+                    war.JoinWar(country, isAttacker);
+                }
+                else if (country.relations[inviter].relations[(int)DiplomaticRelation.Alliance]) {
+                    country.relations[inviter].ChangeRelationState(DiplomaticRelation.Alliance);
                 }
             }
         }
