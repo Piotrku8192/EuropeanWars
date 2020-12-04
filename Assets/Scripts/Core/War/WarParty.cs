@@ -128,7 +128,7 @@ namespace EuropeanWars.Core.War {
                 CountryRelation r = country.relations[item.Key];
                 for (int i = 0; i < r.relations.Length; i++) {
                     if (r.relations[i]) {
-                        r.ChangeRelationState(i);
+                        r.ChangeRelationState(i, country, item.Key);
                     }
                 }
 

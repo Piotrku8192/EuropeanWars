@@ -49,8 +49,8 @@ namespace EuropeanWars.Core.War {
                 if (GameInfo.random.Next(0, 10) > 4) {//TODO: Invoke bot decision and add if bot agrees
                     war.JoinWar(country, isAttacker);
                 }
-                else if (country.relations[inviter].relations[(int)DiplomaticRelation.Alliance]) {
-                    country.relations[inviter].ChangeRelationState(DiplomaticRelation.Alliance);
+                else if (country.relations[inviter].relations[(int)DiplomaticRelation.Alliance] && !isAttacker) {
+                    country.relations[inviter].ChangeRelationState(DiplomaticRelation.Alliance, inviter, country);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.War;
 using EuropeanWars.Network;
 using Lidgren.Network;
@@ -25,11 +26,10 @@ namespace EuropeanWars.UI.Windows {
             this.war = war;
             this.inviter = inviter;
             this.isAttacker = isAttacker;
-            //TODO: Fill title and description with translated content.
-            title.text = "Wezwanie do wojny!";
-            description.text = inviter.name + " wzywa nas do pomocy w wojnie. Jako wierny sojusznik powinniśmy odpowiedzieć!";
-            acceptText.text = "Dołącz";
-            deliceText.text = "Zignoruj";
+            title.text = LanguageDictionary.language["War"];
+            description.text = string.Format(LanguageDictionary.language["WarInvitation"], inviter.name);
+            acceptText.text = LanguageDictionary.language["Accept"];
+            deliceText.text = LanguageDictionary.language["Delice"];
         }
 
         public void Accept() {
@@ -48,6 +48,7 @@ namespace EuropeanWars.UI.Windows {
             msg.Write((ushort)1034);
             msg.Write(inviter.id);
             msg.Write(GameInfo.PlayerCountry.id);
+            msg.Write(isAttacker);
             Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
 
             Destroy(gameObject);

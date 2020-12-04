@@ -5,6 +5,7 @@ using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Core.War;
@@ -174,9 +175,10 @@ namespace EuropeanWars.Network {
             int country = message.ReadInt32();
             CountryInfo i = GameInfo.countries[inviter];
             CountryInfo c = GameInfo.countries[country];
+            bool isAttacker = message.ReadBoolean();
 
-            if (i.relations[c].relations[(int)DiplomaticRelation.Alliance]) {
-                i.relations[c].ChangeRelationState(DiplomaticRelation.Alliance);
+            if (i.relations[c].relations[(int)DiplomaticRelation.Alliance] && !isAttacker) {
+                i.relations[c].ChangeRelationState(DiplomaticRelation.Alliance, i, c);
             }
         }
 
@@ -256,12 +258,11 @@ namespace EuropeanWars.Network {
 
             if (sender == GameInfo.PlayerCountry.id) {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(GameInfo.countries[sender], GameInfo.countries[receiver], true);
-
-                //TODO: translations!!!!
-                window.title.text = "Odrzucono propozycję pokoju!";
-                window.description.text = $"Państwo {GameInfo.countries[receiver].name} odrzuciło naszą propozycję pokoju.";
+                window.title.text = LanguageDictionary.language["PeaceDeal"];
+                window.description.text = string.Format(LanguageDictionary.language["PeaceDealDeliceDescription"],
+                GameInfo.countries[receiver].name);
                 window.acceptText.text = "Ok";
-                window.deliceText.gameObject.SetActive(false);
+                window.deliceText.transform.parent.gameObject.SetActive(false);
             }
         }
         #endregion
@@ -272,7 +273,7 @@ namespace EuropeanWars.Network {
             CountryInfo receiver = GameInfo.countries[message.ReadInt32()];
             int relation = message.ReadInt32();
 
-            sender.relations[receiver].ChangeRelationState((DiplomaticRelation)relation);
+            sender.relations[receiver].ChangeRelationState((DiplomaticRelation)relation, sender, receiver);
         }
 
         [Command(1040)]

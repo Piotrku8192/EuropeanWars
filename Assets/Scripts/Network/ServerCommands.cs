@@ -221,11 +221,13 @@ namespace EuropeanWars.Network {
         public static void DeliceWarInvitation(NetIncomingMessage message) {
             int inviter = message.ReadInt32();
             int country = message.ReadInt32();
+            bool isAttacker = message.ReadBoolean();
 
             NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
             msg.Write((ushort)1034);
             msg.Write(inviter);
             msg.Write(country);
+            msg.Write(isAttacker);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
 

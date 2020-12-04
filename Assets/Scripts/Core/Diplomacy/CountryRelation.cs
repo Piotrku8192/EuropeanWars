@@ -34,10 +34,10 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState;
 
-        public void ChangeRelationState(DiplomaticRelation relation) {
-            ChangeRelationState((int)relation);
+        public void ChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
+            ChangeRelationState((int)relation, sender, receiver);
         }
-        public void ChangeRelationState(int relation) {
+        public void ChangeRelationState(int relation, CountryInfo sender, CountryInfo receiver) {
             //TODO: Add switch and additional actions in this place
             relations[relation] = !relations[relation];
             if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
@@ -49,7 +49,14 @@ namespace EuropeanWars.Core.Diplomacy {
                     item.Value.RefreshFogOfWar();
                 }
 
-                //TODO: Spawn notification with event information
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender, receiver, true);
+                window.acceptText.text = "Ok";
+                window.deliceText.transform.parent.gameObject.SetActive(false);
+                window.title.text = LanguageDictionary.language[Enum.GetName(typeof(DiplomaticRelation), relation)];
+                window.description.text = string.Format(
+                    LanguageDictionary.language["DiplomaticRelationChanged"],
+                    window.title.text, LanguageDictionary.language[relations[relation] ? "HasBeenCreated" : "HasBeenDeleted"],
+                    receiver.name);
             }
         }
 
@@ -60,7 +67,7 @@ namespace EuropeanWars.Core.Diplomacy {
         public void TryChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
             if (relations[(int)relation]) {
                 if (!sender.isPlayer) {
-                    ChangeRelationState(relation);
+                    ChangeRelationState(relation, sender, receiver);
                 }
                 else {
                     SendMessage(relation, sender, receiver, 1039);
@@ -72,7 +79,7 @@ namespace EuropeanWars.Core.Diplomacy {
             if (!sender.IsInWarAgainstCountry(receiver)) {
                 if (!sender.isPlayer && !receiver.isPlayer) {
                     if (GameInfo.countryAIs[receiver].IsDiplomaticRelationChangeAccepted(relation, sender)) {
-                        ChangeRelationState(relation);
+                        ChangeRelationState(relation, sender, receiver);
                     }
                 }
                 else if (sender.isPlayer && !receiver.isPlayer) {
@@ -97,8 +104,6 @@ namespace EuropeanWars.Core.Diplomacy {
         }
         private void ShowRequest(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
             DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender, receiver, true);
-
-            //TODO: translations!!!
             window.acceptText.text = LanguageDictionary.language["Accept"];
             window.deliceText.text = LanguageDictionary.language["Delice"];
             window.title.text = LanguageDictionary.language[relation.ToString()];

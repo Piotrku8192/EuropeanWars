@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Network;
+﻿using EuropeanWars.Core.Language;
+using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
 using System.Collections.Generic;
@@ -128,11 +129,10 @@ namespace EuropeanWars.Core.War {
             if (receiver.country == GameInfo.PlayerCountry && SenderWarScore < 99) {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender.country, receiver.country, true);
 
-                //TODO: translations!!!
-                window.acceptText.text = "Zaakceptuj";
-                window.deliceText.text = "Odrzuć";
-                window.title.text = "Propozycja pokoju";
-                string description = GainedGold == 0 ? "" : $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
+                window.acceptText.text = LanguageDictionary.language["Accept"];
+                window.deliceText.text = LanguageDictionary.language["Delice"];
+                window.title.text = LanguageDictionary.language["PeaceDeal"];
+                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.name, GainedGold);
                 foreach (var item in selectedSenderElements) {
                     description += senderElements[item].Name + "\n";
                 }
@@ -162,9 +162,9 @@ namespace EuropeanWars.Core.War {
 
                 //TODO: translations!!!
                 window.acceptText.text = "Ok";
-                window.deliceText.gameObject.SetActive(false);
-                window.title.text = "Pokój";
-                string description = $"Państwo {receiver.country.name} odda {GainedGold} złota państwu {sender.country.name}\n";
+                window.deliceText.transform.parent.gameObject.SetActive(false);
+                window.title.text = LanguageDictionary.language["PeaceDeal"];
+                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.name, GainedGold);
 
                 foreach (var item in selectedSenderElements) {
                     description += senderElements[item].Name + "\n";

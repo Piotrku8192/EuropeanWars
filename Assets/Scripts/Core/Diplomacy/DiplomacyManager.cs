@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.War;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace EuropeanWars.Core.Diplomacy {
                 if (defender == GameInfo.PlayerCountry) {
                     //TODO: Implement translation
                     DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(attacker, defender, true);
-                    win.title.text = "Wojna!";
-                    win.description.text = "Nasz niedaleki sąsiad wypowiedział nam wojnę!";
+                    win.title.text = LanguageDictionary.language["War"];
+                    win.description.text = string.Format(LanguageDictionary.language["WarDescription"], attacker.name, warReason.Name);
                     win.acceptText.text = "Ok";
-                    win.deliceText.text = "Ok";
+                    win.deliceText.transform.parent.gameObject.SetActive(false);
                 }
                 WarInfo war = new WarInfo(warReason, attacker, defender);
                 wars.Add(war.id, war);
