@@ -56,42 +56,20 @@ namespace EuropeanWars.Core.AI {
         }
 
         protected virtual void BuildBuildingInSlot(BuildingInfo building, ProvinceInfo province, int slot) {
-            //NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
-            //msg.Write((ushort)512);
-            //msg.Write(building.id);
-            //msg.Write(province.id);
-            //msg.Write(slot);
-            //Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             province.BuildBuilding(building, slot);
         }
         protected virtual void RecruitArmy(UnitInfo unit, ProvinceInfo province, int count) {
-            //NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
-            //msg.Write((ushort)2048);
-            //msg.Write(unit.id);
-            //msg.Write(country.id);
-            //msg.Write(province.id);
-            //msg.Write(size);
-            //Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             country.EnqueueUnitToRecruit(unit, province, count);
         }
         protected virtual void FabricateClaim(ProvinceInfo province) {
-            //NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
-            //msg.Write((ushort)1032);
-            //msg.Write(province.id);
-            //msg.Write(country.id);
-            //Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             province.FabricateClaim(country);
         }
         protected virtual void DeclareWar(CountryInfo _country, int reason) {
-            //NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
-            //msg.Write((ushort)1035);
-            //msg.Write(country.id);
-            //msg.Write(_country.id);
-            //msg.Write(reason);
-            //Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
-            WarReasonFactory factory = new WarReasonFactory(country, _country);
-            WarReason w = factory.GetReasons()[reason];
-            DiplomacyManager.DeclareWar(w, country, _country);
+            if (country.relations[_country].truceInMonths == 0) {
+                WarReasonFactory factory = new WarReasonFactory(country, _country);
+                WarReason w = factory.GetReasons()[reason];
+                DiplomacyManager.DeclareWar(w, country, _country);
+            }
         }
     }
 }

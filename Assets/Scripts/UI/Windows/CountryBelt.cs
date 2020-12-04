@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.War;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,7 +51,7 @@ namespace EuropeanWars.UI.Windows {
 
                 vassal.SetActive(false); //TODO: Change it to country.vassals.Contains(this.country);
                 truce.gameObject.SetActive(country.relations[this.country].truceInMonths > 0);
-                truce.text = $"{country.relations[this.country].truceInMonths} months left";
+                truce.text = country.relations[this.country].truceInMonths.ToString() + " " + LanguageDictionary.language["Months"];
 
                 for (int i = 0; i < relations.Length; i++) {
                     if (country.relations[this.country].relations[i]) {

@@ -1,5 +1,6 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
@@ -22,7 +23,7 @@ namespace EuropeanWars.Core.Diplomacy {
     public class CountryRelation {
         public int Points { get; private set; }
         public bool[] relations;
-        public ushort truceInMonths;
+        public int truceInMonths;
 
         public bool withPlayerCountry;
 
@@ -30,6 +31,13 @@ namespace EuropeanWars.Core.Diplomacy {
             Points = Mathf.Clamp(points, -100, 100);
             this.relations = new bool[Enum.GetValues(typeof(DiplomaticRelation)).Length];
             truceInMonths = 0;
+            TimeManager.onMonthElapsed += OnMonthElapsed;
+        }
+
+        public void OnMonthElapsed() {
+            if (truceInMonths > 0) {
+                truceInMonths--;
+            }
         }
 
         public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState;
@@ -85,6 +93,14 @@ namespace EuropeanWars.Core.Diplomacy {
                 else if (sender.isPlayer && !receiver.isPlayer) {
                     if (GameInfo.countryAIs[receiver].IsDiplomaticRelationChangeAccepted(relation, sender)) {
                         SendMessage(relation, sender, receiver, 1039);
+                    }
+                    else {
+                        DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender, receiver, true);
+                        window.acceptText.text = "Ok";
+                        window.deliceText.transform.parent.gameObject.SetActive(false);
+                        window.title.text = LanguageDictionary.language[Enum.GetName(typeof(DiplomaticRelation), relation)];
+                        window.description.text = string.Format(
+                            LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.name, window.title.text);
                     }
                 }
                 else if (!sender.isPlayer && receiver.isPlayer) {

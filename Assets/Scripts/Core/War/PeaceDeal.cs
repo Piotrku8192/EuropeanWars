@@ -160,7 +160,6 @@ namespace EuropeanWars.Core.War {
             if (war.ContainsCountry(GameInfo.PlayerCountry)) {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender.country, receiver.country, true);
 
-                //TODO: translations!!!
                 window.acceptText.text = "Ok";
                 window.deliceText.transform.parent.gameObject.SetActive(false);
                 window.title.text = LanguageDictionary.language["PeaceDeal"];
@@ -179,9 +178,15 @@ namespace EuropeanWars.Core.War {
             receiver.country.gold -= GainedGold;
 
             if (!sender.IsMajor) {
+                foreach (var item in sender.party.Enemies.countries) {
+                    sender.country.relations[item.Key].truceInMonths += Mathf.Abs(UsedWarScore) + 12;
+                }
                 sender.party.LeaveParty(sender);
             }
             else {
+                foreach (var item in receiver.party.Enemies.countries) {
+                    receiver.country.relations[item.Key].truceInMonths += Mathf.Abs(UsedWarScore) + 12;
+                }
                 receiver.party.LeaveParty(receiver);
             }
 

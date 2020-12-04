@@ -883,13 +883,16 @@
     "TradeAgreament": "Umowa handlowa",
     "DiplomaticRequestDescripton": "Państwo <color=#ffff00>{0}</color> zaproponowało nam {1}, powinniśmy zaakceptować to zaproszenie?",
     "DiplomaticRelationChanged": "{1} {0} z <color=#ffff00>{2}</color>",
+    "DiplomaticRelationDeliced": "Państwo <color=#ffff00>{0}</color> odrzuciło propozycję zawiązania {1}",
     "HasBeenCreated": "Zawiązaliśmy",
     "HasBeenDeleted": "Rozwiązaliśmy",
     "War": "Wojna!",
     "WarDescription": "Państwo <color=#ffff00>{0}</color> wypowiedziało nam wojnę! Powód: <color=#ff0000>{1}</color>",
     "WarInvitation": "Państwo <color=#ffff00>{0}</color> wezwało nas do wojny. Powinniśmy im pomóc?",
     "PeaceDealGoldDescription": "Państwo {0} odda {1} złota",
-    "PeaceDealDeliceDescription": "Państwo <color=#ffff00>{0}</color> odrzuciło naszą propozycję pokoju"
+    "PeaceDealDeliceDescription": "Państwo <color=#ffff00>{0}</color> odrzuciło naszą propozycję pokoju",
+    "Months": "miesięcy",
+    "SendDeal": "Wyślij propozycję"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1775,12 +1778,15 @@
     "TradeAgreament": "Trade agreament",
     "DiplomaticRequestDescripton": "{0} asked us for {1}, should we accept this invitation?",
     "DiplomaticRelationChanged": "{0} with <color=#ffff00>{2}</color> {1}",
+    "DiplomaticRelationDeliced": "<color=#ffff00>{0}</color> deliced our request of {1}",
     "HasBeenCreated": "has been created",
     "HasBeenDeleted": "has been deleted",
     "War": "War!",
     "WarDescription": "<color=#ffff00>{0}</color> declared war on us with reason: <color=#ff0000>{1}</color>",
     "WarInvitation": "<color=#ffff00>{0}</color> invited us to the war. Should we help them?",
     "PeaceDealGoldDescription": "<color=#ffff00>{0}</color> will return {1} gold \n",
-    "PeaceDealDeliceDescription": "<color=#ffff00>{0}</color> has been deliced our peace deal"
+    "PeaceDealDeliceDescription": "<color=#ffff00>{0}</color> has been deliced our peace deal",
+    "Months": "months",
+    "SendDeal": "Send deal"
   }
 ]

@@ -13,6 +13,7 @@ using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -193,6 +194,11 @@ namespace EuropeanWars.Network {
             WarReasonFactory factory = new WarReasonFactory(a, d);
             WarReason w = factory.GetReasons()[warReason];
             DiplomacyManager.DeclareWar(w, a, d);
+
+            if (DiplomacyWindow.Singleton.window.activeInHierarchy 
+                && (DiplomacyWindow.Singleton.countryWindow.country == a || DiplomacyWindow.Singleton.countryWindow.country == d)) {
+                DiplomacyWindow.Singleton.UpdateWindow();
+            }
         }
 
         [Command(1036)]
@@ -292,7 +298,12 @@ namespace EuropeanWars.Network {
             int relation = message.ReadInt32();
 
             if (sender == GameInfo.PlayerCountry) {
-                //TODO: Show delice window.
+                DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(sender, receiver, true);
+                window.acceptText.text = "Ok";
+                window.deliceText.transform.parent.gameObject.SetActive(false);
+                window.title.text = LanguageDictionary.language[Enum.GetName(typeof(DiplomaticRelation), relation)];
+                window.description.text = string.Format(
+                    LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.name, window.title.text);
             }
         }
 

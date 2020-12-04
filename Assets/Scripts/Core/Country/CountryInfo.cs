@@ -123,6 +123,7 @@ namespace EuropeanWars.Core.Country {
             CalculateEconomy();
             EndBankruptcy();
             CalculateManpower();
+            CalculateDiplomacy();
         }
         public void OnYearElapsed() {
             CalculatePrestige();
@@ -174,6 +175,12 @@ namespace EuropeanWars.Core.Country {
         public void CalculatePrestige() {
             //TODO: Yes, this is definetly bad way to do that.
             prestige += 1;
+        }
+
+        public void CalculateDiplomacy() {
+            if (DiplomacyWindow.Singleton.countryWindow.country == this && DiplomacyWindow.Singleton.window.activeInHierarchy) {
+                DiplomacyWindow.Singleton.UpdateWindow();
+            }
         }
 
         public void EnqueFabricateClaim(ProvinceInfo province) {
