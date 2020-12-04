@@ -1,10 +1,11 @@
-﻿using EuropeanWars.Core.Province;
+﻿using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Province;
 using System.Linq;
 using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public class ProvincePeaceDealElement : PeaceDealElement {
-        public override string Name => $"<color=#004c8f>{province.NationalCountry.name}</color> oddaje prowincję <color=#e3c800>{province.name}</color> dla <color=#004c8f>{province.Country.name}</color>"; //TODO: Make this translating when translate system is done.
+        public override string Name => string.Format(LanguageDictionary.language["PeaceDealProvinceElement"], province.NationalCountry.name, province.name, province.Country.name);
         public override int WarScoreCost => Mathf.FloorToInt(province.taxation * costModifier);
         public override Color Color => Color.yellow;
 

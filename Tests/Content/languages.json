@@ -892,7 +892,9 @@
     "PeaceDealGoldDescription": "Państwo {0} odda {1} złota",
     "PeaceDealDeliceDescription": "Państwo <color=#ffff00>{0}</color> odrzuciło naszą propozycję pokoju",
     "Months": "miesięcy",
-    "SendDeal": "Wyślij propozycję"
+    "SendDeal": "Wyślij propozycję",
+    "PeaceDealProvinceElement": "Państwo <color=#e3c800>{0}</color> odda <color=#004c8f>{1}</color> państwu <color=#e3c800>{2}</color>",
+    "ConquestWarReason": "Roszczenia do prowincji <color=#004c8f>{0}</color>"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1787,6 +1789,8 @@
     "PeaceDealGoldDescription": "<color=#ffff00>{0}</color> will return {1} gold \n",
     "PeaceDealDeliceDescription": "<color=#ffff00>{0}</color> has been deliced our peace deal",
     "Months": "months",
-    "SendDeal": "Send deal"
+    "SendDeal": "Send deal",
+    "PeaceDealProvinceElement": "<color=#e3c800>{0}</color> returns <color=#004c8f>{1}</color> to <color=#e3c800>{2}</color>",
+    "ConquestWarReason": "Take <color=#004c8f>{0}</color>"
   }
 ]

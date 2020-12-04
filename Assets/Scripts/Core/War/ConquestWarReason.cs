@@ -1,10 +1,11 @@
 ﻿using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
+using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Province;
 
 namespace EuropeanWars.Core.War {
     public class ConquestWarReason : WarReason {
-        public override string Name => "Roszczenia do prowincji " + target.name; //TODO: Add translate
+        public override string Name => string.Format(LanguageDictionary.language["ConquestWarReason"], target.name);
         public override bool ProvinceTakingEnabled => true;
 
         public readonly ProvinceInfo target;
