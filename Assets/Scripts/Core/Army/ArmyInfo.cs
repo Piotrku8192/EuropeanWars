@@ -24,7 +24,7 @@ namespace EuropeanWars.Core.Army {
         public int Size => units.Values.Sum();
         public int MaxSize => maxUnits.Values.Sum();
         public int Artilleries => GetArtilleries();
-        public int AverageSpeed => units.Sum(t => t.Key.speed * t.Value) / (Size > 0 ? Size : 1);
+        public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1);
         public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
         public bool IsSelected { get; private set; }
 
@@ -94,24 +94,10 @@ namespace EuropeanWars.Core.Army {
                     movingforDays = 0;
                     daysToMove = 0;
                     OnArmyMove(ra[0]);
-                    if (ra.Length > 2) {
+                    if (ra.Length > 1) {
                         daysToMove = Mathf.CeilToInt(Vector2.Distance(
-                            new Vector2(ra[0].x, ra[0].y), new Vector2(ra[1].x, ra[1].y))) / (AverageSpeed == 0 ? 1 : AverageSpeed);
-                    }
-
-                    if (Country == GameInfo.PlayerCountry) {
-                        ArmyObject.DrawRoute(route.ToArray());
-                    }
-                }
-                Vector2 pos = new Vector2(ra[0].x, ra[0].y);
-                if (ra.Length > 1) {
-                    pos = Vector2.Lerp(pos, new Vector2(ra[1].x, ra[1].y),
-                        movingforDays / (float)(daysToMove == 0 ? 1 : daysToMove));
-                }
-                if (ArmyObject) {
-                    ArmyObject.transform.position = pos;
-                    if (Country == GameInfo.PlayerCountry) {
-                        ArmyObject.lineRenderer.SetPosition(0, pos);
+                            new Vector2(ra[0].x, ra[0].y), 
+                            new Vector2(ra[1].x, ra[1].y)) / (AverageSpeed == 0 ? 1 : AverageSpeed));
                     }
                 }
             }
@@ -329,10 +315,17 @@ namespace EuropeanWars.Core.Army {
                 if (Country == GameInfo.PlayerCountry) {
                     ArmyObject.DrawRoute(route.ToArray());
                 }
+
+                daysToMove = Mathf.CeilToInt(Vector2.Distance(
+                    new Vector2(Province.x, Province.y),
+                    new Vector2(r[1].x, r[1].y)) / (AverageSpeed == 0 ? 1 : AverageSpeed));
+                movingforDays = 0;
             }
         }
 
         public void OnArmyMove(ProvinceInfo newProvince) {
+            ArmyObject.StartCoroutine(ArmyObject.MoveObjectToProvince(Province, newProvince));
+
             if (route.Count < 2) {
                 isMoveLocked = false;
             }

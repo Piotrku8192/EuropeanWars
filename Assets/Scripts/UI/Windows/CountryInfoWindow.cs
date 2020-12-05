@@ -25,6 +25,14 @@ namespace EuropeanWars.UI.Windows {
 
         public void UpdateLanguage() {
             declareWarWindow.declareButton.GetComponentInChildren<Text>().text = LanguageDictionary.language["DeclareWar"];
+            declareWarButton.GetComponent<DescriptionText>().text = LanguageDictionary.language["DeclareWar"];
+            peaceWarButton.GetComponent<DescriptionText>().text = LanguageDictionary.language["PeaceDeal"];
+
+            foreach (var item in dipActionButtons) {
+                item.GetComponent<DescriptionText>().text = 
+                    (item.targetState ? LanguageDictionary.language["CreateRelation"] : LanguageDictionary.language["DeleteRelation"]) +
+                    " " + LanguageDictionary.language[item.action.ToString()];
+            }
         }
 
         public void UpdateWindow(CountryInfo country) {

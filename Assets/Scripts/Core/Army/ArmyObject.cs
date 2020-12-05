@@ -1,6 +1,7 @@
 ﻿using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,6 +50,26 @@ namespace EuropeanWars.Core.Army {
             }
         }
 
+        public IEnumerator MoveObjectToProvince(ProvinceInfo oldProvince, ProvinceInfo newProvince) {
+            Vector2 pos1 = new Vector2(oldProvince.x, oldProvince.y);
+            Vector2 pos2 = new Vector2(newProvince.x, newProvince.y);
+
+            for (int i = 0; i <= 50; i++) {
+                Vector2 p = Vector2.Lerp(pos1, pos2, (float)i/50);
+
+                transform.position = p;
+                if (army.Country == GameInfo.PlayerCountry) {
+                    lineRenderer.SetPosition(0, p);
+                }
+
+                yield return new WaitForFixedUpdate();
+            }
+
+            if (army.Country == GameInfo.PlayerCountry) {
+                DrawRoute(army.route.ToArray());
+            }
+        }
+
         public void OnClick() {
             if (army.IsSelected) {
                 army.UnselectArmy();
@@ -94,8 +115,6 @@ namespace EuropeanWars.Core.Army {
         public void DrawRoute(ProvinceInfo[] route) {
             try {
                 lineRenderer.positionCount = route.Length;
-                lineRenderer.SetPosition(0, transform.position);
-
                 for (int i = 0; i < route.Length; i++) {
                     ProvinceInfo item = route[i];
                     lineRenderer.SetPosition(i, new Vector2(item.x, item.y));

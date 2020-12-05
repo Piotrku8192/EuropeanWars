@@ -24,6 +24,7 @@ namespace EuropeanWars.Core.Diplomacy {
         public int Points { get; private set; }
         public bool[] relations;
         public int truceInMonths;
+        public int monthsToNextAction;
 
         public bool withPlayerCountry;
 
@@ -38,9 +39,12 @@ namespace EuropeanWars.Core.Diplomacy {
             if (truceInMonths > 0) {
                 truceInMonths--;
             }
+            if (monthsToNextAction > 0) {
+                monthsToNextAction--;
+            }
         }
 
-        public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState;
+        public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState && monthsToNextAction == 0;
 
         public void ChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
             ChangeRelationState((int)relation, sender, receiver);
@@ -73,6 +77,10 @@ namespace EuropeanWars.Core.Diplomacy {
         }
 
         public void TryChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
+            if (monthsToNextAction > 0) {
+                return;
+            }
+
             if (relations[(int)relation]) {
                 if (!sender.isPlayer) {
                     ChangeRelationState(relation, sender, receiver);
@@ -81,10 +89,9 @@ namespace EuropeanWars.Core.Diplomacy {
                     SendMessage(relation, sender, receiver, 1039);
                 }
 
-                return;
+                monthsToNextAction += 12;
             }
-
-            if (!sender.IsInWarAgainstCountry(receiver)) {
+            else if (!sender.IsInWarAgainstCountry(receiver)) {
                 if (!sender.isPlayer && !receiver.isPlayer) {
                     if (GameInfo.countryAIs[receiver].IsDiplomaticRelationChangeAccepted(relation, sender)) {
                         ChangeRelationState(relation, sender, receiver);
@@ -111,6 +118,8 @@ namespace EuropeanWars.Core.Diplomacy {
                 else if (GameInfo.PlayerCountry == sender) {
                     SendMessage(relation, sender, receiver, 1040);
                 }
+
+                monthsToNextAction += 12;
             }
         }
         public void ProcessRequest(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {
