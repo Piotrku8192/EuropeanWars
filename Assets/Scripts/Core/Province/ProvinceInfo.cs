@@ -193,7 +193,8 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void BuildBuilding(BuildingInfo building, int slot) {
-            if (buildings.Contains(building) && building.id != 0) {
+            if ((buildings.Contains(building) && building.id != 0) 
+                || Country != NationalCountry) {
                 return;
             }
 
@@ -213,7 +214,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void UpgradeProvince() {
-            if (Country.gold > 50) {
+            if (Country.gold > 50 && Country == NationalCountry) {
                 Country.gold -= 50;
                 taxation += 1;
                 if (ProvinceWindow.Singleton.province == this) {
@@ -223,7 +224,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void DevastateProvince() {
-            if (taxation > 0) {
+            if (taxation > 0 && Country == NationalCountry) {
                 Country.gold += 30;
                 taxation -= 1;
                 if (ProvinceWindow.Singleton.province == this) {
