@@ -18,7 +18,7 @@ namespace EuropeanWars.Core.Diplomacy {
                     //TODO: Implement translation
                     DipRequestWindow win = DiplomacyWindow.Singleton.SpawnRequest(attacker, defender, true);
                     win.title.text = LanguageDictionary.language["War"];
-                    win.description.text = string.Format(LanguageDictionary.language["WarDescription"], attacker.name, warReason.Name);
+                    win.description.text = string.Format(LanguageDictionary.language["WarDescription"], attacker.Name, warReason.Name);
                     win.acceptText.text = "Ok";
                     win.deliceText.transform.parent.gameObject.SetActive(false);
                 }

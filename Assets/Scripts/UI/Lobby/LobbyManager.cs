@@ -34,8 +34,8 @@ namespace EuropeanWars.UI.Lobby {
             }
             readyButton.interactable = !c.isPlayer;
             selectedCountry = c;
-            countryName.text = c.name;
-            crest.sprite = c.crest;
+            countryName.text = c.Name;
+            crest.sprite = c.Crest;
         }
 
         public void Ready() {

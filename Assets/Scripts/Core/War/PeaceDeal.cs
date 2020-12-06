@@ -132,7 +132,7 @@ namespace EuropeanWars.Core.War {
                 window.acceptText.text = LanguageDictionary.language["Accept"];
                 window.deliceText.text = LanguageDictionary.language["Delice"];
                 window.title.text = LanguageDictionary.language["PeaceDeal"];
-                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.name, GainedGold);
+                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.Name, GainedGold);
                 foreach (var item in selectedSenderElements) {
                     description += senderElements[item].Name + "\n";
                 }
@@ -163,7 +163,7 @@ namespace EuropeanWars.Core.War {
                 window.acceptText.text = "Ok";
                 window.deliceText.transform.parent.gameObject.SetActive(false);
                 window.title.text = LanguageDictionary.language["PeaceDeal"];
-                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.name, GainedGold);
+                string description = GainedGold == 0 ? "" : string.Format(LanguageDictionary.language["PeaceDealGoldDescription"], receiver.country.Name, GainedGold);
 
                 foreach (var item in selectedSenderElements) {
                     description += senderElements[item].Name + "\n";

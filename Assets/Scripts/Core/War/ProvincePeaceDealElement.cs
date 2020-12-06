@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EuropeanWars.Core.War {
     public class ProvincePeaceDealElement : PeaceDealElement {
-        public override string Name => string.Format(LanguageDictionary.language["PeaceDealProvinceElement"], province.NationalCountry.name, province.name, province.Country.name);
+        public override string Name => string.Format(LanguageDictionary.language["PeaceDealProvinceElement"], province.NationalCountry.Name, province.name, province.Country.Name);
         public override int WarScoreCost => Mathf.FloorToInt(province.taxation * costModifier);
         public override Color Color => Color.yellow;
 

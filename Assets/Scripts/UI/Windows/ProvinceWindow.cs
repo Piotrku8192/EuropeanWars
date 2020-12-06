@@ -118,7 +118,7 @@ namespace EuropeanWars.UI.Windows {
                 if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                     occupationProgress.text = Mathf.RoundToInt(province.OccupationCounter.Progress) + "%";
                     occupationProgressBar.fillAmount = province.OccupationCounter.Progress * 0.01f;
-                    occupantCrest.sprite = province.OccupationCounter.Army.Country.crest;
+                    occupantCrest.sprite = province.OccupationCounter.Army.Country.Crest;
                     garnisonSize.text = province.garnison.Sum(t => t.Value).ToString();
                     occupantArmySize.text = province.OccupationCounter.Army.Size.ToString();
                 }

@@ -149,6 +149,9 @@ namespace EuropeanWars.Core.Province {
                 Country.provinces.Remove(this);
                 if (nationalCountry) {
                     Country.nationalProvinces.Remove(this);
+                    if (Country.nationalProvinces.Count == 0) {
+                        Country.OnCountryClearedFromMap();
+                    }
                 }
 
                 foreach (var item in new List<UnitToRecruit>(Country.toRecruit)) {

@@ -23,8 +23,8 @@ namespace EuropeanWars.Core.Country {
         public bool isPlayer = false;
 
         //Main
-        public string name;
-        public Sprite crest;
+        public string Name { get; private set; }
+        public Sprite Crest { get; private set; }
         public int king; //TODO: Change type when persons added
         public ReligionInfo religion;
         public List<ProvinceInfo> provinces = new List<ProvinceInfo>();
@@ -55,7 +55,7 @@ namespace EuropeanWars.Core.Country {
         public int manpower;
         public int maxManpower;
         public int manpowerIncrease;
-        public float manpowerModifier;
+        public float manpowerIncreaseModifier;
         public List<UnitToRecruit> toRecruit = new List<UnitToRecruit>();
         public List<ArmyInfo> armies = new List<ArmyInfo>();
 
@@ -65,6 +65,20 @@ namespace EuropeanWars.Core.Country {
         public List<CountryInfo> enemies = new List<CountryInfo>();
         public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
         public Dictionary<CountryInfo, CountryRelation> relations = new Dictionary<CountryInfo, CountryRelation>();
+
+        //Vassals
+        public bool isVassal;
+
+        //if country is vassal
+        public CountryInfo suzerain;
+        /// <summary>
+        /// if false country canot make alliances, wars and so one.
+        /// </summary>
+        public bool sovereign;
+        public bool isMarchy;
+
+        //if country is not vassal
+        public List<CountryInfo> vassals = new List<CountryInfo>();
 
         //Technology and stuff
         public List<BuildingInfo> buildings = new List<BuildingInfo>();
@@ -82,7 +96,7 @@ namespace EuropeanWars.Core.Country {
         }
 
         public void Initialize() {
-            crest = GameInfo.gfx["Country-" + id];
+            Crest = GameInfo.gfx["Country-" + id];
             religion = GameInfo.religions[data.religion];
             buildings = GameInfo.buildings.Values.ToList();
             TimeManager.onDayElapsed += OnDayElapsed;
@@ -112,7 +126,7 @@ namespace EuropeanWars.Core.Country {
             }
         }
         public void UpdateLanguage() {
-            name = LanguageDictionary.language["CountryName-" + id.ToString()];
+            Name = LanguageDictionary.language["CountryName-" + id.ToString()];
         }
 
         public void OnDayElapsed() {
@@ -167,9 +181,9 @@ namespace EuropeanWars.Core.Country {
             //TODO: Update this function after create new system
             maxManpower = nationalProvinces.Count * 5000;
             manpowerIncrease = taxationIncome;
-            manpowerModifier = 0.6f;
+            manpowerIncreaseModifier = 0.6f;
             if (manpower + manpowerIncrease <= maxManpower) {
-                manpower += Mathf.FloorToInt(manpowerIncrease * manpowerModifier);
+                manpower += Mathf.FloorToInt(manpowerIncrease * manpowerIncreaseModifier);
             }
         }
         public void CalculatePrestige() {
@@ -355,5 +369,87 @@ namespace EuropeanWars.Core.Country {
             return null;
         }
         #endregion
+
+        #region Vassals
+        public bool CanMakeVassal(CountryInfo country) {
+            return country.suzerain != this && !isVassal && country.taxationIncome * 2 < taxationIncome;
+        }
+
+        public void MakeVassal(CountryInfo country) {
+            if (country.suzerain != this) {
+                if (country.isVassal) {
+                    country.suzerain.RemoveMarchy(country);
+                    country.suzerain.vassals.Remove(country);
+                }
+                country.suzerain = this;
+                country.isVassal = true;
+                country.sovereign = true;
+                vassals.Add(country);
+            }
+        }
+
+        public void AnnectVassal(CountryInfo country) {
+            if (country.suzerain == this) {
+                foreach (var item in country.provinces) {
+                    item.SetCountry(this, item.NationalCountry == country);
+                }
+                
+            }
+        }
+
+        public void RemoveVassal(CountryInfo country) {
+            if (country.suzerain == this) {
+                country.isVassal = false;
+                country.suzerain = null;
+                vassals.Remove(country);
+            }
+        }
+
+        public void MakeMarchy(CountryInfo country) {
+            if (country.suzerain == this && !country.isMarchy) {
+                //TODO: Add effects
+                country.isMarchy = true;
+            }
+        }
+
+        public void RemoveMarchy(CountryInfo country) {
+            if (country.suzerain == this && country.isMarchy) {
+                //TODO: Remove effects
+                country.isMarchy = false;
+            }
+        }
+        #endregion
+
+        public void OnCountryClearedFromMap() {
+            if (nationalProvinces.Count == 0) {
+                foreach (var item in provinces) {
+                    item.SetCountry(item.NationalCountry, false);
+                }
+
+                foreach (var item in relations) {
+                    for (int i = 0; i < item.Value.relations.Length; i++) {
+                        item.Value.ChangeRelationState(i, this, item.Key);
+                    }
+                }
+
+                foreach (var item in wars.ToArray()) {
+                    item.Value.party.LeaveParty(item.Value, item.Value.party.countries.Count == 1);
+                }
+                foreach (var item in armies.ToArray()) {
+                    item.DeleteLocal();
+                }
+
+                loans = 0;
+                toClaim.Clear();
+
+                suzerain.RemoveMarchy(this);
+                isVassal = false;
+                if (suzerain != null) {
+                    suzerain.vassals.Remove(this);
+                    suzerain = null;
+                }
+                vassals.Clear();
+            }
+        }
     }
 }

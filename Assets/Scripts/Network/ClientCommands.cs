@@ -61,7 +61,7 @@ namespace EuropeanWars.Network {
         public static void Play(NetIncomingMessage message) {
             UIManager.Singleton.lobby.SetActive(false);
             UIManager.Singleton.ui.SetActive(true);
-            UIManager.Singleton.playerCountryCrest.sprite = GameInfo.PlayerCountry.crest;
+            UIManager.Singleton.playerCountryCrest.sprite = GameInfo.PlayerCountry.Crest;
             GameInfo.gameStarted = true;
             foreach (var item in GameInfo.provinces) {
                 item.Value.RefreshFogOfWar();
@@ -266,7 +266,7 @@ namespace EuropeanWars.Network {
                 DipRequestWindow window = DiplomacyWindow.Singleton.SpawnRequest(GameInfo.countries[sender], GameInfo.countries[receiver], true);
                 window.title.text = LanguageDictionary.language["PeaceDeal"];
                 window.description.text = string.Format(LanguageDictionary.language["PeaceDealDeliceDescription"],
-                GameInfo.countries[receiver].name);
+                GameInfo.countries[receiver].Name);
                 window.acceptText.text = "Ok";
                 window.deliceText.transform.parent.gameObject.SetActive(false);
             }
@@ -303,7 +303,7 @@ namespace EuropeanWars.Network {
                 window.deliceText.transform.parent.gameObject.SetActive(false);
                 window.title.text = LanguageDictionary.language[Enum.GetName(typeof(DiplomaticRelation), relation)];
                 window.description.text = string.Format(
-                    LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.name, window.title.text);
+                    LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.Name, window.title.text);
             }
         }
 

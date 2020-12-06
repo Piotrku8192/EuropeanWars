@@ -10,7 +10,7 @@ namespace EuropeanWars.UI.Windows {
 
         public void Init(WarCountryInfo warCountryInfo) {
             Country = warCountryInfo;
-            enemiesMajorCrest.sprite = Country.party.Enemies.major.country.crest;
+            enemiesMajorCrest.sprite = Country.party.Enemies.major.country.Crest;
         }
 
         public void OnClick() {

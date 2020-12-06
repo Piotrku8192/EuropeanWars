@@ -18,7 +18,7 @@ namespace EuropeanWars.UI.Windows {
         public void SetCountry(WarCountryInfo country) {
             this.country = country;
             countryButton.SetCountry(country.country);
-            countryName.text = country.country.name;
+            countryName.text = country.country.Name;
             peaceButton.SetActive(
                 (country.party.Enemies.ContainsCountry(GameInfo.PlayerCountry) && country.party.major == country)
                 || (country.party.Enemies.major.country == GameInfo.PlayerCountry));

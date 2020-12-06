@@ -74,6 +74,12 @@ namespace EuropeanWars.Core.War {
             }
         }
         public void LeaveParty(WarCountryInfo country, bool isWarEnd = false) {
+            foreach (var item in country.country.vassals) {
+                if (item.wars.Keys.Contains(war)) {
+                    LeaveParty(item.wars[war], false);
+                }
+            }
+
             if (ContainsCountry(country)) {
                 foreach (var item in new List<ProvinceInfo>(country.enemyOccupatedProvinces)) {
                     item.SetCountry(item.NationalCountry);

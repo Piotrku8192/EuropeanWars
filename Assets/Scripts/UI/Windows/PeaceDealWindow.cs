@@ -35,7 +35,7 @@ namespace EuropeanWars.UI.Windows {
             peaceDeal = new DynamicPeaceDeal(war, sender, receiver);
             UIManager.Singleton.CloseAllWindows();
             windowObject.SetActive(true);
-            receiverCrest.sprite = receiver.country.crest;
+            receiverCrest.sprite = receiver.country.Crest;
             InitElements();
             MapPainter.PaintMap(MapMode.Peace);
         }

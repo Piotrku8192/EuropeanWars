@@ -10,8 +10,8 @@ namespace EuropeanWars.UI.Windows {
 
         public void SetCountry(CountryInfo country) {
             this.country = country;
-            crest.sprite = country.crest;
-            description.text = country.name;
+            crest.sprite = country.Crest;
+            description.text = country.Name;
         }
 
         public void OnClick() {

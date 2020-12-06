@@ -38,10 +38,10 @@ namespace EuropeanWars.UI.Windows {
         public void UpdateWindow(CountryInfo country) {
             declareWarWindow.ResetAndDisable();
             this.country = country;
-            crest.sprite = country.crest;
+            crest.sprite = country.Crest;
             //religion.sprite = country.religion.image;
             //king.sprite = country.king.image; TODO: uncomment this.
-            countryName.text = country.name;
+            countryName.text = country.Name;
 
             UpdateWarActionButtons();
             UpdateDiplomaticRelations();

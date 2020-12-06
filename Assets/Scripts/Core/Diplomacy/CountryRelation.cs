@@ -68,7 +68,7 @@ namespace EuropeanWars.Core.Diplomacy {
                 window.description.text = string.Format(
                     LanguageDictionary.language["DiplomaticRelationChanged"],
                     window.title.text, LanguageDictionary.language[relations[relation] ? "HasBeenCreated" : "HasBeenDeleted"],
-                    receiver.name);
+                    receiver.Name);
             }
         }
 
@@ -107,7 +107,7 @@ namespace EuropeanWars.Core.Diplomacy {
                         window.deliceText.transform.parent.gameObject.SetActive(false);
                         window.title.text = LanguageDictionary.language[Enum.GetName(typeof(DiplomaticRelation), relation)];
                         window.description.text = string.Format(
-                            LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.name, window.title.text);
+                            LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.Name, window.title.text);
                     }
                 }
                 else if (!sender.isPlayer && receiver.isPlayer) {
@@ -133,7 +133,7 @@ namespace EuropeanWars.Core.Diplomacy {
             window.deliceText.text = LanguageDictionary.language["Delice"];
             window.title.text = LanguageDictionary.language[relation.ToString()];
             window.description.text = string.Format(
-                LanguageDictionary.language["DiplomaticRequestDescripton"], sender.name, window.title.text);
+                LanguageDictionary.language["DiplomaticRequestDescripton"], sender.Name, window.title.text);
 
             NetOutgoingMessage acceptMessage = Client.Singleton.c.CreateMessage();
             acceptMessage.Write((ushort)1039);

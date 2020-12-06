@@ -27,7 +27,7 @@ namespace EuropeanWars.UI.Windows {
             this.inviter = inviter;
             this.isAttacker = isAttacker;
             title.text = LanguageDictionary.language["War"];
-            description.text = string.Format(LanguageDictionary.language["WarInvitation"], inviter.name);
+            description.text = string.Format(LanguageDictionary.language["WarInvitation"], inviter.Name);
             acceptText.text = LanguageDictionary.language["Accept"];
             deliceText.text = LanguageDictionary.language["Delice"];
         }

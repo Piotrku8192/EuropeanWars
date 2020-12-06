@@ -27,7 +27,7 @@ namespace EuropeanWars.Core.Army {
 
         public void Initialize(ArmyInfo army) {
             this.army = army;
-            crest.sprite = army.Country.crest;
+            crest.sprite = army.Country.Crest;
             transform.position = new Vector3(army.Province.x, army.Province.y, 0);
         }
 

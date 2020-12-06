@@ -83,7 +83,7 @@ namespace EuropeanWars.UI.Windows {
                 float percent = cs[i].Item1 / (float)totalCities;
 
                 if (angle > last && angle <= percent + last) {
-                    statText.text = $"{cs[i].Item2.name} {Math.Round(percent * 100f, 1)}%";
+                    statText.text = $"{cs[i].Item2.Name} {Math.Round(percent * 100f, 1)}%";
                     isOther = false;
                     last += percent;
                     break;
