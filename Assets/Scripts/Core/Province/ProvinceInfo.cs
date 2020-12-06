@@ -256,6 +256,7 @@ namespace EuropeanWars.Core.Province {
 
         public bool IsFow() {
             return !(Country == GameInfo.PlayerCountry
+                || Country.suzerain == GameInfo.PlayerCountry || GameInfo.PlayerCountry.suzerain == Country
                 || GameInfo.PlayerCountry.relations[Country].relations[(int)DiplomaticRelation.Alliance]
                 || armies.Where(t => t.Country == GameInfo.PlayerCountry
                 || GameInfo.PlayerCountry.relations[t.Country].relations[(int)DiplomaticRelation.Alliance]).Any());

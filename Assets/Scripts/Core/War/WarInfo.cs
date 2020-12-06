@@ -47,15 +47,12 @@ namespace EuropeanWars.Core.War {
         public void JoinWar(CountryInfo country, bool isAttacker) {
             if (isAttacker) {
                 attackers.JoinParty(country);
-                foreach (var item in country.vassals) {
-                    attackers.JoinParty(item);
-                }
             }
             else {
                 defenders.JoinParty(country);
-                foreach (var item in country.vassals) {
-                    defenders.JoinParty(item);
-                }
+            }
+            foreach (var item in country.vassals) {
+                JoinWar(item, isAttacker);
             }
         }
     }

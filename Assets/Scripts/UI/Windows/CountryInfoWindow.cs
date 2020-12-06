@@ -21,6 +21,13 @@ namespace EuropeanWars.UI.Windows {
 
         public DeclareWarWindow declareWarWindow;
 
+        public Button makeVassal;
+        public Button deleteVassal;
+
+        public Button makeMarchy;
+        public Button deleteMarchy;
+        public Button annexVassal;
+
         public CountryInfo country;
 
         public void UpdateLanguage() {
@@ -45,6 +52,7 @@ namespace EuropeanWars.UI.Windows {
 
             UpdateWarActionButtons();
             UpdateDiplomaticRelations();
+            UpdateVassalActionButtons();
         }
 
         public void UpdateWarActionButtons() {
@@ -52,7 +60,6 @@ namespace EuropeanWars.UI.Windows {
                 && country != GameInfo.PlayerCountry && GameInfo.PlayerCountry.relations[country].truceInMonths == 0;
             peaceWarButton.interactable = GameInfo.PlayerCountry.IsInWarAgainstCountry(country) && country != GameInfo.PlayerCountry;
         }
-
         public void UpdateDiplomaticRelations() {
             if (country == null) {
                 return;
@@ -60,7 +67,7 @@ namespace EuropeanWars.UI.Windows {
 
             foreach (var item in dipActionButtons) {
                 Button button = item.GetComponent<Button>();
-                if (!GameInfo.PlayerCountry.sovereign || !country.sovereign || country == GameInfo.PlayerCountry 
+                if (!GameInfo.PlayerCountry.sovereign || !country.sovereign || country == GameInfo.PlayerCountry
                     || country.IsInWarAgainstCountry(GameInfo.PlayerCountry)) {
                     button.interactable = false;
                     continue;
@@ -68,6 +75,14 @@ namespace EuropeanWars.UI.Windows {
 
                 button.interactable = GameInfo.PlayerCountry.relations[country].CanChangeRelationStateTo(item.action, item.targetState);
             }
+        }
+        public void UpdateVassalActionButtons() {
+            makeVassal.interactable = GameInfo.PlayerCountry.CanMakeVassal(country);
+            deleteVassal.interactable = GameInfo.PlayerCountry.vassals.Contains(country);
+
+            makeMarchy.interactable = country.suzerain == GameInfo.PlayerCountry && !country.isMarchy;
+            deleteMarchy.interactable = country.suzerain == GameInfo.PlayerCountry && country.isMarchy;
+            annexVassal.interactable = country.suzerain == GameInfo.PlayerCountry; //TODO: Add more statements
         }
 
         public void TryChangeRelationState(DiplomaticRelation relation, bool targetState) {
@@ -93,6 +108,30 @@ namespace EuropeanWars.UI.Windows {
                 PeaceDealWindow.Singleton.CreatePeaceDeal(
                     war, GameInfo.PlayerCountry.wars[war], country.wars[war]);
             }
+        }
+
+        public void MakeVassal() {
+            GameInfo.PlayerCountry.MakeVassal(country);
+            UpdateVassalActionButtons();
+        }
+
+        public void RemoveVassal() {
+            GameInfo.PlayerCountry.RemoveVassal(country);
+            UpdateVassalActionButtons();
+        }
+
+        public void MakeMarchy() {
+            GameInfo.PlayerCountry.MakeMarchy(country);
+            UpdateVassalActionButtons();
+        }
+        public void RemoveMarchy() {
+            GameInfo.PlayerCountry.RemoveMarchy(country);
+            UpdateVassalActionButtons();
+        }
+
+        public void AnnexVassal() {
+            GameInfo.PlayerCountry.AnnexVassal(country);
+            UpdateVassalActionButtons();
         }
     }
 }

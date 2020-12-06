@@ -10,6 +10,7 @@ using EuropeanWars.Core.War;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Windows;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
 
@@ -123,6 +124,10 @@ namespace EuropeanWars.Core.Country {
                         item.Value.relations.Add(this, relation);
                     }
                 }
+            }
+
+            foreach (var item in data.vassals) {
+                MakeVassal(GameInfo.countries[item]);
             }
         }
         public void UpdateLanguage() {
@@ -394,12 +399,25 @@ namespace EuropeanWars.Core.Country {
                         }
                     }
                 }
+
+                if (this == GameInfo.PlayerCountry || country == GameInfo.PlayerCountry) {
+                    foreach (var item in provinces) {
+                        item.RefreshFogOfWarInRegion();
+                    }
+                    foreach (var item in country.provinces) {
+                        item.RefreshFogOfWarInRegion();
+                    }
+                }
             }
         }
 
         public void AnnexVassal(CountryInfo country) {
             if (country.suzerain == this) {
-                foreach (var item in country.provinces) {
+                foreach (var item in country.armies.ToArray()) {
+                    item.SetCountry(this);
+                }
+
+                foreach (var item in country.provinces.ToArray()) {
                     item.SetCountry(this, item.NationalCountry == country);
                 }
             }
@@ -437,7 +455,9 @@ namespace EuropeanWars.Core.Country {
 
                 foreach (var item in relations) {
                     for (int i = 0; i < item.Value.relations.Length; i++) {
-                        item.Value.ChangeRelationState(i, this, item.Key);
+                        if (item.Value.relations[i]) {
+                            item.Value.ChangeRelationState(i, this, item.Key);
+                        }
                     }
                 }
 

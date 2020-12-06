@@ -49,7 +49,7 @@ namespace EuropeanWars.UI.Windows {
                     result++;
                 }
 
-                vassal.SetActive(false); //TODO: Change it to country.vassals.Contains(this.country);
+                vassal.SetActive(this.country.suzerain == country);
                 truce.gameObject.SetActive(country.relations[this.country].truceInMonths > 0);
                 truce.text = country.relations[this.country].truceInMonths.ToString() + " " + LanguageDictionary.language["Months"];
 

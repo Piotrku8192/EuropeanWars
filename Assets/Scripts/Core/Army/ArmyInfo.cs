@@ -84,13 +84,18 @@ namespace EuropeanWars.Core.Army {
             TimeManager.onMonthElapsed += ReinforcementArmy;
         }
 
+        public void SetCountry(CountryInfo country) {
+            Country.armies.Remove(this);
+            Country = country;
+            country.armies.Add(this);
+        }
+
         private void CountMovement() {
             if (route.Count > 1) {
-                ProvinceInfo[] ra = route.ToArray();
                 movingforDays++;
                 if (movingforDays >= daysToMove) {
                     route.Dequeue();
-                    ra = route.ToArray();
+                    ProvinceInfo[] ra = route.ToArray();
                     movingforDays = 0;
                     daysToMove = 0;
                     OnArmyMove(ra[0]);

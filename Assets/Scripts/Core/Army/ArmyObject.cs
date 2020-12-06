@@ -99,6 +99,9 @@ namespace EuropeanWars.Core.Army {
             if (army.Country == GameInfo.PlayerCountry) {
                 color = Color.green;
             }
+            else if (GameInfo.PlayerCountry.vassals.Contains(army.Country)) {
+                color = Color.magenta;
+            }
             else if (GameInfo.PlayerCountry.IsInWarAgainstCountry(army.Country)) {
                 color = Color.red;
             }

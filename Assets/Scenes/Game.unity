@@ -10354,8 +10354,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 418634950}
-        m_MethodName: OnClick
+      - m_Target: {fileID: 982599481}
+        m_MethodName: RemoveMarchy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21330,8 +21330,8 @@ RectTransform:
   m_Children:
   - {fileID: 1159635888}
   - {fileID: 465954964}
-  - {fileID: 2014510106}
   - {fileID: 1753606678}
+  - {fileID: 2014510106}
   m_Father: {fileID: 33977732}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21419,6 +21419,11 @@ MonoBehaviour:
   declareWarButton: {fileID: 310479001}
   peaceWarButton: {fileID: 1132888159}
   declareWarWindow: {fileID: 2014510110}
+  makeVassal: {fileID: 1265044033}
+  deleteVassal: {fileID: 1805331369}
+  makeMarchy: {fileID: 1251755743}
+  deleteMarchy: {fileID: 418634952}
+  annexVassal: {fileID: 1985980448}
 --- !u!1 &989603182
 GameObject:
   m_ObjectHideFlags: 0
@@ -25252,6 +25257,11 @@ MonoBehaviour:
   declareWarButton: {fileID: 0}
   peaceWarButton: {fileID: 0}
   declareWarWindow: {fileID: 0}
+  makeVassal: {fileID: 0}
+  deleteVassal: {fileID: 0}
+  makeMarchy: {fileID: 0}
+  deleteMarchy: {fileID: 0}
+  annexVassal: {fileID: 0}
 --- !u!1 &1193666474
 GameObject:
   m_ObjectHideFlags: 0
@@ -25722,8 +25732,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1251755741}
-        m_MethodName: OnClick
+      - m_Target: {fileID: 982599481}
+        m_MethodName: MakeMarchy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25964,7 +25974,7 @@ GameObject:
   - component: {fileID: 1265044032}
   - component: {fileID: 1265044031}
   m_Layer: 8
-  m_Name: CreateVassal
+  m_Name: MakeVassal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26061,9 +26071,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2014510105}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 982599481}
+        m_MethodName: MakeVassal
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -37597,7 +37607,7 @@ RectTransform:
   - {fileID: 467867593}
   - {fileID: 1413204117}
   m_Father: {fileID: 982599477}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -39171,7 +39181,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 982599481}
-        m_MethodName: PeaceWar
+        m_MethodName: RemoveVassal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -43841,8 +43851,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1985980446}
-        m_MethodName: OnClick
+      - m_Target: {fileID: 982599481}
+        m_MethodName: AnnexVassal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -44443,7 +44453,7 @@ RectTransform:
   - {fileID: 1334832919}
   - {fileID: 718401296}
   m_Father: {fileID: 982599477}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
