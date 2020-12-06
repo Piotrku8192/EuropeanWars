@@ -50,7 +50,12 @@ namespace EuropeanWars.Core.Diplomacy {
             ChangeRelationState((int)relation, sender, receiver);
         }
         public void ChangeRelationState(int relation, CountryInfo sender, CountryInfo receiver) {
+            if (!sender.sovereign || !receiver.sovereign) {
+                return;
+            }
+
             //TODO: Add switch and additional actions in this place
+
             relations[relation] = !relations[relation];
             if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
                 DiplomacyWindow.Singleton.UpdateWindow();

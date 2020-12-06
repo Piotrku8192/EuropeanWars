@@ -74,7 +74,7 @@ namespace EuropeanWars.Core.Country {
         /// <summary>
         /// if false country canot make alliances, wars and so one.
         /// </summary>
-        public bool sovereign;
+        public bool sovereign = true;
         public bool isMarchy;
 
         //if country is not vassal
@@ -385,15 +385,23 @@ namespace EuropeanWars.Core.Country {
                 country.isVassal = true;
                 country.sovereign = true;
                 vassals.Add(country);
+
+                foreach (var item in country.wars) {
+                    if (!wars.Keys.Contains(item.Key)) {
+                        item.Key.JoinWar(this, item.Value.party == item.Key.attackers);
+                        if (item.Value.IsMajor) {
+                            item.Value.party.major = wars[item.Key];
+                        }
+                    }
+                }
             }
         }
 
-        public void AnnectVassal(CountryInfo country) {
+        public void AnnexVassal(CountryInfo country) {
             if (country.suzerain == this) {
                 foreach (var item in country.provinces) {
                     item.SetCountry(this, item.NationalCountry == country);
                 }
-                
             }
         }
 
@@ -401,6 +409,7 @@ namespace EuropeanWars.Core.Country {
             if (country.suzerain == this) {
                 country.isVassal = false;
                 country.suzerain = null;
+                country.sovereign = true;
                 vassals.Remove(country);
             }
         }
@@ -443,6 +452,7 @@ namespace EuropeanWars.Core.Country {
                 toClaim.Clear();
 
                 suzerain.RemoveMarchy(this);
+                sovereign = false;
                 isVassal = false;
                 if (suzerain != null) {
                     suzerain.vassals.Remove(this);

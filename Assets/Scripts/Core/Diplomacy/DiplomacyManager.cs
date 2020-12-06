@@ -9,6 +9,10 @@ namespace EuropeanWars.Core.Diplomacy {
         public static Dictionary<int, WarInfo> wars = new Dictionary<int, WarInfo>();
 
         public static void DeclareWar(WarReason warReason, CountryInfo attacker, CountryInfo defender) {
+            if (!attacker.sovereign) {
+                return;
+            }
+
             if (attacker == GameInfo.PlayerCountry) {
                 DiplomacyWindow.Singleton.UpdateWindow();
             }

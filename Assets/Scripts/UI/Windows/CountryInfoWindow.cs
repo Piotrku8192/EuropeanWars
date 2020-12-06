@@ -48,7 +48,7 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void UpdateWarActionButtons() {
-            declareWarButton.interactable = !GameInfo.PlayerCountry.IsInWarAgainstCountry(country) 
+            declareWarButton.interactable = GameInfo.PlayerCountry.sovereign && !GameInfo.PlayerCountry.IsInWarAgainstCountry(country) 
                 && country != GameInfo.PlayerCountry && GameInfo.PlayerCountry.relations[country].truceInMonths == 0;
             peaceWarButton.interactable = GameInfo.PlayerCountry.IsInWarAgainstCountry(country) && country != GameInfo.PlayerCountry;
         }
@@ -60,7 +60,8 @@ namespace EuropeanWars.UI.Windows {
 
             foreach (var item in dipActionButtons) {
                 Button button = item.GetComponent<Button>();
-                if (country == GameInfo.PlayerCountry || country.IsInWarAgainstCountry(GameInfo.PlayerCountry)) {
+                if (!GameInfo.PlayerCountry.sovereign || !country.sovereign || country == GameInfo.PlayerCountry 
+                    || country.IsInWarAgainstCountry(GameInfo.PlayerCountry)) {
                     button.interactable = false;
                     continue;
                 }

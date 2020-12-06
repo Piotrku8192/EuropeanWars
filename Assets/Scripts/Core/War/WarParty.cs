@@ -10,7 +10,7 @@ namespace EuropeanWars.Core.War {
     public class WarParty {
         public readonly WarInfo war;
         public WarParty Enemies { get; private set; }
-        public readonly WarCountryInfo major;
+        public WarCountryInfo major;
         public readonly Dictionary<CountryInfo, WarCountryInfo> countries;
 
         public int PartyScoreCost => countries.Sum(t => t.Value.CountryScoreCost);
