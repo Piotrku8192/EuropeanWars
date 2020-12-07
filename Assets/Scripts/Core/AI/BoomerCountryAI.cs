@@ -10,6 +10,9 @@ using UnityEngine;
 
 namespace EuropeanWars.Core.AI {
     public class BoomerCountryAI : CountryAI {
+        List<ProvinceInfo> targetProvinces = new List<ProvinceInfo>();
+        List<ProvinceInfo> occupatedProvinces = new List<ProvinceInfo>();
+
         public BoomerCountryAI(CountryInfo country) : base(country) {
         }
 
@@ -25,6 +28,7 @@ namespace EuropeanWars.Core.AI {
             MakeClaims();
             DeclareWars();
             PeaceWars();
+            FindTargets();
         }
 
         protected override void OnYearElapsed() {
@@ -87,12 +91,12 @@ namespace EuropeanWars.Core.AI {
             }
         }
 
-        private void MoveArmies() {
-            List<ProvinceInfo> occupatedProvinces = country.nationalProvinces.Where(t =>
+        private void FindTargets() {
+            occupatedProvinces = country.nationalProvinces.Where(t =>
             !country.provinces.Contains(t) || (t.OccupationCounter.Progress > 0 && t.OccupationCounter.Army?.Country != country)).ToList();
 
-            List<ProvinceInfo> targetProvinces = new List<ProvinceInfo>();
 
+            targetProvinces.Clear();
             if (country.wars.Count > 0) {
                 foreach (var item in country.wars) {
                     foreach (var enemy in item.Value.party.Enemies.countries) {
@@ -100,14 +104,9 @@ namespace EuropeanWars.Core.AI {
                     }
                 }
             }
+        }
 
-            //Delete armies if country doesn't exist.
-            if (country.nationalProvinces.Count == 0) {
-                foreach (var item in country.armies.ToArray()) {
-                    item.DeleteLocal();
-                }
-            }
-
+        private void MoveArmies() {
             foreach (var item in country.armies) {
                 if (item.isMoveLocked || item.Province.OccupationCounter.Army == item) {
                     continue;
@@ -116,14 +115,17 @@ namespace EuropeanWars.Core.AI {
                 if (item.BlackStatus) {
                     if (country.provinces.Count > 0) {
                         item.GenerateRoute(country.provinces[GameInfo.random.Next(0, country.provinces.Count)]);//TODO: Add province validation plz...
+                        item.isMoveLocked = true;
                     }
                 }
                 else if (occupatedProvinces.Count > 0) {
                     item.GenerateRoute(occupatedProvinces[0]);
+                    item.isMoveLocked = true;
                     occupatedProvinces.RemoveAt(0);
                 }
                 else if (targetProvinces.Count > 0) {
                     item.GenerateRoute(targetProvinces[0]);
+                    item.isMoveLocked = true;
                     targetProvinces.RemoveAt(0);
                 }
             }

@@ -20,10 +20,10 @@ namespace EuropeanWars.Core.Pathfinding {
 
         public ProvinceInfo[] FindPath(ProvinceInfo province) {
             foreach (var item in GameInfo.provinces) {
-                item.Value.Node.Movable = IsMoveable(item.Value);
+                item.Value.Node.Movable = IsMovable(item.Value);
             }
 
-            if (!IsMoveable(province)) {
+            if (!IsMovable(province)) {
                 return null;
             }
 
@@ -49,7 +49,7 @@ namespace EuropeanWars.Core.Pathfinding {
             List<(int, ProvinceInfo)> provinces = new List<(int, ProvinceInfo)>();
 
             foreach (var item in path.Item1.Last().neighbours) {
-                if (IsMoveable(item) && !path.Item1.Contains(item)) {
+                if (IsMovable(item) && !path.Item1.Contains(item)) {
                     int c = path.Item2 + //Vector2.Distance(new Vector2(path.Item1.Last().x, path.Item1.Last().y), new Vector2(item.x, item.y)) +
                     (int)Vector2.Distance(new Vector2(item.x, item.y), new Vector2(end.x, end.y));
 
@@ -82,13 +82,14 @@ namespace EuropeanWars.Core.Pathfinding {
             return paths.OrderBy(t => t.Item2).FirstOrDefault();
         }
 
-        public bool IsMoveable(ProvinceInfo province) {
+        public bool IsMovable(ProvinceInfo province) {
             return province.isLand
                 && province.isInteractive
                 && (army.BlackStatus
                 || province.Country == country
-                || country.relations[province.Country].relations[(int)DiplomaticRelation.MilitaryAccess])
-                || country.IsInWarAgainstCountry(province.Country);
+                || country.relations[province.Country].relations[(int)DiplomaticRelation.MilitaryAccess]
+                || province.Country == country.suzerain || country.vassals.Contains(province.Country)
+                || country.IsInWarWithCountry(province.Country));
         }
     }
 }

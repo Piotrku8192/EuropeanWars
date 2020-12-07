@@ -376,8 +376,18 @@ namespace EuropeanWars.Core.Country {
         #endregion
 
         #region Vassals
-        public bool CanMakeVassal(CountryInfo country) {
-            return country.suzerain != this && !isVassal && country.taxationIncome * 2 < taxationIncome;
+        public bool CanMakeVassal(CountryInfo country, bool isInPeaceDeal = false) {
+            return country.suzerain != this && !isVassal && country.taxationIncome * 2 < taxationIncome
+                && relations[country].Points == 100
+                && relations[country].truceInMonths == 0
+                && (isInPeaceDeal || (wars.Count == 0 && country.wars.Count == 0));
+        }
+
+        public bool CanAnnexVassal(CountryInfo country) {
+            return country.suzerain == this && isVassal && country.taxationIncome * 3 < taxationIncome
+                && relations[country].Points == 100
+                && relations[country].truceInMonths == 0
+                && wars.Count == 0 && country.wars.Count == 0;
         }
 
         public void MakeVassal(CountryInfo country) {
@@ -449,7 +459,12 @@ namespace EuropeanWars.Core.Country {
 
         public void OnCountryClearedFromMap() {
             if (nationalProvinces.Count == 0) {
-                foreach (var item in provinces) {
+                foreach (var item in wars.ToArray()) {
+                    PeaceDeal p = new PeaceDeal(item.Key, item.Value, item.Value.party.Enemies.major);
+                    p.Execute();
+                }
+
+                foreach (var item in provinces.ToArray()) {
                     item.SetCountry(item.NationalCountry, false);
                 }
 
@@ -461,9 +476,6 @@ namespace EuropeanWars.Core.Country {
                     }
                 }
 
-                foreach (var item in wars.ToArray()) {
-                    item.Value.party.LeaveParty(item.Value, item.Value.party.countries.Count == 1);
-                }
                 foreach (var item in armies.ToArray()) {
                     item.DeleteLocal();
                 }
@@ -471,10 +483,10 @@ namespace EuropeanWars.Core.Country {
                 loans = 0;
                 toClaim.Clear();
 
-                suzerain.RemoveMarchy(this);
                 sovereign = false;
                 isVassal = false;
                 if (suzerain != null) {
+                    suzerain.RemoveMarchy(this);
                     suzerain.vassals.Remove(this);
                     suzerain = null;
                 }

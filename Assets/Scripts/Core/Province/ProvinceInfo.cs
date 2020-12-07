@@ -145,13 +145,13 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void SetCountry(CountryInfo country, bool nationalCountry = false) {
+            bool clearedFromMap = false;
+
             if (Country != null) {
                 Country.provinces.Remove(this);
                 if (nationalCountry) {
                     Country.nationalProvinces.Remove(this);
-                    if (Country.nationalProvinces.Count == 0) {
-                        Country.OnCountryClearedFromMap();
-                    }
+                    clearedFromMap = Country.nationalProvinces.Count == 0;
                 }
 
                 foreach (var item in new List<UnitToRecruit>(Country.toRecruit)) {
@@ -176,6 +176,10 @@ namespace EuropeanWars.Core.Province {
                 if (GameInfo.gameStarted) {
                     RefreshFogOfWar();
                 }
+            }
+
+            if (clearedFromMap) {
+                Country.OnCountryClearedFromMap();
             }
         }
 

@@ -20,7 +20,7 @@ namespace EuropeanWars.Core.War {
 
         public bool IsMajor => party.major == this;
 
-        public int CountryScoreCost => country.nationalProvinces.Sum(t => t.taxation);
+        public int CountryScoreCost => country.nationalProvinces.Sum(t => t.taxation) == 0 ? 1 : country.nationalProvinces.Sum(t => t.taxation);
         public int WarScore { get; private set; }
         public int PercentWarScore => Mathf.RoundToInt((float)WarScore / (WarScore < 0 ? CountryScoreCost : party.Enemies.PartyScoreCost) * 100);
         public Color PercentWarScoreColor => PercentWarScore == 0 ? Color.yellow : (PercentWarScore > 0 ? Color.green : Color.red);

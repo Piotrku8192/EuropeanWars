@@ -43,10 +43,15 @@ namespace EuropeanWars.Core.War {
 
         private void SendInvitation(CountryInfo inviter, CountryInfo country, bool isAttacker) {
             if (country == GameInfo.PlayerCountry) {
-                DiplomacyWindow.Singleton.SpawnWarInvitation(war, inviter, isAttacker);
+                if (country.suzerain != inviter) {
+                    DiplomacyWindow.Singleton.SpawnWarInvitation(war, inviter, isAttacker);
+                }
+                else {
+                    war.JoinWar(country, isAttacker);
+                }
             }
             else if (!country.isPlayer) {
-                if (GameInfo.random.Next(0, 10) > 4) {//TODO: Invoke bot decision and add if bot agrees
+                if (GameInfo.random.Next(0, 10) > 4 || country.suzerain == inviter) {//TODO: Invoke bot decision and add if bot agrees
                     war.JoinWar(country, isAttacker);
                 }
                 else if (country.relations[inviter].relations[(int)DiplomaticRelation.Alliance] && !isAttacker) {
@@ -58,6 +63,11 @@ namespace EuropeanWars.Core.War {
         private CountryInfo[] GetCountryFriends(CountryInfo country, WarParty enemies) {
             List<CountryInfo> result = new List<CountryInfo>();
             foreach (var item in country.relations) {
+                if (item.Key.suzerain == country) {
+                    result.Add(item.Key);
+                    continue;
+                }
+
                 if (item.Value.relations[(int)DiplomaticRelation.Alliance]) {
                     if (!item.Key.IsInWarAgainstCountry(country) && !item.Key.IsInWarAgainstCountry(enemies.major.country)) {
                         if (war.warReason.CanInviteCountryToWar(country, item.Key)) {

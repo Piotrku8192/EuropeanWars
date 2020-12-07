@@ -3,6 +3,6 @@
 namespace EuropeanWars.Core.Pathfinding {
     public interface IPathfinder {
         ProvinceInfo[] FindPath(ProvinceInfo province);
-        bool IsMoveable(ProvinceInfo province);
+        bool IsMovable(ProvinceInfo province);
     }
 }

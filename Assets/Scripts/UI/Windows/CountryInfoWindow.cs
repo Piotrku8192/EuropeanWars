@@ -82,7 +82,7 @@ namespace EuropeanWars.UI.Windows {
 
             makeMarchy.interactable = country.suzerain == GameInfo.PlayerCountry && !country.isMarchy;
             deleteMarchy.interactable = country.suzerain == GameInfo.PlayerCountry && country.isMarchy;
-            annexVassal.interactable = country.suzerain == GameInfo.PlayerCountry; //TODO: Add more statements
+            annexVassal.interactable = country.suzerain == GameInfo.PlayerCountry && country.CanAnnexVassal(country);
         }
 
         public void TryChangeRelationState(DiplomaticRelation relation, bool targetState) {

@@ -296,7 +296,6 @@ namespace EuropeanWars.Core.Army {
             if (isMoveLocked) {
                 return;
             }
-
             if (target == Province) {
                 route.Clear();
                 route.Enqueue(target);
@@ -312,7 +311,7 @@ namespace EuropeanWars.Core.Army {
 
             LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
             ProvinceInfo[] r = pathfinder.FindPath(target);
-            if (r != null) {
+            if (r != null && r.Length > 1) {
                 route.Clear();
                 foreach (var item in r) {
                     route.Enqueue(item);
