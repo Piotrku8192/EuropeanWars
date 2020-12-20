@@ -154,16 +154,18 @@ namespace EuropeanWars.Core.AI {
 
         private void PeaceWars() {
             foreach (var item in country.wars) {
-                if (TimeManager.year - item.Key.startYear > 10 || item.Value.PercentWarScore > 20) {
-                    PeaceDeal peaceDeal = new PeaceDeal(item.Key, item.Value, item.Value.party.Enemies.major);
-                    foreach (var e in peaceDeal.senderElements) {
-                        if (e.Value is ProvincePeaceDealElement) {
-                            if (peaceDeal.UsedWarScore + e.Value.WarScoreCost <= item.Value.PercentWarScore) {
-                                peaceDeal.SelectSenderElement(e.Value);
+                if (TimeManager.year - item.Key.startYear > 4 || item.Value.PercentWarScore > 20) {
+                    if (PeaceDeal.CanMakePeaceDeal(item.Key, item.Value, item.Value.party.Enemies.major)) {
+                        PeaceDeal peaceDeal = new PeaceDeal(item.Key, item.Value, item.Value.party.Enemies.major);
+                        foreach (var e in peaceDeal.senderElements) {
+                            if (e.Value is ProvincePeaceDealElement) {
+                                if (peaceDeal.UsedWarScore + e.Value.WarScoreCost <= item.Value.PercentWarScore) {
+                                    peaceDeal.SelectSenderElement(e.Value);
+                                }
                             }
                         }
+                        peaceDeal.SendRequest();
                     }
-                    peaceDeal.SendRequest();
                 }
             }
         }

@@ -33,6 +33,13 @@ namespace EuropeanWars.Core.War {
                 }
             }
 
+            foreach (var item in war.attackers.major.country.vassals) {
+                war.JoinWar(item, true);
+            }
+            foreach (var item in war.defenders.major.country.vassals) {
+                war.JoinWar(item, false);
+            }
+
             foreach (var item in defs) {
                 SendInvitation(war.defenders.major.country, item, false);
             }

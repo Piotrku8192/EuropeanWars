@@ -58,7 +58,9 @@ namespace EuropeanWars.UI.Windows {
         public void UpdateWarActionButtons() {
             declareWarButton.interactable = GameInfo.PlayerCountry.sovereign && !GameInfo.PlayerCountry.IsInWarAgainstCountry(country) 
                 && country != GameInfo.PlayerCountry && GameInfo.PlayerCountry.relations[country].truceInMonths == 0;
-            peaceWarButton.interactable = GameInfo.PlayerCountry.IsInWarAgainstCountry(country) && country != GameInfo.PlayerCountry;
+            WarInfo w = country.GetWarAgainstCountry(GameInfo.PlayerCountry);
+            peaceWarButton.interactable = GameInfo.PlayerCountry.IsInWarAgainstCountry(country) && country != GameInfo.PlayerCountry
+                && PeaceDeal.CanMakePeaceDeal(country.GetWarAgainstCountry(GameInfo.PlayerCountry), GameInfo.PlayerCountry.wars[w], country.wars[w]);
         }
         public void UpdateDiplomaticRelations() {
             if (country == null) {

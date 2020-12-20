@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
 using EuropeanWars.UI.Windows;
 using Lidgren.Network;
@@ -31,6 +32,12 @@ namespace EuropeanWars.Core.War {
             this.receiver = receiver;
             PeaceDealElementsFactory factory = new PeaceDealElementsFactory(this);
             factory.FillPeaceDeal();
+        }
+
+        public static bool CanMakePeaceDeal(WarInfo war, WarCountryInfo sender, WarCountryInfo receiver) {
+            return TimeManager.year - war.startYear > 1 
+                && ((sender.country.sovereign && !sender.party.ContainsCountry(sender.country.suzerain)) || sender.IsMajor)
+                && ((receiver.country.sovereign && !receiver.party.ContainsCountry(receiver.country.suzerain)) || receiver.IsMajor);
         }
 
         /// <summary>

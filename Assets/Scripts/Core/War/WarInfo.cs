@@ -51,6 +51,9 @@ namespace EuropeanWars.Core.War {
             else {
                 defenders.JoinParty(country);
             }
+            foreach (var item in country.vassals) {
+                JoinWar(item, isAttacker);
+            }
         }
     }
 }

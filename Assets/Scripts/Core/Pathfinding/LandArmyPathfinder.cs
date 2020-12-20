@@ -89,7 +89,8 @@ namespace EuropeanWars.Core.Pathfinding {
                 || province.Country == country
                 || country.relations[province.Country].relations[(int)DiplomaticRelation.MilitaryAccess]
                 || province.Country == country.suzerain || country.vassals.Contains(province.Country)
-                || country.IsInWarWithCountry(province.Country));
+                || country.IsInWarAgainstCountry(province.Country)
+                || (country.IsInWarWithCountry(province.Country) && country.relations[province.Country].relations[(int)DiplomaticRelation.Alliance]));
         }
     }
 }
