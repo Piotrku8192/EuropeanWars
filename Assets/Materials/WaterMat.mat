@@ -90,7 +90,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnableExternalAlpha: 0
-    - _FogOfWar: 1
+    - _FogOfWar: 0
     - _FogOfWarAlpha: 0
     - _FogOfWarRepeat: 1.02
     - _GlossMapScale: 1

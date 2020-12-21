@@ -40,6 +40,12 @@ namespace EuropeanWars.UI.Windows {
                     (item.targetState ? LanguageDictionary.language["CreateRelation"] : LanguageDictionary.language["DeleteRelation"]) +
                     " " + LanguageDictionary.language[item.action.ToString()];
             }
+
+            makeVassal.GetComponent<DescriptionText>().text = LanguageDictionary.language["MakeVassal"];
+            deleteVassal.GetComponent<DescriptionText>().text = LanguageDictionary.language["DeleteVassal"];
+            makeMarchy.GetComponent<DescriptionText>().text = LanguageDictionary.language["MakeMarchy"];
+            deleteMarchy.GetComponent<DescriptionText>().text = LanguageDictionary.language["DeleteMarchy"];
+            annexVassal.GetComponent<DescriptionText>().text = LanguageDictionary.language["AnnexVassal"];
         }
 
         public void UpdateWindow(CountryInfo country) {

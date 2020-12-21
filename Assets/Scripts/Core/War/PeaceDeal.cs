@@ -36,8 +36,8 @@ namespace EuropeanWars.Core.War {
 
         public static bool CanMakePeaceDeal(WarInfo war, WarCountryInfo sender, WarCountryInfo receiver) {
             return TimeManager.year - war.startYear > 1 
-                && ((sender.country.sovereign && !sender.party.ContainsCountry(sender.country.suzerain)) || sender.IsMajor)
-                && ((receiver.country.sovereign && !receiver.party.ContainsCountry(receiver.country.suzerain)) || receiver.IsMajor);
+                && ((!sender.country.isVassal || (sender.country.sovereign && !sender.party.ContainsCountry(sender.country.suzerain))) || sender.IsMajor)
+                && ((!receiver.country.isVassal || (receiver.country.sovereign && !receiver.party.ContainsCountry(receiver.country.suzerain))) || receiver.IsMajor);
         }
 
         /// <summary>
