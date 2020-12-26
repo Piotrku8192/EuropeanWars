@@ -23,6 +23,12 @@ namespace EuropeanWars.Core.Diplomacy {
     public class CountryRelation {
         public int Points { get; private set; }
         public bool[] relations;
+        /// <summary>
+        /// Chance of gaining 1 relation point (if is less than 100) between 0 and 1
+        /// For example: 0,8 => 80% that relations will increase by 1 and 20% that relation will decrease by 1 every month
+        /// </summary>
+        public float monthlyPointsIncreaseChance;
+
         public int truceInMonths;
         public int monthsToNextAction;
 
@@ -30,6 +36,8 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public CountryRelation(int points) {
             Points = Mathf.Clamp(points, -100, 100);
+            monthlyPointsIncreaseChance = 1.0f; //TODO: change it to based on relation type and environment
+
             this.relations = new bool[Enum.GetValues(typeof(DiplomaticRelation)).Length];
             truceInMonths = 0;
             TimeManager.onMonthElapsed += OnMonthElapsed;
@@ -42,6 +50,9 @@ namespace EuropeanWars.Core.Diplomacy {
             if (monthsToNextAction > 0) {
                 monthsToNextAction--;
             }
+
+            //Increase or decrease points basing on monthly increase chance
+            ChangePoints(GameInfo.random.Next(0, 100) < monthlyPointsIncreaseChance * 100 ? 1 : -1);
         }
 
         public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState && monthsToNextAction == 0;
@@ -79,6 +90,10 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public void ChangePoints(int change) {
             Points = Mathf.Clamp(Points + change, -100, 100);
+
+            if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
+                DiplomacyWindow.Singleton.UpdateWindow();
+            }
         }
 
         public void TryChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {

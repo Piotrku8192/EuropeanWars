@@ -18,7 +18,7 @@ namespace EuropeanWars.UI.Windows {
         public WarInvitationWindow warInvitationWindowPrefab;
         public CountryInfoWindow countryWindow;
 
-        private Dictionary<CountryInfo, CountryBelt> countries = new Dictionary<CountryInfo, CountryBelt>();
+        public Dictionary<CountryInfo, CountryBelt> countries = new Dictionary<CountryInfo, CountryBelt>();
 
         public void Awake() {
             Singleton = this;
@@ -30,6 +30,7 @@ namespace EuropeanWars.UI.Windows {
 
         public void UpdateWindow(CountryInfo country) {
             UIManager.Singleton.CloseAllWindows();
+            UIManager.Singleton.managementButtonsTabList.SelectTab(UIManager.Singleton.managementButtonsTabList.tabs[1]);
             window.SetActive(true);
 
             foreach (var item in GameInfo.countries) {
