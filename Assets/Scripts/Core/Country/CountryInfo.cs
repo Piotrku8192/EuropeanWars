@@ -3,6 +3,7 @@ using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
 using EuropeanWars.Core.Time;
@@ -66,6 +67,9 @@ namespace EuropeanWars.Core.Country {
         public List<CountryInfo> enemies = new List<CountryInfo>();
         public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
         public Dictionary<CountryInfo, CountryRelation> relations = new Dictionary<CountryInfo, CountryRelation>();
+
+        public List<Diplomat> diplomats = new List<Diplomat>();
+        public List<Spy> spies = new List<Spy>();
 
         //Vassals
         public bool isVassal;

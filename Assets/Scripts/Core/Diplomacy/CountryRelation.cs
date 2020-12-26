@@ -24,8 +24,8 @@ namespace EuropeanWars.Core.Diplomacy {
         public int Points { get; private set; }
         public bool[] relations;
         /// <summary>
-        /// Chance of gaining 1 relation point (if is less than 100) between 0 and 1
-        /// For example: 0,8 => 80% that relations will increase by 1 and 20% that relation will decrease by 1 every month
+        /// Chance of gaining 1 relation point (if is less than 100) between 0 and 1. If grater than 1 there is 100% chance to increase points
+        /// For example: 0,8 => 80% that relation points will increase by 1 and 20% that relation points will decrease by 1 every month
         /// </summary>
         public float monthlyPointsIncreaseChance;
 
@@ -90,10 +90,6 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public void ChangePoints(int change) {
             Points = Mathf.Clamp(Points + change, -100, 100);
-
-            if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
-                DiplomacyWindow.Singleton.UpdateWindow();
-            }
         }
 
         public void TryChangeRelationState(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {

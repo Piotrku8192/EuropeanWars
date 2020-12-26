@@ -902,6 +902,11 @@
     "SendDeal": "Wyślij propozycję",
     "PeaceDealProvinceElement": "Państwo <color=#e3c800>{0}</color> odda <color=#004c8f>{1}</color> państwu <color=#e3c800>{2}</color>",
     "ConquestWarReason": "Roszczenia do prowincji <color=#004c8f>{0}</color>",
+    "Diplomat": "Dyplomata",
+    "Spy": "Szpieg",
+    "General": "Generał",
+    "ImproveRelationsModifier": "Modyfikator poprawy relacji",
+    "MonthlySpyNetworkIncrease": "Miesięczna zmiana siatki szpiegowskiej"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1805,6 +1810,11 @@
     "Months": "months",
     "SendDeal": "Send deal",
     "PeaceDealProvinceElement": "<color=#e3c800>{0}</color> returns <color=#004c8f>{1}</color> to <color=#e3c800>{2}</color>",
-    "ConquestWarReason": "Take <color=#004c8f>{0}</color>"
+    "ConquestWarReason": "Take <color=#004c8f>{0}</color>",
+    "Diplomat": "Diplomat",
+    "Spy": "Spy",
+    "General": "General",
+    "ImproveRelationsModifier": "Improve relations modifier",
+    "MonthlySpyNetworkIncrease": "Monthly spy network increase"
   }
 ]
