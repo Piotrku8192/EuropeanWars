@@ -135,9 +135,12 @@ namespace EuropeanWars.Core.Country {
             }
 
             //TODO: Remove it
-            diplomats.Add(new Diplomat("Diplomat1", 1609, 1666, this, 0.4f));
-            diplomats.Add(new Diplomat("Diplomat2", 1024, 2048, this, 0.4f));
-            diplomats.Add(new Diplomat("Diplomat3", 0, 1678, this, 0.4f));
+            diplomats.Add(new Diplomat("Diplomat1", 1609, 1700, this, 0.4f));
+            diplomats.Add(new Diplomat("Diplomat2", 1609, 1700, this, 0.4f));
+            diplomats.Add(new Diplomat("Diplomat3", 1609, 1700, this, 0.4f));
+            spies.Add(new Spy("Spy1", 1609, 1700, this, 2));
+            spies.Add(new Spy("Spy2", 1609, 1700, this, 2));
+            spies.Add(new Spy("Spy3", 1609, 1700, this, 2));
         }
         public void UpdateLanguage() {
             Name = LanguageDictionary.language["CountryName-" + id.ToString()];
