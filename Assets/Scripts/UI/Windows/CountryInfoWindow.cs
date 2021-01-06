@@ -2,9 +2,11 @@
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.War;
 using EuropeanWars.Network;
 using Lidgren.Network;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +14,9 @@ namespace EuropeanWars.UI.Windows {
     public class CountryInfoWindow : MonoBehaviour {
         public Image crest;
         public Image religion;
-        public Image king;
+        public Image ruler;
         public Text countryName;
+        public RelationPointsImage relationPoints;
 
         public DiplomaticRelationButton[] dipActionButtons;
         public Button declareWarButton;
@@ -28,7 +31,13 @@ namespace EuropeanWars.UI.Windows {
         public Button deleteMarchy;
         public Button annexVassal;
 
+        public PersonButton diplomatButton;
+        public PersonButton spyButton;
+
+        public ChoosePersonWindow choosePersonWindow;
+
         public CountryInfo country;
+        private CountryRelation relation;
 
         public void UpdateLanguage() {
             declareWarWindow.declareButton.GetComponentInChildren<Text>().text = LanguageDictionary.language["DeclareWar"];
@@ -52,9 +61,25 @@ namespace EuropeanWars.UI.Windows {
             declareWarWindow.ResetAndDisable();
             this.country = country;
             crest.sprite = country.Crest;
-            //religion.sprite = country.religion.image;
+            religion.sprite = country.religion.image;
             //king.sprite = country.king.image; TODO: uncomment this.
             countryName.text = country.Name;
+
+            if (GameInfo.PlayerCountry.relations.ContainsKey(country)) {
+                relation = GameInfo.PlayerCountry.relations[country];
+                relationPoints.gameObject.SetActive(true);
+                relationPoints.SetRelation(GameInfo.PlayerCountry.relations[country]);
+
+                diplomatButton.gameObject.SetActive(true);
+                spyButton.gameObject.SetActive(true);
+                diplomatButton.SetPerson(GameInfo.PlayerCountry.GetDiplomatInRelation(relation));
+                spyButton.SetPerson(GameInfo.PlayerCountry.GetSpyInRelation(relation));
+            }
+            else {
+                relationPoints.gameObject.SetActive(false);
+                diplomatButton.gameObject.SetActive(false);
+                spyButton.gameObject.SetActive(false);
+            }
 
             UpdateWarActionButtons();
             UpdateDiplomaticRelations();
@@ -109,7 +134,6 @@ namespace EuropeanWars.UI.Windows {
 
             declareWarWindow.ResetAndDisable();
         }
-
         public void PeaceWar() {
             if (GameInfo.PlayerCountry.IsInWarAgainstCountry(country) && country != GameInfo.PlayerCountry) {
                 WarInfo war = GameInfo.PlayerCountry.GetWarAgainstCountry(country);
@@ -117,17 +141,14 @@ namespace EuropeanWars.UI.Windows {
                     war, GameInfo.PlayerCountry.wars[war], country.wars[war]);
             }
         }
-
         public void MakeVassal() {
             GameInfo.PlayerCountry.MakeVassal(country);
             UpdateVassalActionButtons();
         }
-
         public void RemoveVassal() {
             GameInfo.PlayerCountry.RemoveVassal(country);
             UpdateVassalActionButtons();
         }
-
         public void MakeMarchy() {
             GameInfo.PlayerCountry.MakeMarchy(country);
             UpdateVassalActionButtons();
@@ -136,10 +157,48 @@ namespace EuropeanWars.UI.Windows {
             GameInfo.PlayerCountry.RemoveMarchy(country);
             UpdateVassalActionButtons();
         }
-
         public void AnnexVassal() {
             GameInfo.PlayerCountry.AnnexVassal(country);
             UpdateVassalActionButtons();
+        }
+
+        public void ChangeDiplomat() {
+            choosePersonWindow.Initialize(new ChoosePersonWindow.ChoosePerson(SetDiplomat),
+                GameInfo.PlayerCountry.diplomats.Where(t => t.CurrentlyImprovingRelation != GameInfo.PlayerCountry.relations[country]).ToArray());
+            choosePersonWindow.gameObject.SetActive(true);
+        }
+        public void ChangeSpy() {
+            choosePersonWindow.Initialize(new ChoosePersonWindow.ChoosePerson(SetSpy), 
+                GameInfo.PlayerCountry.spies.Where(t => t.CurrentlyBuildingSpyNetwork != GameInfo.PlayerCountry.relations[country]).ToArray());
+            choosePersonWindow.gameObject.SetActive(true);
+        }
+        public void DiscardDiplomat() {
+            Diplomat diplomat = (Diplomat)diplomatButton.Person;
+            if (diplomat != null) {
+                diplomat.ImproveRelation(null);
+            }
+            diplomatButton.SetPerson(null);
+        }
+        public void DiscardSpy() {
+            Spy spy = (Spy)diplomatButton.Person;
+            if (spy != null) {
+                spy.BuildSpyNetwork(null);
+            }
+            spyButton.SetPerson(null);
+        }
+        public void SetDiplomat(Person person) {
+            Diplomat diplomat = (Diplomat)person;
+            if (diplomat.country == GameInfo.PlayerCountry) {
+                diplomat.ImproveRelation(GameInfo.PlayerCountry.relations[country]);
+                diplomatButton.SetPerson(diplomat);
+            }
+        }
+        public void SetSpy(Person person) {
+            Spy spy = (Spy)person;
+            if (spy.country == GameInfo.PlayerCountry) {
+                spy.BuildSpyNetwork(GameInfo.PlayerCountry.relations[country]);
+                spyButton.SetPerson(spy);
+            }
         }
     }
 }

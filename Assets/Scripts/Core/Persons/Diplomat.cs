@@ -1,4 +1,5 @@
-﻿using EuropeanWars.Core.Diplomacy;
+﻿using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Language;
 
 namespace EuropeanWars.Core.Persons {
@@ -11,7 +12,7 @@ namespace EuropeanWars.Core.Persons {
         public override string Speciality => LanguageDictionary.language["Diplomat"];
         public override string MoreInfo => LanguageDictionary.language["ImproveRelationsModifier"] + ": " + ImproveRelationsModifier;
 
-        public Diplomat(string name, int birthYear, int deathYear, float improveRelationsModifier) : base(name, birthYear, deathYear) {
+        public Diplomat(string name, int birthYear, int deathYear, CountryInfo country, float improveRelationsModifier) : base(name, birthYear, deathYear, country) {
             ImproveRelationsModifier = improveRelationsModifier;
         }
 
@@ -20,8 +21,16 @@ namespace EuropeanWars.Core.Persons {
                 if (CurrentlyImprovingRelation != null) {
                     CurrentlyImprovingRelation.monthlyPointsIncreaseChance -= ImproveRelationsModifier;
                 }
+
+                Diplomat dip = country.GetDiplomatInRelation(relation);
+                if (dip != null) {
+                    dip.ImproveRelation(null);
+                }
+
                 CurrentlyImprovingRelation = relation;
-                CurrentlyImprovingRelation.monthlyPointsIncreaseChance += ImproveRelationsModifier;
+                if (relation != null) {
+                    CurrentlyImprovingRelation.monthlyPointsIncreaseChance += ImproveRelationsModifier;
+                }
             }
         }
     }

@@ -133,6 +133,11 @@ namespace EuropeanWars.Core.Country {
             foreach (var item in data.vassals) {
                 MakeVassal(GameInfo.countries[item]);
             }
+
+            //TODO: Remove it
+            diplomats.Add(new Diplomat("Diplomat1", 1609, 1666, this, 0.4f));
+            diplomats.Add(new Diplomat("Diplomat2", 1024, 2048, this, 0.4f));
+            diplomats.Add(new Diplomat("Diplomat3", 0, 1678, this, 0.4f));
         }
         public void UpdateLanguage() {
             Name = LanguageDictionary.language["CountryName-" + id.ToString()];
@@ -497,5 +502,26 @@ namespace EuropeanWars.Core.Country {
                 vassals.Clear();
             }
         }
+
+        #region Diplomacy
+        public Diplomat GetDiplomatInRelation(CountryRelation relation) {
+            foreach (Diplomat item in diplomats) {
+                if (item.CurrentlyImprovingRelation == relation) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+        public Spy GetSpyInRelation(CountryRelation relation) {
+            foreach (Spy item in spies) {
+                if (item.CurrentlyBuildingSpyNetwork == relation) {
+                    return item;
+                }
+            }
+
+            return null;
+        }
+        #endregion
     }
 }

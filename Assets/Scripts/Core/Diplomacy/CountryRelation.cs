@@ -36,7 +36,7 @@ namespace EuropeanWars.Core.Diplomacy {
 
         public CountryRelation(int points) {
             Points = Mathf.Clamp(points, -100, 100);
-            monthlyPointsIncreaseChance = 1.0f; //TODO: change it to based on relation type and environment
+            monthlyPointsIncreaseChance = 0.5f; //TODO: change it to based on relation type and environment
 
             this.relations = new bool[Enum.GetValues(typeof(DiplomaticRelation)).Length];
             truceInMonths = 0;
@@ -106,6 +106,10 @@ namespace EuropeanWars.Core.Diplomacy {
                 }
 
                 monthsToNextAction += 12;
+
+                if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
+                    DiplomacyWindow.Singleton.UpdateWindow();
+                }
             }
             else if (!sender.IsInWarAgainstCountry(receiver)) {
                 if (!sender.isPlayer && !receiver.isPlayer) {
@@ -136,6 +140,10 @@ namespace EuropeanWars.Core.Diplomacy {
                 }
 
                 monthsToNextAction += 12;
+
+                if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
+                    DiplomacyWindow.Singleton.UpdateWindow();
+                }
             }
         }
         public void ProcessRequest(DiplomaticRelation relation, CountryInfo sender, CountryInfo receiver) {

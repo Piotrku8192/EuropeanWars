@@ -108,10 +108,6 @@ namespace EuropeanWars.Core.War {
                     WarList.Singleton.RemoveWar(country);
                 }
 
-                if (WarWindow.Singleton.war == war) {
-                    WarWindow.Singleton.SetWar(war);
-                }
-
                 if (!isWarEnd) {
                     if (countries.Count == 0) {
                         war.Delete();
@@ -126,6 +122,10 @@ namespace EuropeanWars.Core.War {
 
                 foreach (var item in GameInfo.provinces) {
                     item.Value.RefreshFogOfWar();
+                }
+
+                if (WarWindow.Singleton.war == war) {
+                    WarWindow.Singleton.SetWar(war);
                 }
             }
         }

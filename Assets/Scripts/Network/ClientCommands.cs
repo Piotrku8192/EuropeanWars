@@ -305,6 +305,10 @@ namespace EuropeanWars.Network {
                 window.description.text = string.Format(
                     LanguageDictionary.language["DiplomaticRelationDeliced"], receiver.Name, window.title.text);
             }
+
+            if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
+                DiplomacyWindow.Singleton.UpdateWindow();
+            }
         }
 
         #endregion
