@@ -22,12 +22,14 @@ namespace EuropeanWars.Core.Diplomacy {
 
     public class CountryRelation {
         public int Points { get; private set; }
+        public int SpyNetwork { get; private set; }
         public bool[] relations;
         /// <summary>
         /// Chance of gaining 1 relation point (if is less than 100) between 0 and 1. If grater than 1 there is 100% chance to increase points
         /// For example: 0,8 => 80% that relation points will increase by 1 and 20% that relation points will decrease by 1 every month
         /// </summary>
         public float monthlyPointsIncreaseChance;
+        public int monthlySpyNetworkChange;
 
         public int truceInMonths;
         public int monthsToNextAction;
@@ -53,6 +55,7 @@ namespace EuropeanWars.Core.Diplomacy {
 
             //Increase or decrease points basing on monthly increase chance
             ChangePoints(GameInfo.random.Next(0, 100) < monthlyPointsIncreaseChance * 100 ? 1 : -1);
+            SpyNetwork = Mathf.Clamp(SpyNetwork + monthlySpyNetworkChange, 0, 100);   
         }
 
         public bool CanChangeRelationStateTo(DiplomaticRelation relation, bool targetState) => relations[(int)relation] != targetState && monthsToNextAction == 0;

@@ -508,6 +508,10 @@ namespace EuropeanWars.Core.Country {
 
         #region Diplomacy
         public Diplomat GetDiplomatInRelation(CountryRelation relation) {
+            if (relation == null) {
+                return null;
+            }
+
             foreach (Diplomat item in diplomats) {
                 if (item.CurrentlyImprovingRelation == relation) {
                     return item;
@@ -517,6 +521,10 @@ namespace EuropeanWars.Core.Country {
             return null;
         }
         public Spy GetSpyInRelation(CountryRelation relation) {
+            if (relation == null) {
+                return null;
+            }
+
             foreach (Spy item in spies) {
                 if (item.CurrentlyBuildingSpyNetwork == relation) {
                     return item;

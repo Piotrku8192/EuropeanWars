@@ -64,6 +64,7 @@ namespace EuropeanWars.UI.Windows {
             religion.sprite = country.religion.image;
             //king.sprite = country.king.image; TODO: uncomment this.
             countryName.text = country.Name;
+            choosePersonWindow.gameObject.SetActive(false);
 
             if (GameInfo.PlayerCountry.relations.ContainsKey(country)) {
                 relation = GameInfo.PlayerCountry.relations[country];
@@ -180,7 +181,7 @@ namespace EuropeanWars.UI.Windows {
             diplomatButton.SetPerson(null);
         }
         public void DiscardSpy() {
-            Spy spy = (Spy)diplomatButton.Person;
+            Spy spy = (Spy)spyButton.Person;
             if (spy != null) {
                 spy.BuildSpyNetwork(null);
             }

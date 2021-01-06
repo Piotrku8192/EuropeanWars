@@ -4,19 +4,19 @@ using EuropeanWars.Core.Language;
 
 namespace EuropeanWars.Core.Persons {
     public class Spy : Person {
-        public int MonthlySpyNetworkIncrease { get; private set; }
+        public int MonthlySpyNetworkChange { get; private set; }
         public CountryRelation CurrentlyBuildingSpyNetwork { get; private set; }
         public override string Speciality => LanguageDictionary.language["Spy"];
-        public override string MoreInfo => LanguageDictionary.language["MonthlySpyNetworkIncrease"] + ": " + MonthlySpyNetworkIncrease;
+        public override string MoreInfo => LanguageDictionary.language["MonthlySpyNetworkIncrease"] + ": " + MonthlySpyNetworkChange;
 
         public Spy(string name, int birthYear, int deathYear, CountryInfo country, int monthlySpyNetworkIncrease) : base(name, birthYear, deathYear, country) {
-            MonthlySpyNetworkIncrease = monthlySpyNetworkIncrease;
+            MonthlySpyNetworkChange = monthlySpyNetworkIncrease;
         }
 
         public void BuildSpyNetwork(CountryRelation relation) {
             if (CurrentlyBuildingSpyNetwork != relation) {
                 if (CurrentlyBuildingSpyNetwork != null) {
-                    CurrentlyBuildingSpyNetwork.monthlyPointsIncreaseChance -= MonthlySpyNetworkIncrease;
+                    CurrentlyBuildingSpyNetwork.monthlySpyNetworkChange -= MonthlySpyNetworkChange;
                 }
                 Spy spy = country.GetSpyInRelation(relation);
                 if (spy != null) {
@@ -25,7 +25,7 @@ namespace EuropeanWars.Core.Persons {
 
                 CurrentlyBuildingSpyNetwork = relation;
                 if (relation != null) {
-                    CurrentlyBuildingSpyNetwork.monthlyPointsIncreaseChance += MonthlySpyNetworkIncrease;
+                    CurrentlyBuildingSpyNetwork.monthlySpyNetworkChange += MonthlySpyNetworkChange;
                 }
             }
         }
