@@ -176,28 +176,48 @@ namespace EuropeanWars.UI.Windows {
         public void DiscardDiplomat() {
             Diplomat diplomat = (Diplomat)diplomatButton.Person;
             if (diplomat != null) {
-                diplomat.ImproveRelation(null);
+                NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                msg.Write((ushort)1042);
+                msg.Write(-1);
+                msg.Write(-1);
+                msg.Write(diplomat.id);
+                Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             }
             diplomatButton.SetPerson(null);
         }
         public void DiscardSpy() {
             Spy spy = (Spy)spyButton.Person;
             if (spy != null) {
-                spy.BuildSpyNetwork(null);
+                NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                msg.Write((ushort)1043);
+                msg.Write(-1);
+                msg.Write(-1);
+                msg.Write(spy.id);
+                Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             }
             spyButton.SetPerson(null);
         }
         public void SetDiplomat(Person person) {
             Diplomat diplomat = (Diplomat)person;
             if (diplomat.country == GameInfo.PlayerCountry) {
-                diplomat.ImproveRelation(GameInfo.PlayerCountry.relations[country]);
+                NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                msg.Write((ushort)1042);
+                msg.Write(person.country.id);
+                msg.Write(country.id);
+                msg.Write(person.id);
+                Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
                 diplomatButton.SetPerson(diplomat);
             }
         }
         public void SetSpy(Person person) {
             Spy spy = (Spy)person;
             if (spy.country == GameInfo.PlayerCountry) {
-                spy.BuildSpyNetwork(GameInfo.PlayerCountry.relations[country]);
+                NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                msg.Write((ushort)1043);
+                msg.Write(person.country.id);
+                msg.Write(country.id);
+                msg.Write(person.id);
+                Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
                 spyButton.SetPerson(spy);
             }
         }

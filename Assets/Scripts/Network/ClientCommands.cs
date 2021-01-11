@@ -6,6 +6,7 @@ using EuropeanWars.Core.Building;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Language;
+using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Core.War;
@@ -308,6 +309,35 @@ namespace EuropeanWars.Network {
 
             if (DiplomacyWindow.Singleton.window.activeInHierarchy) {
                 DiplomacyWindow.Singleton.UpdateWindow();
+            }
+        }
+
+        [Command(1042)]
+        public static void SetDiplomatInRelation(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            int secondCountry = message.ReadInt32();
+            int personId = message.ReadInt32();
+
+            Diplomat d = (Diplomat)GameInfo.persons[personId];
+            if (country == -1) {
+                d.ImproveRelation(null);
+            }
+            else {
+                d.ImproveRelation(GameInfo.countries[country].relations[GameInfo.countries[secondCountry]]);
+            }
+        }
+        [Command(1043)]
+        public static void SetSpyInRelation(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            int secondCountry = message.ReadInt32();
+            int personId = message.ReadInt32();
+
+            Spy d = (Spy)GameInfo.persons[personId];
+            if (country == -1) {
+                d.BuildSpyNetwork(null);
+            }
+            else {
+                d.BuildSpyNetwork(GameInfo.countries[country].relations[GameInfo.countries[secondCountry]]);
             }
         }
 

@@ -322,6 +322,33 @@ namespace EuropeanWars.Network {
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
+        [Command(1042)]
+        public static void SetDiplomatInRelation(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            int secondCountry = message.ReadInt32();
+            int personId = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1042);
+            msg.Write(country);
+            msg.Write(secondCountry);
+            msg.Write(personId);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+        [Command(1043)]
+        public static void SetSpyInRelation(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            int secondCountry = message.ReadInt32();
+            int personId = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)1043);
+            msg.Write(country);
+            msg.Write(secondCountry);
+            msg.Write(personId);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         #endregion
 
         #region Army (2048-3071)
