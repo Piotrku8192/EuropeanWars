@@ -420,6 +420,26 @@ namespace EuropeanWars.Network {
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
 
+        [Command(2053)]
+        public static void CreateArmy(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            int province = message.ReadInt32();
+            int unit = message.ReadInt32();
+            int count = message.ReadInt32();
+            int maxCount = message.ReadInt32();
+            bool selectAsMovingArmy = message.ReadBoolean(); 
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2053);
+            msg.Write(country);
+            msg.Write(province);
+            msg.Write(unit);
+            msg.Write(count);
+            msg.Write(maxCount);
+            msg.Write(selectAsMovingArmy);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         #endregion
     }
 }

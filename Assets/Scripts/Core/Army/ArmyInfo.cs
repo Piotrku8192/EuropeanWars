@@ -24,7 +24,7 @@ namespace EuropeanWars.Core.Army {
         public int Size => units.Values.Sum();
         public int MaxSize => maxUnits.Values.Sum();
         public int Artilleries => GetArtilleries();
-        public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1);
+        public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1) * Country.armySpeedModifier;
         public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
         public bool IsSelected { get; private set; }
 
@@ -38,6 +38,30 @@ namespace EuropeanWars.Core.Army {
         public bool BlackStatus { get; private set; }
 
         public Queue<ProvinceInfo> route = new Queue<ProvinceInfo>();
+
+        public ArmyInfo(ProvinceInfo province, CountryInfo country, UnitInfo unit, int count, int maxCount, bool selectAsMovingArmy = false) {
+            units.Add(unit, count);
+            maxUnits.Add(unit, maxCount);
+            Country = country;
+            Province = province;
+            Country.armies.Add(this);
+            Province.armies.Add(this);
+            id = nextId;
+            GameInfo.armies.Add(id, this);
+            nextId++;
+
+            ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
+            TimeManager.onDayElapsed += CountMovement;
+            TimeManager.onDayElapsed += UpdateBlackStatus;
+            TimeManager.onMonthElapsed += ReinforcementArmy;
+
+            if (selectAsMovingArmy) {
+                ArmyInfo a = SelectedArmyWindow.Singleton.SelectedArmy;
+                SelectArmy(false);
+                SelectedArmyWindow.Singleton.SelectArmy(a);
+                SelectedArmyWindow.Singleton.SelectMovingArmy(this);
+            }
+        }
 
         public ArmyInfo(UnitToRecruit unit) {
             units.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
@@ -178,16 +202,30 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void MoveUnitToOtherArmyRequest(UnitInfo unit, ArmyInfo targetArmy, int count) {
-            if (targetArmy != null && Province == targetArmy.Province) {
+            if (targetArmy == null || Province == targetArmy.Province) {
                 int c = units[unit];
                 int mc = maxUnits[unit];
                 RemoveUnitRequest(unit, count);
-                targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+
+                if (targetArmy == null) {
+                    NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+                    msg.Write((ushort)2053);
+                    msg.Write(Country.id);
+                    msg.Write(Province.id);
+                    msg.Write(unit.id);
+                    msg.Write(Mathf.Clamp(count, 0, c));
+                    msg.Write(Mathf.Clamp(count, 0, mc));
+                    msg.Write(SelectedArmyWindow.Singleton.SelectedArmy == this);
+                    Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+                }
+                else {
+                    targetArmy.AddUnitRequest(unit, Mathf.Clamp(count, 0, c), Mathf.Clamp(count, 0, mc));
+                }
             }
         }
 
         public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
-            if (targetArmy != null && Province == targetArmy.Province) {
+            if (Province == targetArmy.Province && targetArmy != null) {
                 int c = units[unit];
                 int mc = maxUnits[unit];
                 RemoveUnit(unit, count);

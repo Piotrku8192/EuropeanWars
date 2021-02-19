@@ -20,8 +20,16 @@ namespace EuropeanWars.Core.Army {
             this.attackers = attacker;
             this.defenders = defender;
             this.province = province;
-            attackCounter = new ArmyAttackCounter(attacker.GetUnits(), defender.GetUnits(), GameStatistics.battleAttackerArmyAttackModifier,
-                GameStatistics.battleDefenderArmyAttackModifier, () => ended = true, () => ended = true);
+            float[] attackersModifier = new float[GameStatistics.battleAttackerArmyAttackModifier.Length];
+            for (int i = 0; i < attackersModifier.Length; i++) {
+                attackersModifier[i] = GameStatistics.battleAttackerArmyAttackModifier[i] + attacker.Armies[0].Country.armyAttackModifier;
+            }
+            float[] defendersModifier = new float[GameStatistics.battleDefenderArmyAttackModifier.Length];
+            for (int i = 0; i < defendersModifier.Length; i++) {
+                defendersModifier[i] = GameStatistics.battleDefenderArmyAttackModifier[i] + defender.Armies[0].Country.armyAttackModifier;
+            }
+            attackCounter = new ArmyAttackCounter(attacker.GetUnits(), defender.GetUnits(), attackersModifier,
+                defendersModifier, () => ended = true, () => ended = true);
 
             PlayBattle();
         }

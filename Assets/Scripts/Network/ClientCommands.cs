@@ -396,6 +396,17 @@ namespace EuropeanWars.Network {
                 GameInfo.armies[id].DeleteLocal();
             }
         }
+
+        [Command(2053)]
+        public static void CreateArmy(NetIncomingMessage message) {
+            CountryInfo country = GameInfo.countries[message.ReadInt32()];
+            ProvinceInfo province = GameInfo.provinces[message.ReadInt32()];
+            UnitInfo unit = GameInfo.units[message.ReadInt32()];
+            int count = message.ReadInt32();
+            int maxCount = message.ReadInt32();
+            bool selectAsMovingArmy = message.ReadBoolean();
+            new ArmyInfo(province, country, unit, count, maxCount, selectAsMovingArmy);
+        }
         #endregion
     }
 }

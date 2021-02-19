@@ -30,8 +30,7 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void MoveUnitToSecondArmy(int count) {
-            if (army == SelectedArmyWindow.Singleton.SelectedArmy
-                && SelectedArmyWindow.Singleton.MovingArmy != null) {
+            if (army == SelectedArmyWindow.Singleton.SelectedArmy) {
                 army.MoveUnitToOtherArmyRequest(unit, SelectedArmyWindow.Singleton.MovingArmy, unit.recruitSize * count);
             }
             else if (army == SelectedArmyWindow.Singleton.MovingArmy

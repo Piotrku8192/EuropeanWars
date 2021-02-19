@@ -7,6 +7,7 @@ using EuropeanWars.Core.Language;
 using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Religion;
+using EuropeanWars.GameMap;
 using EuropeanWars.UI;
 using EuropeanWars.UI.Lobby;
 using EuropeanWars.UI.Windows;
@@ -113,6 +114,10 @@ namespace EuropeanWars.Core {
 
                 if (gameStarted) {
                     ProvinceWindow.Singleton.UpdateWindow(SelectedProvince, true);
+                }
+
+                if (MapPainter.mapMode == MapMode.Relations || MapPainter.mapMode == MapMode.Diplomatic) {
+                    MapPainter.PaintMap(MapPainter.mapMode);
                 }
             }
         }

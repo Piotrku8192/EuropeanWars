@@ -24,8 +24,9 @@ namespace EuropeanWars.UI.Windows {
                 return;
             }
 
-            if (ProvinceWindow.Singleton.province.Country == GameInfo.PlayerCountry) {
-                if (building.id == 0) {
+            if (ProvinceWindow.Singleton.province.Country == GameInfo.PlayerCountry
+                || GameInfo.PlayerCountry.spyNetworks[ProvinceWindow.Singleton.province.Country] >= 100) {
+                if (building.id == 0 && ProvinceWindow.Singleton.province.Country == GameInfo.PlayerCountry) {
                     ProvinceWindow.Singleton.SelectBuildingSlot(slotId);
                 }
                 else {

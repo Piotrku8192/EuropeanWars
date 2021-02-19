@@ -1,4 +1,6 @@
 ﻿using EuropeanWars.Core;
+using EuropeanWars.Core.Country;
+using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.War;
 using EuropeanWars.UI;
@@ -14,7 +16,9 @@ namespace EuropeanWars.GameMap {
         Trade,
         Terrain,
         Recrutation,
-        Peace
+        Peace,
+        Relations,
+        Diplomatic
     }
 
     public static class MapPainter {
@@ -113,6 +117,46 @@ namespace EuropeanWars.GameMap {
                             }
                         }
 
+                    }
+                    break;
+                case MapMode.Relations:
+                    if (GameInfo.SelectedProvince != null) {
+                        if (GameInfo.SelectedProvince.Country != province.Country) {
+                            color = Color.Lerp(Color.red, Color.green, (GameInfo.SelectedProvince.Country.relations[province.Country].Points + 100) / 200.0f);
+                            break;
+                        }
+                    }
+                    else {
+                        if (GameInfo.PlayerCountry != province.Country) {
+                            color = Color.Lerp(Color.red, Color.green, (GameInfo.PlayerCountry.relations[province.Country].Points + 100) / 200.0f);
+                            break;
+                        }
+                    }
+                    color = Color.gray;
+                    break;
+                case MapMode.Diplomatic:
+                    CountryInfo country;
+                    if (GameInfo.SelectedProvince != null) {
+                        country = GameInfo.SelectedProvince.Country;
+                    }
+                    else {
+                        country = GameInfo.PlayerCountry;
+                    }
+
+                    if (country == province.Country) {
+                        color = Color.green;
+                    }
+                    else {
+                        CountryRelation relation = country.relations[province.Country];
+                        if (country.IsInWarAgainstCountry(province.Country)) {
+                            color = Color.red;
+                        }
+                        else if (relation.relations[(int)DiplomaticRelation.Alliance] == true) {
+                            color = Color.blue;
+                        }
+                        else if (country.vassals.Contains(province.Country)) {
+                            color = Color.cyan;
+                        }
                     }
                     break;
                 default:

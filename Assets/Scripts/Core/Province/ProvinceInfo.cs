@@ -214,7 +214,6 @@ namespace EuropeanWars.Core.Province {
             buildingsIncome += buildings[slot].incomeModifier;
             defense += buildings[slot].defenceModifier;
 
-
             if (ProvinceWindow.Singleton.province == this) {
                 ProvinceWindow.Singleton.UpdateWindow(this);
             }
@@ -263,7 +262,8 @@ namespace EuropeanWars.Core.Province {
                 || Country.suzerain == GameInfo.PlayerCountry || GameInfo.PlayerCountry.suzerain == Country
                 || GameInfo.PlayerCountry.relations[Country].relations[(int)DiplomaticRelation.Alliance]
                 || armies.Where(t => t.Country == GameInfo.PlayerCountry
-                || GameInfo.PlayerCountry.relations[t.Country].relations[(int)DiplomaticRelation.Alliance]).Any());
+                || GameInfo.PlayerCountry.relations[t.Country].relations[(int)DiplomaticRelation.Alliance]).Any()
+                || GameInfo.PlayerCountry.spyNetworks[Country] >= 100);
         }
 
         public void SetFogOfWarInRegion(bool b) {

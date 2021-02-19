@@ -37,8 +37,17 @@ namespace EuropeanWars.Core.Province {
             Reset();
             if (army != null) {
                 Army = army;
-                attackCounter = new ArmyAttackCounter(Army.units, province.garnison, GameStatistics.occupantArmyAttackModifier,
-                    GameStatistics.occupatedArmyAttackModifier, () => areAttackersEmpty = true, () => areDefendersEmpty = true);
+                float[] attackersModifier = new float[GameStatistics.occupantArmyAttackModifier.Length];
+                for (int i = 0; i < attackersModifier.Length; i++) {
+                    attackersModifier[i] = GameStatistics.occupantArmyAttackModifier[i] + army.Country.armyAttackModifier;
+                }
+                float[] defendersModifier = new float[GameStatistics.occupatedArmyAttackModifier.Length];
+                for (int i = 0; i < defendersModifier.Length; i++) {
+                    defendersModifier[i] = GameStatistics.occupatedArmyAttackModifier[i] + army.Country.armyAttackModifier;
+                }
+
+                attackCounter = new ArmyAttackCounter(Army.units, province.garnison, attackersModifier,
+                    defendersModifier, () => areAttackersEmpty = true, () => areDefendersEmpty = true);
                 if (ProvinceWindow.Singleton.province == province) {
                     ProvinceWindow.Singleton.UpdateWindow(province);
                 }

@@ -36,6 +36,13 @@ namespace EuropeanWars.UI.Windows {
 
         public ChoosePersonWindow choosePersonWindow;
 
+        public Text armySize;
+
+        public GameObject spyNetworkUI;
+        public Text spyNetwork;
+        public Image spyNetworkProgress;
+        public Image[] spyNetworkLevels;
+
         public CountryInfo country;
         private CountryRelation relation;
 
@@ -75,11 +82,26 @@ namespace EuropeanWars.UI.Windows {
                 spyButton.gameObject.SetActive(true);
                 diplomatButton.SetPerson(GameInfo.PlayerCountry.GetDiplomatInRelation(relation));
                 spyButton.SetPerson(GameInfo.PlayerCountry.GetSpyInRelation(relation));
+
+                int spyNet = GameInfo.PlayerCountry.spyNetworks[country];
+                spyNetwork.text = spyNet.ToString();
+                spyNetworkProgress.fillAmount = spyNet / 100.0f;
+
+                for (int i = 0; i < spyNetworkLevels.Length; i++) {
+                    spyNetworkLevels[i].color = spyNet >= (i + 1) * (1.0f / spyNetworkLevels.Length) * 100 ? new Color(255, 176, 0) : Color.gray;
+                    spyNetworkLevels[i].GetComponent<DescriptionText>().text = LanguageDictionary.language["SpyNetworkLevelDescription-" + i.ToString()];
+                }
+                spyNetworkUI.SetActive(true);
+
+                armySize.gameObject.SetActive(GameInfo.PlayerCountry.spyNetworks[country] >= 60);
+                armySize.text = country.armies.Sum(t => t.Size).ToString();
             }
             else {
                 relationPoints.gameObject.SetActive(false);
                 diplomatButton.gameObject.SetActive(false);
                 spyButton.gameObject.SetActive(false);
+                spyNetworkUI.SetActive(false);
+                armySize.gameObject.SetActive(false);
             }
 
             UpdateWarActionButtons();

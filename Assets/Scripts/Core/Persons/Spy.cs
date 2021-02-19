@@ -16,18 +16,12 @@ namespace EuropeanWars.Core.Persons {
 
         public void BuildSpyNetwork(CountryRelation relation) {
             if (CurrentlyBuildingSpyNetwork != relation) {
-                if (CurrentlyBuildingSpyNetwork != null) {
-                    CurrentlyBuildingSpyNetwork.monthlySpyNetworkChange -= MonthlySpyNetworkChange;
-                }
                 Spy spy = country.GetSpyInRelation(relation);
                 if (spy != null) {
                     spy.BuildSpyNetwork(null);
                 }
 
                 CurrentlyBuildingSpyNetwork = relation;
-                if (relation != null) {
-                    CurrentlyBuildingSpyNetwork.monthlySpyNetworkChange += MonthlySpyNetworkChange;
-                }
             }
         }
     }

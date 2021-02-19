@@ -58,6 +58,9 @@ namespace EuropeanWars.Core.Country {
         public int maxManpower;
         public int manpowerIncrease;
         public float manpowerIncreaseModifier;
+        public float armyRercruitTimeModifier;
+        public float armyAttackModifier;
+        public float armySpeedModifier;
         public List<UnitToRecruit> toRecruit = new List<UnitToRecruit>();
         public List<ArmyInfo> armies = new List<ArmyInfo>();
 
@@ -70,6 +73,7 @@ namespace EuropeanWars.Core.Country {
 
         public List<Diplomat> diplomats = new List<Diplomat>();
         public List<Spy> spies = new List<Spy>();
+        public Dictionary<CountryInfo, int> spyNetworks = new Dictionary<CountryInfo, int>();
 
         //Vassals
         public bool isVassal;
@@ -98,6 +102,7 @@ namespace EuropeanWars.Core.Country {
             buildingsIncomeModifier = data.buildingsIncomeModifier;
             tradeIncomeModifier = data.tradeIncomeModifier;
             armyMaintenanceModifier = 1;
+            armyRercruitTimeModifier = 1;
         }
 
         public void Initialize() {
@@ -121,12 +126,13 @@ namespace EuropeanWars.Core.Country {
             }
 
             foreach (var item in GameInfo.countries) {
-                if (item.Value != this && item.Value.id > 0) {
-                    if (!item.Value.relations.ContainsKey(this)) {
+                if (item.Value != this) {
+                    if (!item.Value.relations.ContainsKey(this) && item.Value.id > 0) {
                         CountryRelation relation = new CountryRelation(GameInfo.random.Next(-100, 100)); //TODO: Change it to something else
                         relations.Add(item.Value, relation);
                         item.Value.relations.Add(this, relation);
                     }
+                    spyNetworks.Add(item.Value, 0);
                 }
             }
 
@@ -207,8 +213,41 @@ namespace EuropeanWars.Core.Country {
         }
 
         public void CalculateDiplomacy() {
+            foreach (var item in relations) {
+                ChangeSpyNetwork(item.Key, spyNetworks[item.Key] - 1 + (GetSpyInRelation(item.Value) == null ? 0 : GetSpyInRelation(item.Value).MonthlySpyNetworkChange));
+            }
+
             if (DiplomacyWindow.Singleton.countryWindow.country == this && DiplomacyWindow.Singleton.window.activeInHierarchy) {
                 DiplomacyWindow.Singleton.UpdateWindow();
+            }
+        }
+
+        public void ChangeSpyNetwork(CountryInfo country, int newSN) {
+            int lastSN = spyNetworks[country];
+            spyNetworks[country] = Mathf.Clamp(newSN, 0, 100);
+
+            if (spyNetworks[country] >= 20 && lastSN < 20) {
+                country.armyRercruitTimeModifier += 0.05f;
+            }
+            else if (spyNetworks[country] < 20 && lastSN >= 20) {
+                country.armyRercruitTimeModifier -= 0.05f;
+            }
+
+            if (spyNetworks[country] >= 40 && lastSN < 40) {
+                country.armyAttackModifier -= 0.05f;
+                country.armySpeedModifier -= 0.05f;
+                country.buildingsIncomeModifier -= 0.05f;
+            }
+            else if (spyNetworks[country] < 40 && lastSN >= 40) {
+                country.armyAttackModifier += 0.05f;
+                country.armySpeedModifier += 0.05f;
+                country.buildingsIncomeModifier += 0.05f;
+            }
+
+            if ((spyNetworks[country] >= 100 && lastSN < 100) || (lastSN >= 100 && spyNetworks[country] < 100)) {
+                foreach (var item in country.provinces) {
+                    item.RefreshFogOfWar();
+                }
             }
         }
 
@@ -325,7 +364,7 @@ namespace EuropeanWars.Core.Country {
                 unit.unitInfo = info;
                 unit.province = province;
                 unit.country = this;
-                unit.days = info.recruitDays;
+                unit.days = (int)(info.recruitDays * armyRercruitTimeModifier);
                 unit.count = count;
 
                 UnitToRecruit u = toRecruit.Where(t => t.Equals(unit)).FirstOrDefault();
