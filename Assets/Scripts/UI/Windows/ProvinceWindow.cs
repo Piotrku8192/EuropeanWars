@@ -32,6 +32,7 @@ namespace EuropeanWars.UI.Windows {
         public Button upgradeButton;
         public Button devastateButton;
         public Button fabricateClaimButton;
+        public Button lootProvinceButton;
 
         public BuildingButton[] buildings;
         public BuildingBuilder builder;
@@ -81,7 +82,7 @@ namespace EuropeanWars.UI.Windows {
                 buildingsIncome.text = province.buildingsIncome.ToString();
                 tradeIncome.text = province.tradeIncome.ToString();
                 culture.text = province.culture.name;
-                garnison.text = (province.fogOfWar || (GameInfo.PlayerCountry.spyNetworks.ContainsKey(province.Country) 
+                garnison.text = (province.fogOfWar && !(GameInfo.PlayerCountry.spyNetworks.ContainsKey(province.Country) 
                     && GameInfo.PlayerCountry.spyNetworks[province.Country] >= 20)) ? "?" : province.garnison.Sum(t => t.Value).ToString();
 
                 foreach (var item in claimators) {
@@ -107,6 +108,8 @@ namespace EuropeanWars.UI.Windows {
                 fabricateClaimButton.interactable = province.isInteractive && !province.claimators.Contains(GameInfo.PlayerCountry) && !GameInfo.PlayerCountry.toClaim.ContainsKey(province)
                     && province.neighbours.Where(t => t.NationalCountry == GameInfo.PlayerCountry).Any()
                     && !province.Country.IsInWarAgainstCountry(GameInfo.PlayerCountry);
+
+                lootProvinceButton.interactable = province.Country == GameInfo.PlayerCountry && province.monthsSinceLastLoot > 5;
 
                 if (!province.fogOfWar && province.OccupationCounter.Army != null) {
                     occupationWindow.SetActive(true);
@@ -166,6 +169,13 @@ namespace EuropeanWars.UI.Windows {
             msg.Write((ushort)1032);
             msg.Write(province.id);
             msg.Write(GameInfo.PlayerCountry.id);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void LootProvince() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)518);
+            msg.Write(province.id);
             Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }

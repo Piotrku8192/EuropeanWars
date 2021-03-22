@@ -1,1 +1,178 @@
-[{"id":0,"cost":0,"terrain":0,"minTaxation":0,"incomeModifier":0,"defenceModifier":0},{"id":1,"cost":300,"terrain":0,"minTaxation":7,"incomeModifier":0,"defenceModifier":0},{"id":2,"cost":1500,"terrain":0,"minTaxation":7,"incomeModifier":0,"defenceModifier":0},{"id":3,"cost":2000,"terrain":1,"minTaxation":10,"incomeModifier":360,"defenceModifier":0},{"id":4,"cost":1600,"terrain":1,"minTaxation":19,"incomeModifier":250,"defenceModifier":0},{"id":5,"cost":1700,"terrain":0,"minTaxation":17,"incomeModifier":190,"defenceModifier":0},{"id":6,"cost":1700,"terrain":0,"minTaxation":17,"incomeModifier":280,"defenceModifier":0},{"id":7,"cost":1700,"terrain":0,"minTaxation":17,"incomeModifier":200,"defenceModifier":0},{"id":8,"cost":1700,"terrain":0,"minTaxation":17,"incomeModifier":300,"defenceModifier":0},{"id":9,"cost":4500,"terrain":0,"minTaxation":6,"incomeModifier":-5,"defenceModifier":2},{"id":10,"cost":12000,"terrain":0,"minTaxation":14,"incomeModifier":-10,"defenceModifier":5},{"id":11,"cost":800,"terrain":0,"minTaxation":4,"incomeModifier":-2,"defenceModifier":1},{"id":12,"cost":100,"terrain":0,"minTaxation":0,"incomeModifier":20,"defenceModifier":0},{"id":13,"cost":120,"terrain":0,"minTaxation":5,"incomeModifier":60,"defenceModifier":0},{"id":14,"cost":3600,"terrain":0,"minTaxation":6,"incomeModifier":140,"defenceModifier":0},{"id":15,"cost":1000,"terrain":0,"minTaxation":15,"incomeModifier":240,"defenceModifier":0},{"id":16,"cost":200,"terrain":0,"minTaxation":1,"incomeModifier":45,"defenceModifier":0},{"id":17,"cost":650,"terrain":0,"minTaxation":20,"incomeModifier":150,"defenceModifier":0},{"id":18,"cost":5000,"terrain":0,"minTaxation":30,"incomeModifier":50,"defenceModifier":0},{"id":19,"cost":380,"terrain":0,"minTaxation":5,"incomeModifier":121,"defenceModifier":0},{"id":20,"cost":500,"terrain":0,"minTaxation":12,"incomeModifier":10,"defenceModifier":0},{"id":21,"cost":180,"terrain":0,"minTaxation":3,"incomeModifier":100,"defenceModifier":0}]
+[
+  {
+    "id": 0,
+    "cost": 0,
+    "terrain": 0,
+    "minTaxation": 0,
+    "incomeModifier": 0,
+    "defenceModifier": 0
+  },
+  {
+    "id": 1,
+    "cost": 300,
+    "terrain": 0,
+    "minTaxation": 7,
+    "incomeModifier": 0,
+    "defenceModifier": 0
+  },
+  {
+    "id": 2,
+    "cost": 1500,
+    "terrain": 0,
+    "minTaxation": 7,
+    "incomeModifier": 0,
+    "defenceModifier": 0
+  },
+  {
+    "id": 3,
+    "cost": 2000,
+    "terrain": 1,
+    "minTaxation": 10,
+    "incomeModifier": 360,
+    "defenceModifier": 0
+  },
+  {
+    "id": 4,
+    "cost": 1600,
+    "terrain": 1,
+    "minTaxation": 19,
+    "incomeModifier": 250,
+    "defenceModifier": 0
+  },
+  {
+    "id": 5,
+    "cost": 1700,
+    "terrain": 0,
+    "minTaxation": 17,
+    "incomeModifier": 190,
+    "defenceModifier": 0
+  },
+  {
+    "id": 6,
+    "cost": 1700,
+    "terrain": 0,
+    "minTaxation": 17,
+    "incomeModifier": 280,
+    "defenceModifier": 0
+  },
+  {
+    "id": 7,
+    "cost": 1700,
+    "terrain": 0,
+    "minTaxation": 17,
+    "incomeModifier": 200,
+    "defenceModifier": 0
+  },
+  {
+    "id": 8,
+    "cost": 1700,
+    "terrain": 0,
+    "minTaxation": 17,
+    "incomeModifier": 300,
+    "defenceModifier": 0
+  },
+  {
+    "id": 9,
+    "cost": 4500,
+    "terrain": 0,
+    "minTaxation": 6,
+    "incomeModifier": -5,
+    "defenceModifier": 2
+  },
+  {
+    "id": 10,
+    "cost": 12000,
+    "terrain": 0,
+    "minTaxation": 14,
+    "incomeModifier": -10,
+    "defenceModifier": 5
+  },
+  {
+    "id": 11,
+    "cost": 800,
+    "terrain": 0,
+    "minTaxation": 4,
+    "incomeModifier": -2,
+    "defenceModifier": 1
+  },
+  {
+    "id": 12,
+    "cost": 100,
+    "terrain": 0,
+    "minTaxation": 0,
+    "incomeModifier": 20,
+    "defenceModifier": 0
+  },
+  {
+    "id": 13,
+    "cost": 120,
+    "terrain": 0,
+    "minTaxation": 5,
+    "incomeModifier": 60,
+    "defenceModifier": 0
+  },
+  {
+    "id": 14,
+    "cost": 3600,
+    "terrain": 0,
+    "minTaxation": 6,
+    "incomeModifier": 140,
+    "defenceModifier": 0
+  },
+  {
+    "id": 15,
+    "cost": 1000,
+    "terrain": 0,
+    "minTaxation": 15,
+    "incomeModifier": 240,
+    "defenceModifier": 0
+  },
+  {
+    "id": 16,
+    "cost": 200,
+    "terrain": 0,
+    "minTaxation": 1,
+    "incomeModifier": 45,
+    "defenceModifier": 0
+  },
+  {
+    "id": 17,
+    "cost": 650,
+    "terrain": 0,
+    "minTaxation": 20,
+    "incomeModifier": 150,
+    "defenceModifier": 0
+  },
+  {
+    "id": 18,
+    "cost": 5000,
+    "terrain": 0,
+    "minTaxation": 30,
+    "incomeModifier": 50,
+    "defenceModifier": 0
+  },
+  {
+    "id": 19,
+    "cost": 380,
+    "terrain": 0,
+    "minTaxation": 5,
+    "incomeModifier": 121,
+    "defenceModifier": 0
+  },
+  {
+    "id": 20,
+    "cost": 500,
+    "terrain": 0,
+    "minTaxation": 12,
+    "incomeModifier": 10,
+    "defenceModifier": 0
+  },
+  {
+    "id": 21,
+    "cost": 180,
+    "terrain": 0,
+    "minTaxation": 3,
+    "incomeModifier": 100,
+    "defenceModifier": 0
+  }
+]

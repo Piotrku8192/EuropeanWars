@@ -837,6 +837,7 @@
     "UnitName-69": "Działo",
     "UnitName-70": "Armata",
     "UnitName-71": "Moździerz",
+    "UnitName-72": "Tabor",
     "Description-gold": "Złoto",
     "Description-manpower": "Poborowi",
     "Description-prestige": "Prestiż",
@@ -855,6 +856,8 @@
     "Description-diplomacy": "Dyplomacja",
     "Description-army": "Armia",
     "Description-trade": "Handel",
+    "Description-food": "Żywność",
+    "Description-foodPerMonth": "Pobór żywności na miesiąc",
     "Attack": "Atak",
     "Defence": "Obrona",
     "Speed": "Mobilność",
@@ -911,7 +914,8 @@
     "SpyNetworkLevelDescription-1": "Poziom 2 - 40 punktów\n- sabotowanie budynków innych państw (obniża przychód i efekty budynków)\n- negatywne efekty na armię innego państwa (zmniejszony atak i prędkość)",
     "SpyNetworkLevelDescription-2": "Poziom 3 - 60 punktów\n- ilość wrogich armii / flot",
     "SpyNetworkLevelDescription-3": "Poziom 4 - 80 punktów\n- co robią dyplomaci innych państw\n- co robią szpiedzy innych państw\n- powstrzymanie działań szpiega innego kraju",
-    "SpyNetworkLevelDescription-4": "Poziom 5 - 100 punktów\n- niszczenie budynków innych państw\n- brak mgły wojny w innym państwie\n- utrudnianie działań dyplomaty innego kraju"
+    "SpyNetworkLevelDescription-4": "Poziom 5 - 100 punktów\n- niszczenie budynków innych państw\n- brak mgły wojny w innym państwie\n- utrudnianie działań dyplomaty innego kraju",
+    "Loot": "Plądruj"
   },
   {
     "ProvinceName-0028FF": "Bergslagen",
@@ -1751,6 +1755,7 @@
     "UnitName-69": "Gun",
     "UnitName-70": "Cannon",
     "UnitName-71": "Mortar",
+    "UnitName-72": "Stock",
     "Description-gold": "Gold",
     "Description-manpower": "Manpower",
     "Description-prestige": "Prestige",
@@ -1769,6 +1774,8 @@
     "Description-diplomacy": "Diplomacy",
     "Description-army": "Army",
     "Description-trade": "Trade",
+    "Description-food": "Food",
+    "Description-foodPerMonth": "Need food per month",
     "Attack": "Attack",
     "Defence": "Defence",
     "Speed": "Speed",
@@ -1825,6 +1832,7 @@
     "SpyNetworkLevelDescription-1": "Poziom 2 - 40 punktów\n- sabotage country buildings (lower income and effects from buildings)\n- negative effects on country army (lower attack and speed)",
     "SpyNetworkLevelDescription-2": "Poziom 3 - 60 punktów\n- army and fleet size",
     "SpyNetworkLevelDescription-3": "Poziom 4 - 80 punktów\n- where are country diplomats and spies\n- stop spy effects",
-    "SpyNetworkLevelDescription-4": "Poziom 5 - 100 punktów\n- deleting buildings\n- fog of war is disabled\n- stop diplomat effects"
+    "SpyNetworkLevelDescription-4": "Poziom 5 - 100 punktów\n- deleting buildings\n- fog of war is disabled\n- stop diplomat effects",
+    "Loot": "Loot"
   }
 ]

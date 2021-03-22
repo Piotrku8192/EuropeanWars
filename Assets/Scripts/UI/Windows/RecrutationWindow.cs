@@ -22,6 +22,7 @@ namespace EuropeanWars.UI {
         public Text speed;
         public Text type;
         public Text maintenance;
+        public Text foodPerMonth;
 
         public Slider recruitSizeSlider;
         public Text recruitSizeText;
@@ -66,6 +67,7 @@ namespace EuropeanWars.UI {
                 health.text = unit.health.ToString();
                 speed.text = unit.speed.ToString();
                 maintenance.text = unit.maintenance.ToString();
+                foodPerMonth.text = unit.foodPerMonth.ToString();
             }
         }
 

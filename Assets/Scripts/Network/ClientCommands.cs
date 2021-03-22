@@ -147,6 +147,13 @@ namespace EuropeanWars.Network {
             int country = message.ReadInt32();
             GameInfo.countries[country].Bankruptcy();
         }
+
+        [Command(518)]
+        public static void LootProvince(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+            GameInfo.provinces[id].LootProvince();
+        }
+
         #endregion
 
         #region Diplomacy (1024-2047)

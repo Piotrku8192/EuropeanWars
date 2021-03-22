@@ -184,6 +184,17 @@ namespace EuropeanWars.Network {
             msg.Write(country);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(518)]
+        public static void LootProvince(NetIncomingMessage message) {
+            int id = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)518);
+            msg.Write(id);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
         #endregion
 
         #region Diplomacy (1024-2047)
@@ -439,7 +450,6 @@ namespace EuropeanWars.Network {
             msg.Write(selectAsMovingArmy);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
-
         #endregion
     }
 }

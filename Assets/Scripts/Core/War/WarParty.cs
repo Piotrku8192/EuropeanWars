@@ -125,7 +125,7 @@ namespace EuropeanWars.Core.War {
                 }
 
                 if (WarWindow.Singleton.war == war) {
-                    WarWindow.Singleton.SetWar(war);
+                    WarWindow.Singleton.SetWar(isWarEnd ? null : war);
                 }
             }
         }

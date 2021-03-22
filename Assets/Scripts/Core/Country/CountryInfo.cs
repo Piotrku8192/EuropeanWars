@@ -58,6 +58,10 @@ namespace EuropeanWars.Core.Country {
         public int maxManpower;
         public int manpowerIncrease;
         public float manpowerIncreaseModifier;
+        public int food;
+        public int foodIncrease;
+        public float foodIncreaseModifier;
+
         public float armyRercruitTimeModifier;
         public float armyAttackModifier;
         public float armySpeedModifier;
@@ -103,6 +107,7 @@ namespace EuropeanWars.Core.Country {
             tradeIncomeModifier = data.tradeIncomeModifier;
             armyMaintenanceModifier = 1;
             armyRercruitTimeModifier = 1;
+            foodIncreaseModifier = 1;
         }
 
         public void Initialize() {
@@ -179,6 +184,10 @@ namespace EuropeanWars.Core.Country {
                 buildingsIncome += item.buildingsIncome;
                 tradeIncome += item.tradeIncome;
             }
+
+            foodIncrease = Mathf.FloorToInt(taxationIncome * foodIncreaseModifier);
+            food += foodIncrease;
+
             taxationIncome = Mathf.FloorToInt(taxationIncome * taxationIncomeModifier);
             buildingsIncome = Mathf.FloorToInt(buildingsIncome * buildingsIncomeModifier);
             tradeIncome = Mathf.FloorToInt(tradeIncome * tradeIncomeModifier);

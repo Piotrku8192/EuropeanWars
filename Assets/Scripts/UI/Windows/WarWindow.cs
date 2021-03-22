@@ -33,6 +33,11 @@ namespace EuropeanWars.UI.Windows {
         public void SetWar(WarInfo war) {
             UIManager.Singleton.CloseAllWindows();
             this.war = war;
+            if (war == null) {
+                windowObject.SetActive(false);
+                return;
+            }
+
             windowObject.SetActive(true);
             startDate.text = $"{(war.startDay < 10 ? "0" : "")}{war.startDay}." +
                 $"{(war.startMonth < 10 ? "0" : "")}{war.startMonth}." +

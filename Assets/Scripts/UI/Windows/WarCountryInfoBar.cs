@@ -20,12 +20,12 @@ namespace EuropeanWars.UI.Windows {
             countryButton.SetCountry(country.country);
             countryName.text = country.country.Name;
 
-            if (country.party.Enemies.countries.ContainsKey(GameInfo.PlayerCountry)) {
+            //if (country.party.Enemies.countries.ContainsKey(GameInfo.PlayerCountry)) {
                 peaceButton.SetActive(
-                    (country.party.Enemies.ContainsCountry(GameInfo.PlayerCountry) && country.party.major == country
+                    ((country.party.Enemies.ContainsCountry(GameInfo.PlayerCountry) && country.party.major == country)
                     || (country.party.Enemies.major.country == GameInfo.PlayerCountry))
                     && PeaceDeal.CanMakePeaceDeal(country.party.war, country.party.Enemies.countries[GameInfo.PlayerCountry], country));
-            }
+            //}
         }
 
         public void Update() {

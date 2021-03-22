@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "name": "Uzbrojeni mieszkañcy",
+    "name": "Uzbrojeni mieszkaï¿½cy",
     "image": "Unit-0",
     "type": 0,
     "recruitBuilding": 1,
@@ -12,7 +12,8 @@
     "health": 60,
     "attackCooldown": 0,
     "speed": 10,
-    "maintenance": 0.0
+    "maintenance": 0.0,
+    "foodPerMonth": 0
   },
   {
     "id": 1,
@@ -27,7 +28,8 @@
     "health": 700,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.5
+    "maintenance": 0.5,
+    "foodPerMonth": 25
   },
   {
     "id": 2,
@@ -42,7 +44,8 @@
     "health": 503,
     "attackCooldown": 0,
     "speed": 26,
-    "maintenance": 0.286
+    "maintenance": 0.286,
+    "foodPerMonth": 35
   },
   {
     "id": 3,
@@ -57,7 +60,8 @@
     "health": 200,
     "attackCooldown": 0,
     "speed": 40,
-    "maintenance": 0.286
+    "maintenance": 0.286,
+    "foodPerMonth": 10
   },
   {
     "id": 4,
@@ -72,11 +76,12 @@
     "health": 480,
     "attackCooldown": 0,
     "speed": 34,
-    "maintenance": 0.05
+    "maintenance": 0.05,
+    "foodPerMonth": 25
   },
   {
     "id": 5,
-    "name": "Jazda Wo³oska",
+    "name": "Jazda Woï¿½oska",
     "image": "Unit-5",
     "type": 1,
     "recruitBuilding": 1,
@@ -87,7 +92,8 @@
     "health": 390,
     "attackCooldown": 0,
     "speed": 36,
-    "maintenance": 0.053
+    "maintenance": 0.053,
+    "foodPerMonth": 8
   },
   {
     "id": 6,
@@ -102,7 +108,8 @@
     "health": 400,
     "attackCooldown": 0,
     "speed": 35,
-    "maintenance": 0.04
+    "maintenance": 0.04,
+    "foodPerMonth": 50
   },
   {
     "id": 7,
@@ -117,11 +124,12 @@
     "health": 520,
     "attackCooldown": 0,
     "speed": 23,
-    "maintenance": 0.275
+    "maintenance": 0.275,
+    "foodPerMonth": 40
   },
   {
     "id": 8,
-    "name": "Piechota Wêgierska",
+    "name": "Piechota Wï¿½gierska",
     "image": "Unit-8",
     "type": 0,
     "recruitBuilding": 1,
@@ -132,7 +140,8 @@
     "health": 450,
     "attackCooldown": 0,
     "speed": 10,
-    "maintenance": 0.046
+    "maintenance": 0.046,
+    "foodPerMonth": 30
   },
   {
     "id": 9,
@@ -147,7 +156,8 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 15,
-    "maintenance": 0.01
+    "maintenance": 0.01,
+    "foodPerMonth": 50
   },
   {
     "id": 10,
@@ -162,7 +172,8 @@
     "health": 350,
     "attackCooldown": 0,
     "speed": 13,
-    "maintenance": 0.023
+    "maintenance": 0.023,
+    "foodPerMonth": 40
   },
   {
     "id": 11,
@@ -177,7 +188,8 @@
     "health": 450,
     "attackCooldown": 0,
     "speed": 21,
-    "maintenance": 0.19
+    "maintenance": 0.19,
+    "foodPerMonth": 50
   },
   {
     "id": 12,
@@ -192,7 +204,8 @@
     "health": 630,
     "attackCooldown": 0,
     "speed": 14,
-    "maintenance": 0.043
+    "maintenance": 0.043,
+    "foodPerMonth": 30
   },
   {
     "id": 13,
@@ -207,7 +220,8 @@
     "health": 400,
     "attackCooldown": 0,
     "speed": 12,
-    "maintenance": 0.072
+    "maintenance": 0.072,
+    "foodPerMonth": 25
   },
   {
     "id": 14,
@@ -222,7 +236,8 @@
     "health": 340,
     "attackCooldown": 0,
     "speed": 30,
-    "maintenance": 0.05
+    "maintenance": 0.05,
+    "foodPerMonth": 50
   },
   {
     "id": 15,
@@ -237,7 +252,8 @@
     "health": 600,
     "attackCooldown": 0,
     "speed": 28,
-    "maintenance": 0.1
+    "maintenance": 0.1,
+    "foodPerMonth": 20
   },
   {
     "id": 16,
@@ -252,7 +268,8 @@
     "health": 520,
     "attackCooldown": 0,
     "speed": 25,
-    "maintenance": 0.288
+    "maintenance": 0.288,
+    "foodPerMonth": 10
   },
   {
     "id": 17,
@@ -267,7 +284,8 @@
     "health": 260,
     "attackCooldown": 0,
     "speed": 17,
-    "maintenance": 0.006
+    "maintenance": 0.006,
+    "foodPerMonth": 8
   },
   {
     "id": 18,
@@ -282,7 +300,8 @@
     "health": 310,
     "attackCooldown": 0,
     "speed": 26,
-    "maintenance": 0.01
+    "maintenance": 0.01,
+    "foodPerMonth": 50
   },
   {
     "id": 19,
@@ -297,7 +316,8 @@
     "health": 10,
     "attackCooldown": 0,
     "speed": 15,
-    "maintenance": 0.25
+    "maintenance": 0.25,
+    "foodPerMonth": 1
   },
   {
     "id": 20,
@@ -312,7 +332,8 @@
     "health": 380,
     "attackCooldown": 0,
     "speed": 39,
-    "maintenance": 0.5
+    "maintenance": 0.5,
+    "foodPerMonth": 2
   },
   {
     "id": 21,
@@ -327,7 +348,8 @@
     "health": 650,
     "attackCooldown": 0,
     "speed": 24,
-    "maintenance": 0.12
+    "maintenance": 0.12,
+    "foodPerMonth": 20
   },
   {
     "id": 22,
@@ -342,7 +364,8 @@
     "health": 200,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.001
+    "maintenance": 0.001,
+    "foodPerMonth": 20
   },
   {
     "id": 23,
@@ -357,7 +380,8 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 30,
-    "maintenance": 0.1
+    "maintenance": 0.1,
+    "foodPerMonth": 15
   },
   {
     "id": 24,
@@ -372,7 +396,8 @@
     "health": 450,
     "attackCooldown": 0,
     "speed": 30,
-    "maintenance": 0.12
+    "maintenance": 0.12,
+    "foodPerMonth": 15
   },
   {
     "id": 25,
@@ -387,7 +412,8 @@
     "health": 250,
     "attackCooldown": 0,
     "speed": 35,
-    "maintenance": 0.033
+    "maintenance": 0.033,
+    "foodPerMonth": 50
   },
   {
     "id": 26,
@@ -402,7 +428,8 @@
     "health": 600,
     "attackCooldown": 0,
     "speed": 27,
-    "maintenance": 0.383
+    "maintenance": 0.383,
+    "foodPerMonth": 30
   },
   {
     "id": 27,
@@ -417,7 +444,8 @@
     "health": 280,
     "attackCooldown": 0,
     "speed": 35,
-    "maintenance": 0.13
+    "maintenance": 0.13,
+    "foodPerMonth": 5
   },
   {
     "id": 28,
@@ -432,7 +460,8 @@
     "health": 700,
     "attackCooldown": 0,
     "speed": 29,
-    "maintenance": 0.05
+    "maintenance": 0.05,
+    "foodPerMonth": 20
   },
   {
     "id": 29,
@@ -447,7 +476,8 @@
     "health": 500,
     "attackCooldown": 0,
     "speed": 14,
-    "maintenance": 0.048
+    "maintenance": 0.048,
+    "foodPerMonth": 21
   },
   {
     "id": 30,
@@ -462,11 +492,12 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 10,
-    "maintenance": 0.15
+    "maintenance": 0.15,
+    "foodPerMonth": 5
   },
   {
     "id": 31,
-    "name": "Piechota So³datska",
+    "name": "Piechota Soï¿½datska",
     "image": "Unit-31",
     "type": 0,
     "recruitBuilding": 1,
@@ -477,7 +508,8 @@
     "health": 290,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.008
+    "maintenance": 0.008,
+    "foodPerMonth": 25
   },
   {
     "id": 32,
@@ -492,7 +524,8 @@
     "health": 420,
     "attackCooldown": 0,
     "speed": 22,
-    "maintenance": 0.091
+    "maintenance": 0.091,
+    "foodPerMonth": 55
   },
   {
     "id": 33,
@@ -507,7 +540,8 @@
     "health": 450,
     "attackCooldown": 0,
     "speed": 34,
-    "maintenance": 0.072
+    "maintenance": 0.072,
+    "foodPerMonth": 25
   },
   {
     "id": 34,
@@ -522,11 +556,12 @@
     "health": 480,
     "attackCooldown": 0,
     "speed": 35,
-    "maintenance": 0.5
+    "maintenance": 0.5,
+    "foodPerMonth": 20
   },
   {
     "id": 35,
-    "name": "Ordyñcy",
+    "name": "Ordyï¿½cy",
     "image": "Unit-35",
     "type": 1,
     "recruitBuilding": 1,
@@ -537,11 +572,12 @@
     "health": 150,
     "attackCooldown": 0,
     "speed": 45,
-    "maintenance": 0.01
+    "maintenance": 0.01,
+    "foodPerMonth": 15
   },
   {
     "id": 36,
-    "name": "KazinidŸi",
+    "name": "Kazinidï¿½i",
     "image": "Unit-36",
     "type": 1,
     "recruitBuilding": 1,
@@ -552,11 +588,12 @@
     "health": 50,
     "attackCooldown": 0,
     "speed": 51,
-    "maintenance": 0.019
+    "maintenance": 0.019,
+    "foodPerMonth": 8
   },
   {
     "id": 37,
-    "name": "Kapyku³owie",
+    "name": "Kapykuï¿½owie",
     "image": "Unit-37",
     "type": 0,
     "recruitBuilding": 1,
@@ -567,7 +604,8 @@
     "health": 100,
     "attackCooldown": 0,
     "speed": 11,
-    "maintenance": 0.272
+    "maintenance": 0.272,
+    "foodPerMonth": 5
   },
   {
     "id": 38,
@@ -582,7 +620,8 @@
     "health": 100,
     "attackCooldown": 0,
     "speed": 13,
-    "maintenance": 0.202
+    "maintenance": 0.202,
+    "foodPerMonth": 6
   },
   {
     "id": 39,
@@ -597,7 +636,8 @@
     "health": 305,
     "attackCooldown": 0,
     "speed": 17,
-    "maintenance": 0.001
+    "maintenance": 0.001,
+    "foodPerMonth": 45
   },
   {
     "id": 40,
@@ -612,7 +652,8 @@
     "health": 410,
     "attackCooldown": 0,
     "speed": 26,
-    "maintenance": 0.135
+    "maintenance": 0.135,
+    "foodPerMonth": 10
   },
   {
     "id": 41,
@@ -627,7 +668,8 @@
     "health": 430,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.24
+    "maintenance": 0.24,
+    "foodPerMonth": 5
   },
   {
     "id": 42,
@@ -642,11 +684,12 @@
     "health": 440,
     "attackCooldown": 0,
     "speed": 30,
-    "maintenance": 0.214
+    "maintenance": 0.214,
+    "foodPerMonth": 7
   },
   {
     "id": 43,
-    "name": "Ksi¹¿êce Wojska Nadworne",
+    "name": "Ksiï¿½ï¿½ï¿½ce Wojska Nadworne",
     "image": "Unit-43",
     "type": 1,
     "recruitBuilding": 1,
@@ -657,7 +700,8 @@
     "health": 500,
     "attackCooldown": 0,
     "speed": 29,
-    "maintenance": 0.19
+    "maintenance": 0.19,
+    "foodPerMonth": 50
   },
   {
     "id": 44,
@@ -672,11 +716,12 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 11,
-    "maintenance": 0.15
+    "maintenance": 0.15,
+    "foodPerMonth": 5
   },
   {
     "id": 45,
-    "name": "Ba³kañscy Najemnicy",
+    "name": "Baï¿½kaï¿½scy Najemnicy",
     "image": "Unit-45",
     "type": 1,
     "recruitBuilding": 1,
@@ -687,7 +732,8 @@
     "health": 360,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.061
+    "maintenance": 0.061,
+    "foodPerMonth": 25
   },
   {
     "id": 46,
@@ -702,11 +748,12 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 30,
-    "maintenance": 0.0
+    "maintenance": 0.0,
+    "foodPerMonth": 0
   },
   {
     "id": 47,
-    "name": "Duñska Dragonia",
+    "name": "Duï¿½ska Dragonia",
     "image": "Unit-47",
     "type": 1,
     "recruitBuilding": 1,
@@ -717,7 +764,8 @@
     "health": 420,
     "attackCooldown": 0,
     "speed": 18,
-    "maintenance": 0.075
+    "maintenance": 0.075,
+    "foodPerMonth": 20
   },
   {
     "id": 48,
@@ -732,7 +780,8 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 15,
-    "maintenance": 0.03
+    "maintenance": 0.03,
+    "foodPerMonth": 30
   },
   {
     "id": 49,
@@ -747,7 +796,8 @@
     "health": 400,
     "attackCooldown": 0,
     "speed": 25,
-    "maintenance": 0.014
+    "maintenance": 0.014,
+    "foodPerMonth": 20
   },
   {
     "id": 50,
@@ -762,7 +812,8 @@
     "health": 400,
     "attackCooldown": 0,
     "speed": 14,
-    "maintenance": 0.067
+    "maintenance": 0.067,
+    "foodPerMonth": 15
   },
   {
     "id": 51,
@@ -777,7 +828,8 @@
     "health": 500,
     "attackCooldown": 0,
     "speed": 17,
-    "maintenance": 0.08
+    "maintenance": 0.08,
+    "foodPerMonth": 25
   },
   {
     "id": 52,
@@ -792,11 +844,12 @@
     "health": 600,
     "attackCooldown": 0,
     "speed": 25,
-    "maintenance": 0.083
+    "maintenance": 0.083,
+    "foodPerMonth": 30
   },
   {
     "id": 53,
-    "name": "Czerñ Kozacka",
+    "name": "Czerï¿½ Kozacka",
     "image": "Unit-53",
     "type": 0,
     "recruitBuilding": 1,
@@ -807,7 +860,8 @@
     "health": 50,
     "attackCooldown": 0,
     "speed": 19,
-    "maintenance": 0.0
+    "maintenance": 0.0,
+    "foodPerMonth": 70
   },
   {
     "id": 54,
@@ -822,7 +876,8 @@
     "health": 50,
     "attackCooldown": 0,
     "speed": 42,
-    "maintenance": 0.35
+    "maintenance": 0.35,
+    "foodPerMonth": 1
   },
   {
     "id": 55,
@@ -837,7 +892,9 @@
     "health": 650,
     "attackCooldown": 0,
     "speed": 10,
-    "maintenance": 0.24
+    "maintenance": 0.24,
+    "foodPerMonth": 5,
+    "foodCapacity": 1500
   },
   {
     "id": 56,
@@ -852,7 +909,8 @@
     "health": 100,
     "attackCooldown": 0,
     "speed": 45,
-    "maintenance": 0.5
+    "maintenance": 0.5,
+    "foodPerMonth": 1
   },
   {
     "id": 57,
@@ -867,7 +925,8 @@
     "health": 300,
     "attackCooldown": 0,
     "speed": 27,
-    "maintenance": 0.055
+    "maintenance": 0.055,
+    "foodPerMonth": 40
   },
   {
     "id": 58,
@@ -882,11 +941,12 @@
     "health": 610,
     "attackCooldown": 0,
     "speed": 15,
-    "maintenance": 0.083
+    "maintenance": 0.083,
+    "foodPerMonth": 15
   },
   {
     "id": 59,
-    "name": "Ciê¿ka Jazda Perska",
+    "name": "Ciï¿½ka Jazda Perska",
     "image": "Unit-59",
     "type": 1,
     "recruitBuilding": 1,
@@ -897,11 +957,12 @@
     "health": 430,
     "attackCooldown": 0,
     "speed": 22,
-    "maintenance": 0.21
+    "maintenance": 0.21,
+    "foodPerMonth": 45
   },
   {
     "id": 60,
-    "name": "Konni £ucznicy",
+    "name": "Konni ï¿½ucznicy",
     "image": "Unit-60",
     "type": 1,
     "recruitBuilding": 1,
@@ -912,11 +973,12 @@
     "health": 180,
     "attackCooldown": 0,
     "speed": 38,
-    "maintenance": 0.05
+    "maintenance": 0.05,
+    "foodPerMonth": 4
   },
   {
     "id": 61,
-    "name": "Ksi¹¿êce Oddzia³y Przyboczne",
+    "name": "Ksiï¿½ï¿½ï¿½ce Oddziaï¿½y Przyboczne",
     "image": "Unit-61",
     "type": 1,
     "recruitBuilding": 1,
@@ -927,11 +989,12 @@
     "health": 510,
     "attackCooldown": 0,
     "speed": 28,
-    "maintenance": 0.39
+    "maintenance": 0.39,
+    "foodPerMonth": 25
   },
   {
     "id": 62,
-    "name": "Oddzia³y Przyboczne Hospodara",
+    "name": "Oddziaï¿½y Przyboczne Hospodara",
     "image": "Unit-62",
     "type": 1,
     "recruitBuilding": 1,
@@ -942,7 +1005,8 @@
     "health": 480,
     "attackCooldown": 0,
     "speed": 31,
-    "maintenance": 0.34
+    "maintenance": 0.34,
+    "foodPerMonth": 25
   },
   {
     "id": 63,
@@ -957,7 +1021,8 @@
     "health": 495,
     "attackCooldown": 0,
     "speed": 20,
-    "maintenance": 0.2
+    "maintenance": 0.2,
+    "foodPerMonth": 10
   },
   {
     "id": 64,
@@ -972,7 +1037,8 @@
     "health": 350,
     "attackCooldown": 0,
     "speed": 15,
-    "maintenance": 0.075
+    "maintenance": 0.075,
+    "foodPerMonth": 12
   },
   {
     "id": 65,
@@ -987,11 +1053,12 @@
     "health": 190,
     "attackCooldown": 0,
     "speed": 26,
-    "maintenance": 0.26
+    "maintenance": 0.26,
+    "foodPerMonth": 10
   },
   {
     "id": 66,
-    "name": "Gruziñska Jazda",
+    "name": "Gruziï¿½ska Jazda",
     "image": "Unit-66",
     "type": 1,
     "recruitBuilding": 1,
@@ -1002,11 +1069,12 @@
     "health": 215,
     "attackCooldown": 0,
     "speed": 25,
-    "maintenance": 0.214
+    "maintenance": 0.214,
+    "foodPerMonth": 14
   },
   {
     "id": 67,
-    "name": "Dagestañscy Górale",
+    "name": "Dagestaï¿½scy Gï¿½rale",
     "image": "Unit-67",
     "type": 0,
     "recruitBuilding": 1,
@@ -1017,7 +1085,8 @@
     "health": 100,
     "attackCooldown": 0,
     "speed": 19,
-    "maintenance": 0.142
+    "maintenance": 0.142,
+    "foodPerMonth": 6
   },
   {
     "id": 68,
@@ -1032,11 +1101,12 @@
     "health": 500,
     "attackCooldown": 0,
     "speed": 26,
-    "maintenance": 0.084
+    "maintenance": 0.084,
+    "foodPerMonth": 25
   },
   {
     "id": 69,
-    "name": "Dzia³o",
+    "name": "Dziaï¿½o",
     "image": "Unit-69",
     "type": 2,
     "recruitBuilding": 2,
@@ -1047,7 +1117,8 @@
     "health": 60,
     "attackCooldown": 0,
     "speed": 10,
-    "maintenance": 0.15
+    "maintenance": 0.15,
+    "foodPerMonth": 15
   },
   {
     "id": 70,
@@ -1062,11 +1133,12 @@
     "health": 25,
     "attackCooldown": 0,
     "speed": 12,
-    "maintenance": 0.24
+    "maintenance": 0.24,
+    "foodPerMonth": 17
   },
   {
     "id": 71,
-    "name": "MoŸdzierz",
+    "name": "Moï¿½dzierz",
     "image": "Unit-71",
     "type": 2,
     "recruitBuilding": 2,
@@ -1077,6 +1149,24 @@
     "health": 30,
     "attackCooldown": 0,
     "speed": 11,
-    "maintenance": 0.32
-  }
+    "maintenance": 0.32,
+    "foodPerMonth": 13
+  },
+  {
+    "id": 72,
+    "name": "Tabor",
+    "image": "Unit-72",
+    "type": 3,
+    "recruitBuilding": 1,
+    "recruitSize": 1,
+    "recruitCost": 100,
+    "recruitDays": 100,
+    "attack": 0,
+    "health": 1,
+    "attackCooldown": 0,
+    "speed": 10,
+    "maintenance": 0.1,
+    "foodPerMonth": 0,
+    "foodCapacity": 1500
+  },
 ]

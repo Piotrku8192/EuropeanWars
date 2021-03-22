@@ -35,6 +35,8 @@ namespace EuropeanWars.Core.Province {
         public int buildingsIncome;
         public int tradeIncome;
 
+        public int monthsSinceLastLoot = 6;
+
         public bool isInteractive;
         public bool isActive;
 
@@ -142,6 +144,7 @@ namespace EuropeanWars.Core.Province {
 
         public void OnMonthElapsed() {
             UpdateGarnisonSize();
+            monthsSinceLastLoot++;
         }
 
         public void SetCountry(CountryInfo country, bool nationalCountry = false) {
@@ -297,6 +300,22 @@ namespace EuropeanWars.Core.Province {
                     foreach (var unit in new Dictionary<UnitInfo, int>(armies[i].units)) {
                         armies[i].MoveUnitToOtherArmy(unit.Key, armies[0], armies[i].maxUnits[unit.Key]);
                     }
+                }
+            }
+        }
+
+        public void LootProvince() {
+            //On per 6 months
+            if (monthsSinceLastLoot > 5) {
+                Country.food += taxation;
+                Country.gold += taxation * 10;
+                taxation--;
+                monthsSinceLastLoot = 0;
+
+                //TODO: Add uprising effects and casus beli effect
+
+                if (ProvinceWindow.Singleton.province == this) {
+                    ProvinceWindow.Singleton.UpdateWindow(this);
                 }
             }
         }

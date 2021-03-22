@@ -26,6 +26,7 @@ namespace EuropeanWars.Core.Army {
         public int Artilleries => GetArtilleries();
         public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1) * Country.armySpeedModifier;
         public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
+        public int FoodPerMonth => units.Sum(t => t.Key.foodPerMonth * t.Value / t.Key.recruitSize);
         public bool IsSelected { get; private set; }
 
         public bool isMoveLocked;
@@ -53,7 +54,7 @@ namespace EuropeanWars.Core.Army {
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
-            TimeManager.onMonthElapsed += ReinforcementArmy;
+            TimeManager.onMonthElapsed += ReinforceArmy;
 
             if (selectAsMovingArmy) {
                 ArmyInfo a = SelectedArmyWindow.Singleton.SelectedArmy;
@@ -77,7 +78,7 @@ namespace EuropeanWars.Core.Army {
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
-            TimeManager.onMonthElapsed += ReinforcementArmy;
+            TimeManager.onMonthElapsed += ReinforceArmy;
         }
 
         public ArmyInfo(ArmyData army) {
@@ -105,7 +106,7 @@ namespace EuropeanWars.Core.Army {
             ArmyObject = ArmySpawner.Singleton.SpawnAndInitializeArmy(this);
             TimeManager.onDayElapsed += CountMovement;
             TimeManager.onDayElapsed += UpdateBlackStatus;
-            TimeManager.onMonthElapsed += ReinforcementArmy;
+            TimeManager.onMonthElapsed += ReinforceArmy;
         }
 
         public void SetCountry(CountryInfo country) {
@@ -132,7 +133,9 @@ namespace EuropeanWars.Core.Army {
             }
         }
 
-        private void ReinforcementArmy() {
+        private void ReinforceArmy() {
+            CalculateFood();
+
             if (Province.NationalCountry == Country) {
                 int avaiable = Mathf.Clamp(Province.taxation * GameStatistics.provinceIncomeArmyReinforcementModifier, 0, Country.manpower);
                 UnitInfo[] ks = units.Keys.ToArray();
@@ -147,6 +150,39 @@ namespace EuropeanWars.Core.Army {
                     if (avaiable == 0) {
                         break;
                     }
+                }
+            }
+        }
+
+        private void CalculateFood() {
+            int foodToGive = 0;
+            int f = Mathf.Max(Country.food, FoodPerMonth);
+
+            if (Province.Country == Country) {
+                foodToGive = Mathf.Min(Country.food, FoodPerMonth);
+                Country.food = foodToGive < FoodPerMonth ? 0 : Country.food - FoodPerMonth;
+            }
+            foodToGive += units.Sum(t => t.Key.foodCapacity * t.Value / t.Key.recruitSize);
+
+            int usedFood = 0;
+            foreach (UnitInfo item in units.Keys.ToArray()) {
+                if (foodToGive >= item.foodPerMonth) {
+                    foodToGive -= item.foodPerMonth;
+                    usedFood += item.foodPerMonth;
+                }
+                else {
+                    units[item] = Mathf.Clamp(units[item] - maxUnits[item] / 10, 0, int.MaxValue); //10% per month
+                }
+            }
+
+            usedFood -= f;
+            foreach (UnitInfo item in units.Keys.ToArray()) {
+                if (usedFood >= item.foodCapacity && item.foodCapacity > 0) {
+                    usedFood -= item.foodCapacity;
+                    RemoveUnit(item, item.recruitSize);
+                }
+                else {
+                    break;
                 }
             }
         }
@@ -190,7 +226,7 @@ namespace EuropeanWars.Core.Army {
             Province.armies.Remove(this);
             TimeManager.onDayElapsed -= CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
-            TimeManager.onMonthElapsed -= ReinforcementArmy;
+            TimeManager.onMonthElapsed -= ReinforceArmy;
             try {
                 ArmyObject.StopAllCoroutines();
                 ArmySpawner.Singleton.DestroyArmy(ArmyObject);

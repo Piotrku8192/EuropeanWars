@@ -16,5 +16,7 @@ namespace EuropeanWars.Core.Data {
         public int attackCooldown;
         public int speed;
         public float maintenance;
+        public int foodPerMonth;
+        public int foodCapacity;
     }
 }
