@@ -420,7 +420,7 @@ namespace EuropeanWars.Network {
             int armyId = message.ReadInt32();
             int generalId = message.ReadInt32();
 
-            GameInfo.armies[armyId].SetGeneral((General)GameInfo.persons[generalId]);
+            GameInfo.armies[armyId].SetGeneral(generalId == -1 ? null : (General)GameInfo.persons[generalId]);
         }
         #endregion
     }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EuropeanWars.UI {
+namespace EuropeanWars.UI.Windows {
     public class UnitButton : MonoBehaviour {
         public UnitInfo unit;
         public Image image;

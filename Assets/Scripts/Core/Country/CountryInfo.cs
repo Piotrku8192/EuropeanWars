@@ -75,6 +75,8 @@ namespace EuropeanWars.Core.Country {
         public Dictionary<WarInfo, WarCountryInfo> wars = new Dictionary<WarInfo, WarCountryInfo>();
         public Dictionary<CountryInfo, CountryRelation> relations = new Dictionary<CountryInfo, CountryRelation>();
 
+        public List<General> generals = new List<General>();
+
         public List<Diplomat> diplomats = new List<Diplomat>();
         public List<Spy> spies = new List<Spy>();
         public Dictionary<CountryInfo, int> spyNetworks = new Dictionary<CountryInfo, int>();
@@ -146,10 +148,16 @@ namespace EuropeanWars.Core.Country {
             }
 
             //TODO: Remove it
-            diplomats.Add(new Diplomat("Diplomat1", "S", 1609, 1700, this, GameInfo.gfx["Person-1"], 0.4f));
-            diplomats.Add(new Diplomat("Diplomat2", "S", 1609, 1700, this, GameInfo.gfx["Person-2"], 0.4f));
-            spies.Add(new Spy("Spy1", "S", 1609, 1700, this, GameInfo.gfx["Person-3"], 2));
-            spies.Add(new Spy("Spy2", "S", 1609, 1700, this, GameInfo.gfx["Person-4"], 2));
+            diplomats.Add(new Diplomat("Diplomat1", "", 1609, 1700, this, GameInfo.gfx["Person-1"], 0.4f));
+            diplomats.Add(new Diplomat("Diplomat2", "", 1609, 1700, this, GameInfo.gfx["Person-2"], 0.4f));
+            spies.Add(new Spy("Spy1", "", 1609, 1700, this, GameInfo.gfx["Person-3"], 2));
+            spies.Add(new Spy("Spy2", "", 1609, 1700, this, GameInfo.gfx["Person-4"], 2));
+            generals.Add(new General("General1", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General2", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General3", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General4", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General5", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General6", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
         }
         public void UpdateLanguage() {
             Name = LanguageDictionary.language["CountryName-" + id.ToString()];

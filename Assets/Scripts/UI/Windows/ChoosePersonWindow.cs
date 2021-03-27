@@ -1,7 +1,5 @@
 ﻿using EuropeanWars.Core.Persons;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace EuropeanWars.UI.Windows {
     public class ChoosePersonWindow : MonoBehaviour {

@@ -227,6 +227,9 @@ namespace EuropeanWars.Core.Army {
             GameInfo.armies.Remove(id);
             Country.armies.Remove(this);
             Province.armies.Remove(this);
+            if (General != null) {
+                General.army = null;
+            }
             TimeManager.onDayElapsed -= CountMovement;
             TimeManager.onDayElapsed -= UpdateBlackStatus;
             TimeManager.onMonthElapsed -= ReinforceArmy;
@@ -431,7 +434,7 @@ namespace EuropeanWars.Core.Army {
             NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
             msg.Write((ushort)2054);
             msg.Write(id);
-            msg.Write(general.id);
+            msg.Write(general == null ? -1 : general.id);
 
             Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
@@ -441,7 +444,13 @@ namespace EuropeanWars.Core.Army {
                 General.army = null;
             }
             General = general;
-            General.army = this;
+            if (general != null) {
+                General.army = this;
+            }
+
+            if (SelectedArmyWindow.Singleton.SelectedArmy == this) {
+                SelectedArmyWindow.Singleton.UpdateWindow();
+            }
         }
     }
 }

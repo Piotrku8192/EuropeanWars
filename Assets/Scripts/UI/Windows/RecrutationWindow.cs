@@ -7,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EuropeanWars.UI {
+namespace EuropeanWars.UI.Windows {
     public class RecrutationWindow : MonoBehaviour {
         public List<UnitButton> units = new List<UnitButton>();
         public Transform unitsContent;

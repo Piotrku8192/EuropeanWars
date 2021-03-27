@@ -1,4 +1,5 @@
 ﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.Province;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace EuropeanWars.UI.Windows {
         private Dictionary<ArmyInfo, ArmyButton> armies = new Dictionary<ArmyInfo, ArmyButton>();
         private List<ArmyUnitButton> units = new List<ArmyUnitButton>();
         private List<ArmyUnitButton> movingUnits = new List<ArmyUnitButton>();
+
+        public PersonButton general;
+
+        public ChoosePersonWindow choosePersonWindow;
 
         public void Awake() {
             Singleton = this;
@@ -118,6 +123,9 @@ namespace EuropeanWars.UI.Windows {
                 b.SetUnit(item.Key, army);
                 units.Add(b);
             }
+
+            general.SetPerson(SelectedArmy.General);
+            choosePersonWindow.gameObject.SetActive(false);
         }
 
         public void SelectMovingArmy(ArmyInfo army) {
@@ -136,6 +144,8 @@ namespace EuropeanWars.UI.Windows {
                 b.SetUnit(item.Key, army);
                 movingUnits.Add(b);
             }
+
+            choosePersonWindow.gameObject.SetActive(false);
         }
 
         public void MergeSelectedArmies() {
@@ -155,6 +165,20 @@ namespace EuropeanWars.UI.Windows {
             foreach (var item in new List<ArmyInfo>(armies.Keys)) {
                 item.Delete();
             }
+        }
+
+        public void ChooseGeneral() {
+            choosePersonWindow.Initialize(new ChoosePersonWindow.ChoosePerson(SelectGeneral), SelectedArmy.Country.generals.Where(t => t.army == null).ToArray());
+            choosePersonWindow.gameObject.SetActive(true);
+        }
+
+        public void DiscardGeneral() {
+            SelectGeneral(null);
+        }
+
+        public void SelectGeneral(Person person) {
+            SelectedArmy.SetGeneralRequest((General)person);
+            choosePersonWindow.gameObject.SetActive(false);
         }
     }
 }

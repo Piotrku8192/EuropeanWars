@@ -39,7 +39,7 @@ namespace EuropeanWars.Core.Province {
                 Army = army;
                 float[] attackersModifier = new float[GameStatistics.occupantArmyAttackModifier.Length];
                 for (int i = 0; i < attackersModifier.Length; i++) {
-                    attackersModifier[i] = (float)(GameStatistics.occupantArmyAttackModifier[i] + army.Country.armyAttackModifier + army.General?.attackModifiers[i]);
+                    attackersModifier[i] = (float)(GameStatistics.occupantArmyAttackModifier[i] + army.Country.armyAttackModifier + (army.General == null ? 0 : army.General.attackModifiers[i]));
                 }
                 float[] defendersModifier = new float[GameStatistics.occupatedArmyAttackModifier.Length];
                 for (int i = 0; i < defendersModifier.Length; i++) {

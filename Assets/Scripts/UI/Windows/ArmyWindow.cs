@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using EuropeanWars.Core.Persons;
+using UnityEngine;
 
-namespace EuropeanWars.UI {
+namespace EuropeanWars.UI.Windows {
     public class ArmyWindow : MonoBehaviour {
         public static ArmyWindow Singleton { get; private set; }
         public GameObject window;
