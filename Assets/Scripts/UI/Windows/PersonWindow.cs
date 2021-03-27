@@ -16,7 +16,7 @@ namespace EuropeanWars.UI.Windows {
 
         public void SetPerson(Person person) {
             Person = person ?? throw new ArgumentNullException("person");
-            name.text = Person.name;
+            name.text = Person.firstName;
             age.text = Person.Age.ToString();
             portrait.sprite = Person.Portrait;
             speciality.text = Person.Speciality;

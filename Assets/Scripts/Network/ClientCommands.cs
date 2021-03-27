@@ -414,6 +414,14 @@ namespace EuropeanWars.Network {
             bool selectAsMovingArmy = message.ReadBoolean();
             new ArmyInfo(province, country, unit, count, maxCount, selectAsMovingArmy);
         }
+
+        [Command(2054)]
+        public static void SetGeneral(NetIncomingMessage message) {
+            int armyId = message.ReadInt32();
+            int generalId = message.ReadInt32();
+
+            GameInfo.armies[armyId].SetGeneral((General)GameInfo.persons[generalId]);
+        }
         #endregion
     }
 }

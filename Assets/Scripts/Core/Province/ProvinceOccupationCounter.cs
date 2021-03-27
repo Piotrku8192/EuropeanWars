@@ -39,11 +39,11 @@ namespace EuropeanWars.Core.Province {
                 Army = army;
                 float[] attackersModifier = new float[GameStatistics.occupantArmyAttackModifier.Length];
                 for (int i = 0; i < attackersModifier.Length; i++) {
-                    attackersModifier[i] = GameStatistics.occupantArmyAttackModifier[i] + army.Country.armyAttackModifier;
+                    attackersModifier[i] = (float)(GameStatistics.occupantArmyAttackModifier[i] + army.Country.armyAttackModifier + army.General?.attackModifiers[i]);
                 }
                 float[] defendersModifier = new float[GameStatistics.occupatedArmyAttackModifier.Length];
                 for (int i = 0; i < defendersModifier.Length; i++) {
-                    defendersModifier[i] = GameStatistics.occupatedArmyAttackModifier[i] + army.Country.armyAttackModifier;
+                    defendersModifier[i] = GameStatistics.occupatedArmyAttackModifier[i] + province.Country.armyAttackModifier;
                 }
 
                 attackCounter = new ArmyAttackCounter(Army.units, province.garnison, attackersModifier,

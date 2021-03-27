@@ -8,7 +8,7 @@ namespace EuropeanWars.UI.Windows {
 
         public override void SetPerson(Person person) {
             base.SetPerson(person);
-            _moreInfo.text = $"{person.name}({person.Age})\n{base.moreInfo.text}";
+            _moreInfo.text = $"{person.firstName}({person.Age})\n{base.moreInfo.text}";
         }
 
         public void Select() {

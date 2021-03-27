@@ -1,9 +1,13 @@
-﻿using EuropeanWars.Core.Country;
+﻿using EuropeanWars.Core.Army;
+using EuropeanWars.Core.Country;
 using UnityEngine;
 
 namespace EuropeanWars.Core.Persons {
     public class General : Person {
-        public General(string name, int birthYear, int deathYear, CountryInfo country, Sprite portrait) : base(name, birthYear, deathYear, country, portrait) {
+        public float[] attackModifiers;
+        public ArmyInfo army;
+
+        public General(string firstName, string lastName, int birthYear, int deathYear, CountryInfo country, Sprite portrait) : base(firstName, lastName, birthYear, deathYear, country, portrait) {
         }
     }
 }

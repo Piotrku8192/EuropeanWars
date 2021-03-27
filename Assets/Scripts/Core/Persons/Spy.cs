@@ -10,7 +10,7 @@ namespace EuropeanWars.Core.Persons {
         public override string Speciality => LanguageDictionary.language["Spy"];
         public override string MoreInfo => LanguageDictionary.language["MonthlySpyNetworkIncrease"] + ": " + MonthlySpyNetworkChange;
 
-        public Spy(string name, int birthYear, int deathYear, CountryInfo country, int monthlySpyNetworkIncrease, Sprite portrait) : base(name, birthYear, deathYear, country, portrait) {
+        public Spy(string firstName, string lastName, int birthYear, int deathYear, CountryInfo country, Sprite portrait, int monthlySpyNetworkIncrease) : base(firstName, lastName, birthYear, deathYear, country, portrait) {
             MonthlySpyNetworkChange = monthlySpyNetworkIncrease;
         }
 

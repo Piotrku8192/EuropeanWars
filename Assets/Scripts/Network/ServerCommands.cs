@@ -450,6 +450,17 @@ namespace EuropeanWars.Network {
             msg.Write(selectAsMovingArmy);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(2054)]
+        public static void SetGeneral(NetIncomingMessage message) {
+            int armyId = message.ReadInt32();
+            int generalId = message.ReadInt32();
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2054);
+            msg.Write(armyId);
+            msg.Write(generalId);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
     }
 }

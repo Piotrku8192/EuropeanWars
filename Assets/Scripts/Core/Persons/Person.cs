@@ -6,7 +6,8 @@ using UnityEngine;
 namespace EuropeanWars.Core.Persons {
     public class Person {
         public readonly int id;
-        public readonly string name;
+        public readonly string firstName;
+        public readonly string lastName;
         public readonly int birthYear;
         public readonly int deathYear;
 
@@ -17,11 +18,12 @@ namespace EuropeanWars.Core.Persons {
         public virtual string Speciality => "-";
         public virtual string MoreInfo => "-";
 
-        public Person(string name, int birthYear, int deathYear, CountryInfo country, Sprite portrait) { //TODO: In the future refactorize it to be able to load it from gameData
+        public Person(string firstName, string lastName, int birthYear, int deathYear, CountryInfo country, Sprite portrait) { //TODO: In the future refactorize it to be able to load it from gameData
             id = GameInfo.persons.Count;
             GameInfo.persons.Add(id, this);
 
-            this.name = name;
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.birthYear = birthYear;
             this.deathYear = deathYear;
             this.country = country;

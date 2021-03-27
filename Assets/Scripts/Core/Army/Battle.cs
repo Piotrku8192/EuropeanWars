@@ -22,11 +22,11 @@ namespace EuropeanWars.Core.Army {
             this.province = province;
             float[] attackersModifier = new float[GameStatistics.battleAttackerArmyAttackModifier.Length];
             for (int i = 0; i < attackersModifier.Length; i++) {
-                attackersModifier[i] = GameStatistics.battleAttackerArmyAttackModifier[i] + attacker.Armies[0].Country.armyAttackModifier;
+                attackersModifier[i] = (float)(GameStatistics.battleAttackerArmyAttackModifier[i] + attacker.Armies[0].Country.armyAttackModifier + attacker.Armies[0].General?.attackModifiers[i]);
             }
             float[] defendersModifier = new float[GameStatistics.battleDefenderArmyAttackModifier.Length];
             for (int i = 0; i < defendersModifier.Length; i++) {
-                defendersModifier[i] = GameStatistics.battleDefenderArmyAttackModifier[i] + defender.Armies[0].Country.armyAttackModifier;
+                defendersModifier[i] = (float)(GameStatistics.battleDefenderArmyAttackModifier[i] + defender.Armies[0].Country.armyAttackModifier + defender.Armies[0].General?.attackModifiers[i]);
             }
             attackCounter = new ArmyAttackCounter(attacker.GetUnits(), defender.GetUnits(), attackersModifier,
                 defendersModifier, () => ended = true, () => ended = true);

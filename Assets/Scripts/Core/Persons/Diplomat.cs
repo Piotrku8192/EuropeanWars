@@ -13,7 +13,7 @@ namespace EuropeanWars.Core.Persons {
         public override string Speciality => LanguageDictionary.language["Diplomat"];
         public override string MoreInfo => LanguageDictionary.language["ImproveRelationsModifier"] + ": " + ImproveRelationsModifier;
 
-        public Diplomat(string name, int birthYear, int deathYear, CountryInfo country, float improveRelationsModifier, Sprite portrait) : base(name, birthYear, deathYear, country, portrait) {
+        public Diplomat(string firstName, string lastName, int birthYear, int deathYear, CountryInfo country, Sprite portrait, float improveRelationsModifier) : base(firstName, lastName, birthYear, deathYear, country, portrait) {
             ImproveRelationsModifier = improveRelationsModifier;
         }
 

@@ -146,10 +146,10 @@ namespace EuropeanWars.Core.Country {
             }
 
             //TODO: Remove it
-            diplomats.Add(new Diplomat("Diplomat1", 1609, 1700, this, 0.4f, GameInfo.gfx["Person-1"]));
-            diplomats.Add(new Diplomat("Diplomat2", 1609, 1700, this, 0.4f, GameInfo.gfx["Person-2"]));
-            spies.Add(new Spy("Spy1", 1609, 1700, this, 2, GameInfo.gfx["Person-3"]));
-            spies.Add(new Spy("Spy2", 1609, 1700, this, 2, GameInfo.gfx["Person-4"]));
+            diplomats.Add(new Diplomat("Diplomat1", "S", 1609, 1700, this, GameInfo.gfx["Person-1"], 0.4f));
+            diplomats.Add(new Diplomat("Diplomat2", "S", 1609, 1700, this, GameInfo.gfx["Person-2"], 0.4f));
+            spies.Add(new Spy("Spy1", "S", 1609, 1700, this, GameInfo.gfx["Person-3"], 2));
+            spies.Add(new Spy("Spy2", "S", 1609, 1700, this, GameInfo.gfx["Person-4"], 2));
         }
         public void UpdateLanguage() {
             Name = LanguageDictionary.language["CountryName-" + id.ToString()];

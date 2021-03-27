@@ -3,6 +3,7 @@ using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
 using EuropeanWars.Core.Pathfinding;
+using EuropeanWars.Core.Persons;
 using EuropeanWars.Core.Province;
 using EuropeanWars.Core.Time;
 using EuropeanWars.Network;
@@ -37,6 +38,8 @@ namespace EuropeanWars.Core.Army {
         public ProvinceInfo Province { get; private set; }
         public ArmyObject ArmyObject { get; private set; }
         public bool BlackStatus { get; private set; }
+
+        public General General { get; private set; }
 
         public Queue<ProvinceInfo> route = new Queue<ProvinceInfo>();
 
@@ -422,6 +425,23 @@ namespace EuropeanWars.Core.Army {
             if (a.Count() > 0) {
                 new Battle(new BattleArmyGroup(new ArmyInfo[1] { this }), new BattleArmyGroup(a.ToArray()), Province);
             }
+        }
+
+        public void SetGeneralRequest(General general) {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2054);
+            msg.Write(id);
+            msg.Write(general.id);
+
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void SetGeneral(General general) {
+            if (General != null && General != general) {
+                General.army = null;
+            }
+            General = general;
+            General.army = this;
         }
     }
 }
