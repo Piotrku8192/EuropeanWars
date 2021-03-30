@@ -25,6 +25,7 @@ namespace EuropeanWars.Core.Province {
         public INode Node { get; private set; }
 
         public bool isLand;
+        public TerrainType terrain;
 
         public float x, y;
         public MapProvince mapProvince;
@@ -128,6 +129,14 @@ namespace EuropeanWars.Core.Province {
                 tradeIncome = 0;
             }
 
+            //Initialize terrain TODO: replace this with something else
+            if (isLand) {
+                terrain = neighbours.Where(t => !t.isLand).Any() ? TerrainType.Coastal : TerrainType.Land;
+            }
+            else {
+                terrain = TerrainType.Sea;
+            }
+
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onMonthElapsed += OnMonthElapsed;
         }
@@ -203,7 +212,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void BuildBuilding(BuildingInfo building, int slot) {
-            if ((buildings.Contains(building) && building.id != 0) 
+            if (terrain != building.terrain || (buildings.Contains(building) && building.id != 0) 
                 || Country != NationalCountry) {
                 return;
             }

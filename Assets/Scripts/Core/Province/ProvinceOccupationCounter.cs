@@ -95,7 +95,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void FindNewOccupant() {
-            SetArmy(province.armies.FirstOrDefault(t => province.Country.IsInWarAgainstCountry(t.Country) && !t.route.Any(x => x != province)));
+            SetArmy(province.armies.FirstOrDefault(t => !t.isNavy && province.Country.IsInWarAgainstCountry(t.Country) && !t.route.Any(x => x != province)));
         }
 
         private void OnAttackersEmpty() {

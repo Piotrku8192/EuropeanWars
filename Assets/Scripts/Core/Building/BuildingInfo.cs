@@ -14,6 +14,8 @@ namespace EuropeanWars.Core.Building {
         public int incomeModifier;
         public int defenceModifier;
 
+        public TerrainType terrain;
+
         private BuildingData data;
 
         public BuildingInfo(BuildingData data) {
@@ -22,6 +24,7 @@ namespace EuropeanWars.Core.Building {
             cost = data.cost;
             incomeModifier = data.incomeModifier;
             defenceModifier = data.defenceModifier;
+            terrain = (TerrainType)data.terrain;
         }
 
         public void Initialize() {

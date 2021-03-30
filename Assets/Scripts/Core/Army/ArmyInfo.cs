@@ -1,4 +1,4 @@
-using EuropeanWars.Audio;
+﻿using EuropeanWars.Audio;
 using EuropeanWars.Core.Country;
 using EuropeanWars.Core.Data;
 using EuropeanWars.Core.Diplomacy;
@@ -19,6 +19,8 @@ namespace EuropeanWars.Core.Army {
         private static int nextId;
         public readonly int id;
 
+        public readonly bool isNavy;
+
         public Dictionary<UnitInfo, int> units = new Dictionary<UnitInfo, int>();
         public Dictionary<UnitInfo, int> maxUnits = new Dictionary<UnitInfo, int>();
 
@@ -28,6 +30,9 @@ namespace EuropeanWars.Core.Army {
         public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1) * Country.armySpeedModifier;
         public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
         public int FoodPerMonth => units.Sum(t => t.Key.foodPerMonth * t.Value / t.Key.recruitSize);
+
+        public int NavyCapacity => units.Sum(t => t.Key.type == UnitType.Navy ? t.Key.recruitSize : 0);
+
         public bool IsSelected { get; private set; }
 
         public bool isMoveLocked;
@@ -44,6 +49,7 @@ namespace EuropeanWars.Core.Army {
         public Queue<ProvinceInfo> route = new Queue<ProvinceInfo>();
 
         public ArmyInfo(ProvinceInfo province, CountryInfo country, UnitInfo unit, int count, int maxCount, bool selectAsMovingArmy = false) {
+            isNavy = unit.type == UnitType.Navy;
             units.Add(unit, count);
             maxUnits.Add(unit, maxCount);
             Country = country;
@@ -68,9 +74,10 @@ namespace EuropeanWars.Core.Army {
         }
 
         public ArmyInfo(UnitToRecruit unit) {
-            units.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
-            maxUnits.Add(unit.unitInfo, unit.count * unit.unitInfo.recruitSize);
-            Country = unit.country;
+            isNavy = unit.unitInfo.type == UnitType.Navy;
+            units.Add(unit.unitInfo, unit.count * (unit.unitInfo.type == UnitType.Navy ? 1 : unit.unitInfo.recruitSize));
+            maxUnits.Add(unit.unitInfo, unit.count * (unit.unitInfo.type == UnitType.Navy ? 1 : unit.unitInfo.recruitSize));
+            Country = unit.country; 
             Province = unit.province;
             Country.armies.Add(this);
             Province.armies.Add(this);
@@ -85,6 +92,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         public ArmyInfo(ArmyData army) {
+            isNavy = army.isNavy;
             for (int i = 0; i < army.unitsT.Length; i++) {
                 units.Add(GameInfo.units[army.unitsT[i]], army.unitsS[i]);
             }
@@ -129,7 +137,7 @@ namespace EuropeanWars.Core.Army {
                     OnArmyMove(ra[0]);
                     if (ra.Length > 1) {
                         daysToMove = Mathf.CeilToInt(Vector2.Distance(
-                            new Vector2(ra[0].x, ra[0].y), 
+                            new Vector2(ra[0].x, ra[0].y),
                             new Vector2(ra[1].x, ra[1].y)) / (AverageSpeed == 0 ? 1 : AverageSpeed));
                     }
                 }
@@ -267,6 +275,11 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void MoveUnitToOtherArmy(UnitInfo unit, ArmyInfo targetArmy, int count) {
+            if (targetArmy.isNavy) {
+                int usedCapacity = targetArmy.units.Sum(t => t.Key.type != UnitType.Navy ? t.Value : 0);
+                count = Mathf.Clamp(count, 0, targetArmy.NavyCapacity - usedCapacity);
+            }
+
             if (Province == targetArmy.Province && targetArmy != null) {
                 int c = units[unit];
                 int mc = maxUnits[unit];
@@ -286,6 +299,11 @@ namespace EuropeanWars.Core.Army {
         }
 
         public void AddUnit(UnitInfo unit, int count, int maxCount) {
+            if (isNavy) {
+                int usedCapacity = units.Sum(t => t.Key.type != UnitType.Navy ? t.Value : 0);
+                count = Mathf.Clamp(count, 0, NavyCapacity - usedCapacity);
+            }
+
             if (!units.ContainsKey(unit)) {
                 maxUnits.Add(unit, maxCount);
                 units.Add(unit, count);
@@ -389,7 +407,7 @@ namespace EuropeanWars.Core.Army {
                 return;
             }
 
-            LandArmyPathfinder pathfinder = new LandArmyPathfinder(this);
+            ArmyPathfinder pathfinder = new ArmyPathfinder(this);
             ProvinceInfo[] r = pathfinder.FindPath(target);
             if (r != null && r.Length > 1) {
                 route.Clear();

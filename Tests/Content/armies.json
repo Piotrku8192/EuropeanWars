@@ -1,5 +1,6 @@
 [
   {
+    "isNavy": false,
     "province": "F1F914",
     "country": 1,
     "unitsT": [ 1, 2, 6, 4, 8, 69 ],
@@ -11,6 +12,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "A42280",
     "country": 1,
     "unitsT": [ 1, 11, 12, 69, 70 ],
@@ -22,6 +24,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "264080",
     "country": 1,
     "unitsT": [ 1, 8, 69 ],
@@ -33,6 +36,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "954E40",
     "country": 3,
     "unitsT": [ 19, 21, 26, 69, 70, 71 ],
@@ -44,6 +48,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "2E2C40",
     "country": 3,
     "unitsT": [ 19, 21, 26, 69, 70, 71 ],
@@ -55,6 +60,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "AA6E00",
     "country": 2,
     "unitsT": [ 69, 70, 14, 31, 32, 33, 30 ],
@@ -66,6 +72,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "2A74C0",
     "country": 2,
     "unitsT": [ 71, 14, 31, 33, 30 ],
@@ -77,6 +84,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "132CFF",
     "country": 16,
     "unitsT": [ 15, 12, 11, 13, 16, 69, 70, 71 ],
@@ -88,6 +96,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "108CC0",
     "country": 5,
     "unitsT": [ 63 ],
@@ -99,6 +108,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "056CC0",
     "country": 4,
     "unitsT": [ 4, 12, 11, 70, 69 ],
@@ -110,6 +120,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "802240",
     "country": 4,
     "unitsT": [ 4, 12, 11, 16, 70, 69, 71 ],
@@ -121,6 +132,7 @@
     "isMovingLocked": false
   },
   {
+    "isNavy": false,
     "province": "002C40",
     "country": 8,
     "unitsT": [ 51, 47, 48, 49, 50, 71 ],
