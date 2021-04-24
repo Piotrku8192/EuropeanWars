@@ -174,5 +174,14 @@
     "minTaxation": 3,
     "incomeModifier": 100,
     "defenceModifier": 0
+  },
+  {
+    "id": 22,
+    "cost": 50,
+    "terrain": 0,
+    "minTaxation": 1,
+    "incomeModifier": 5,
+    "foodIncomeModifier": 50,
+    "defenceModifier": 0
   }
 ]

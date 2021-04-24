@@ -29,9 +29,9 @@ namespace EuropeanWars.Core.Data {
         private Thread loadingThread;
 
         public void Start() {
-            path = Application.dataPath + "\\Content";
+            path = Application.dataPath + "/Content";
 #if UNITY_EDITOR
-            path = Directory.GetCurrentDirectory() + "\\Tests\\Content";
+            path = Directory.GetCurrentDirectory() + "/Tests/Content";
             convertFromJsonFiles = true;
 #endif
             loadingThread = new Thread(LoadData);
@@ -70,7 +70,7 @@ namespace EuropeanWars.Core.Data {
             if (convertFromJsonFiles) {
                 ConvertFromJsonFiles();
             }
-            gameData = DataConverter.FromString<GameData>(File.ReadAllText(path + "\\gameData"));
+            gameData = DataConverter.FromString<GameData>(File.ReadAllText(path + "/gameData"));
             gameData.FillGameInfo();
 
             loaded = true;
@@ -78,32 +78,32 @@ namespace EuropeanWars.Core.Data {
         }
 
         private void ConvertFromJsonFiles() {
-            foreach (var item in Directory.GetFiles(path + "\\gfx")) {
-                string name = item.Split('\\').Last().Split('.').First();
+            foreach (var item in Directory.GetFiles(path + "/gfx")) {
+                string name = item.Split('/').Last().Split('.').First();
                 byte[] bytes = File.ReadAllBytes(item);
                 gameData.gfx.Add(name, bytes);
             }
-            gameData.languages = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(File.ReadAllText(path + "\\languages.json"));
-            gameData.buildings = JsonConvert.DeserializeObject<BuildingData[]>(File.ReadAllText(path + "\\buildings.json"));
-            gameData.religions = JsonConvert.DeserializeObject<ReligionData[]>(File.ReadAllText(path + "\\religions.json"));
-            gameData.cultures = JsonConvert.DeserializeObject<CultureData[]>(File.ReadAllText(path + "\\cultures.json"));
-            gameData.countries = JsonConvert.DeserializeObject<CountryData[]>(File.ReadAllText(path + "\\countries.json"));
-            gameData.provinces = JsonConvert.DeserializeObject<ProvinceData[]>(File.ReadAllText(path + "\\provinces.json"));
-            gameData.units = JsonConvert.DeserializeObject<UnitData[]>(File.ReadAllText(path + "\\units.json"));
-            gameData.armies = JsonConvert.DeserializeObject<ArmyData[]>(File.ReadAllText(path + "\\armies.json"));
-            gameData.map = File.ReadAllText(path + "\\map");
-            File.WriteAllText(path + "\\gameData", DataConverter.ToString(gameData));
+            gameData.languages = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(File.ReadAllText(path + "/languages.json"));
+            gameData.buildings = JsonConvert.DeserializeObject<BuildingData[]>(File.ReadAllText(path + "/buildings.json"));
+            gameData.religions = JsonConvert.DeserializeObject<ReligionData[]>(File.ReadAllText(path + "/religions.json"));
+            gameData.cultures = JsonConvert.DeserializeObject<CultureData[]>(File.ReadAllText(path + "/cultures.json"));
+            gameData.countries = JsonConvert.DeserializeObject<CountryData[]>(File.ReadAllText(path + "/countries.json"));
+            gameData.provinces = JsonConvert.DeserializeObject<ProvinceData[]>(File.ReadAllText(path + "/provinces.json"));
+            gameData.units = JsonConvert.DeserializeObject<UnitData[]>(File.ReadAllText(path + "/units.json"));
+            gameData.armies = JsonConvert.DeserializeObject<ArmyData[]>(File.ReadAllText(path + "/armies.json"));
+            gameData.map = File.ReadAllText(path + "/map");
+            File.WriteAllText(path + "/gameData", DataConverter.ToString(gameData));
         }
 
         private void ConvertToJsonFiles() {
-            File.WriteAllText(path + "\\languages.json", JsonConvert.SerializeObject(LanguageDictionary.languages));
-            File.WriteAllText(path + "\\buildings.json", JsonConvert.SerializeObject(gameData.buildings));
-            File.WriteAllText(path + "\\religions.json", JsonConvert.SerializeObject(gameData.religions));
-            File.WriteAllText(path + "\\cultures.json", JsonConvert.SerializeObject(gameData.cultures));
-            File.WriteAllText(path + "\\countries.json", JsonConvert.SerializeObject(gameData.countries));
-            File.WriteAllText(path + "\\provinces.json", JsonConvert.SerializeObject(gameData.provinces));
-            File.WriteAllText(path + "\\units.json", JsonConvert.SerializeObject(gameData.units));
-            File.WriteAllText(path + "\\armies.json", JsonConvert.SerializeObject(gameData.armies));
+            File.WriteAllText(path + "/languages.json", JsonConvert.SerializeObject(LanguageDictionary.languages));
+            File.WriteAllText(path + "/buildings.json", JsonConvert.SerializeObject(gameData.buildings));
+            File.WriteAllText(path + "/religions.json", JsonConvert.SerializeObject(gameData.religions));
+            File.WriteAllText(path + "/cultures.json", JsonConvert.SerializeObject(gameData.cultures));
+            File.WriteAllText(path + "/countries.json", JsonConvert.SerializeObject(gameData.countries));
+            File.WriteAllText(path + "/provinces.json", JsonConvert.SerializeObject(gameData.provinces));
+            File.WriteAllText(path + "/units.json", JsonConvert.SerializeObject(gameData.units));
+            File.WriteAllText(path + "/armies.json", JsonConvert.SerializeObject(gameData.armies));
         }
     }
 }

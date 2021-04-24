@@ -12,6 +12,7 @@ namespace EuropeanWars.Core.Building {
         public int cost;
 
         public int incomeModifier;
+        public int foodModifier;
         public int defenceModifier;
 
         public TerrainType terrain;
@@ -24,6 +25,7 @@ namespace EuropeanWars.Core.Building {
             cost = data.cost;
             incomeModifier = data.incomeModifier;
             defenceModifier = data.defenceModifier;
+            foodModifier = data.foodModifier;
             terrain = (TerrainType)data.terrain;
         }
 

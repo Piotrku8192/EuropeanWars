@@ -187,13 +187,15 @@ namespace EuropeanWars.Core.Country {
             buildingsIncome = 0;
             tradeIncome = 0;
             armyMaintenance = 0;
+            foodIncrease = 0;
             foreach (var item in provinces) {
                 taxationIncome += item.taxation;
                 buildingsIncome += item.buildingsIncome;
                 tradeIncome += item.tradeIncome;
+                foodIncrease += item.buildings.Where(t => t != null).Sum(t => t.foodModifier);
             }
 
-            foodIncrease = Mathf.FloorToInt(taxationIncome * foodIncreaseModifier);
+            foodIncrease += Mathf.FloorToInt(taxationIncome * foodIncreaseModifier);
             food += foodIncrease;
 
             taxationIncome = Mathf.FloorToInt(taxationIncome * taxationIncomeModifier);

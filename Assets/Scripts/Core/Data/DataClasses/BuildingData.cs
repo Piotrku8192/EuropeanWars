@@ -8,6 +8,7 @@ namespace EuropeanWars.Core.Data {
         public int terrain;
         public int minTaxation;
         public int incomeModifier;
+        public int foodModifier;
         public int defenceModifier;
     }
 }

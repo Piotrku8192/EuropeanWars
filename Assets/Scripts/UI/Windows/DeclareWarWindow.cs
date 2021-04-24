@@ -1,8 +1,8 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core;
+﻿using EuropeanWars.Core;
 using EuropeanWars.Core.War;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace EuropeanWars.UI.Windows {
     public class DeclareWarWindow : MonoBehaviour {

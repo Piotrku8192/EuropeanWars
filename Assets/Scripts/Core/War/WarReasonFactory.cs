@@ -1,5 +1,5 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core.Country;
+﻿using EuropeanWars.Core.Country;
+using System.Collections.Generic;
 
 namespace EuropeanWars.Core.War {
     public class WarReasonFactory {

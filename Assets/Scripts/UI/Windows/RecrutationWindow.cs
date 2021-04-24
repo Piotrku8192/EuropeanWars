@@ -1,11 +1,11 @@
-﻿using Boo.Lang;
-using EuropeanWars.Core;
+﻿using EuropeanWars.Core;
 using EuropeanWars.Core.Army;
 using EuropeanWars.Core.Language;
 using EuropeanWars.GameMap;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace EuropeanWars.UI.Windows {
     public class RecrutationWindow : MonoBehaviour {
