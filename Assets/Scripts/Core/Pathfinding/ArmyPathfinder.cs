@@ -82,8 +82,8 @@ namespace EuropeanWars.Core.Pathfinding {
         }
 
         public bool IsMovable(ProvinceInfo province) {
-            return (province.isLand ^ army.isNavy)
-                && province.isInteractive
+            return ((province.isLand ^ army.isNavy) || province.buildings.Contains(GameInfo.buildings[3]/*harbor*/))
+                && (province.isInteractive || !province.isLand)
                 && (army.isNavy
                 || army.BlackStatus
                 || province.Country == country

@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -37.23, y: 1.5}
-  m_SizeDelta: {x: -80.45, y: -3}
+  m_AnchoredPosition: {x: -40.069996, y: 1.5}
+  m_SizeDelta: {x: -86.13, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1936215966492140102
 CanvasRenderer:
@@ -60,6 +60,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -143,6 +145,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -221,8 +225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 82.6, y: 1.5}
-  m_SizeDelta: {x: -169.64, y: -3}
+  m_AnchoredPosition: {x: 79.757, y: 1.5}
+  m_SizeDelta: {x: -163.96, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1936215966620527036
 CanvasRenderer:
@@ -247,6 +251,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.60154617, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -298,7 +304,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 44.981003, y: 1.5}
+  m_AnchoredPosition: {x: 39.3, y: 1.5}
   m_SizeDelta: {x: -165.19, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1936215966976298294
@@ -324,6 +330,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.74263537, b: 0.11792451, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -403,6 +411,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -491,6 +501,8 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.10005146, g: 0.38679248, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

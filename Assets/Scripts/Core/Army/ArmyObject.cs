@@ -2,6 +2,7 @@
 using EuropeanWars.Core.Province;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace EuropeanWars.Core.Army {
         public Image crest;
         public Text size;
         public Text artillerySize;
+        public Image artillerySizeBackground;
         public Image sizeBackground;
         public GameObject blackStatusImage;
         public GameObject occupationProgress;
@@ -29,23 +31,34 @@ namespace EuropeanWars.Core.Army {
             this.army = army;
             crest.sprite = army.Country.Crest;
             transform.position = new Vector3(army.Province.x, army.Province.y, 0);
+            if (army.isNavy) {
+                artillerySizeBackground.color = Color.cyan;
+            }
         }
 
         public void Update() {
             if (GameInfo.gameStarted) {
-                size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
-                artillerySize.text = army.Artilleries.ToString();
-                UpdateScale();
-                UpdateColor();
-                blackStatusImage.SetActive(army.BlackStatus);
-
-                if (army.Province.OccupationCounter?.Army == army) {
-                    occupationProgress.SetActive(true);
-                    occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
-                    occupationProgressText.text = Mathf.RoundToInt(army.Province.OccupationCounter.Progress) + "%";
+                if (army.isNavy) {
+                    size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
+                    artillerySize.text = army.units.Where(t => t.Key.type == UnitType.Navy).Sum(t => t.Value).ToString();
+                    UpdateScale();
+                    UpdateColor();
                 }
                 else {
-                    occupationProgress.SetActive(false);
+                    size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";
+                    artillerySize.text = army.Artilleries.ToString();
+                    UpdateScale();
+                    UpdateColor();
+                    blackStatusImage.SetActive(army.BlackStatus);
+
+                    if (army.Province.OccupationCounter?.Army == army) {
+                        occupationProgress.SetActive(true);
+                        occupationProgressBar.fillAmount = army.Province.OccupationCounter.Progress / 100;
+                        occupationProgressText.text = Mathf.RoundToInt(army.Province.OccupationCounter.Progress) + "%";
+                    }
+                    else {
+                        occupationProgress.SetActive(false);
+                    }
                 }
             }
         }

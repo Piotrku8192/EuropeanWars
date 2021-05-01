@@ -199,7 +199,7 @@ namespace EuropeanWars.Core.Army {
         }
 
         private void UpdateBlackStatus() {
-            BlackStatus = Country != Province.Country && !Country.relations[Province.Country].relations[(int)DiplomaticRelation.MilitaryAccess]
+            BlackStatus = !isNavy && Country != Province.Country && !Country.relations[Province.Country].relations[(int)DiplomaticRelation.MilitaryAccess]
                 && !Country.IsInWarAgainstCountry(Province.Country);
             if (route.Count < 2) {
                 isMoveLocked = false;

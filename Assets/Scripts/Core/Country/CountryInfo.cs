@@ -110,6 +110,7 @@ namespace EuropeanWars.Core.Country {
             armyMaintenanceModifier = 1;
             armyRercruitTimeModifier = 1;
             foodIncreaseModifier = 1;
+            armySpeedModifier = 1;
         }
 
         public void Initialize() {

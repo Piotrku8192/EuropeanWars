@@ -131,7 +131,7 @@ namespace EuropeanWars.Core.Province {
 
             //Initialize terrain TODO: replace this with something else
             if (isLand) {
-                terrain = neighbours.Where(t => !t.isLand).Any() ? TerrainType.Coastal : TerrainType.Land;
+                terrain = neighbours.Where(t => !t.isLand).Any() ? TerrainType.Coastal : TerrainType.All;
             }
             else {
                 terrain = TerrainType.Sea;
@@ -212,7 +212,7 @@ namespace EuropeanWars.Core.Province {
         }
 
         public void BuildBuilding(BuildingInfo building, int slot) {
-            if (terrain != building.terrain || (buildings.Contains(building) && building.id != 0) 
+            if ((terrain != building.terrain && building.terrain != TerrainType.All) || (buildings.Contains(building) && building.id != 0) 
                 || Country != NationalCountry) {
                 return;
             }
