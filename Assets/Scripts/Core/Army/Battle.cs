@@ -69,7 +69,7 @@ namespace EuropeanWars.Core.Army {
                 foreach (var item in defenders.Armies) {
                     ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
                     if (ps.Length == 0) {
-                        ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                        ps = new ProvinceInfo[1] { province.neighbours.First(t => item.isNavy ? t.isLand && t.isInteractive : !t.isLand) };
                     }
                     item.isMoveLocked = false;
                     item.GenerateRoute(ps.OrderBy(t => t.taxation).First());
@@ -81,7 +81,7 @@ namespace EuropeanWars.Core.Army {
                 foreach (var item in attackers.Armies) {
                     ProvinceInfo[] ps = item.Country.provinces.Where(t => t != province).ToArray();
                     if (ps.Length == 0) {
-                        ps = new ProvinceInfo[1] { province.neighbours.First(t => t.isLand && t.isInteractive) };
+                        ps = new ProvinceInfo[1] { province.neighbours.First(t => item.isNavy ? t.isLand && t.isInteractive : !t.isLand) };
                     }
                     item.isMoveLocked = false;
                     item.GenerateRoute(ps.OrderBy(t => t.taxation).First());

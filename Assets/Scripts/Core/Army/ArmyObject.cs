@@ -43,6 +43,7 @@ namespace EuropeanWars.Core.Army {
                     artillerySize.text = army.units.Where(t => t.Key.type == UnitType.Navy).Sum(t => t.Value).ToString();
                     UpdateScale();
                     UpdateColor();
+                    blackStatusImage.SetActive(army.BlackStatus);
                 }
                 else {
                     size.text = $"{Math.Round(army.Size * 0.001f, 1)}k";

@@ -6,8 +6,8 @@
         public static int maxArtilleryOccupationBonus = 50;
         public static float artilleryOccupationBonusModifier = 0.03f;
         public static float battleAttacksCountModifier = 0.01f;
-        public static float[] battleAttackerArmyAttackModifier = new float[4] { 1.0f, 1.0f, 1.0f, 1.0f };
-        public static float[] battleDefenderArmyAttackModifier = new float[4] { 1.0f, 1.0f, 1.0f, 1.0f };
+        public static float[] battleAttackerArmyAttackModifier = new float[5] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+        public static float[] battleDefenderArmyAttackModifier = new float[5] { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
         public static float battleWarScoreChangeModifier = 0.003f;
         public static int provinceIncomeArmyReinforcementModifier = 10;
         public static float armySpeedModifier = 0.8f;
