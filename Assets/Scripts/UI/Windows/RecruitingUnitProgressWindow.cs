@@ -18,7 +18,7 @@ namespace EuropeanWars.UI {
 
         public void Update() {
             if (unit != null) {
-                size.text = (unit.count * unit.unitInfo.recruitSize).ToString();
+                size.text = (unit.count * (unit.unitInfo.type == UnitType.Navy ? 1 : unit.unitInfo.recruitSize)).ToString();
                 days.text = $"{unit.unitInfo.recruitDays - unit.days}/{unit.unitInfo.recruitDays}";
                 progressImage.fillAmount = (unit.unitInfo.recruitDays - unit.days) / (float)unit.unitInfo.recruitDays;
                 if (unit.days <= 0) {

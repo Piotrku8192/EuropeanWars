@@ -49,11 +49,12 @@ namespace EuropeanWars.UI.Windows {
 
         public void Update() {
             if (selectedUnit != null) {
-                recruitSizeText.text = (recruitSizeSlider.value * selectedUnit.recruitSize).ToString();
+                int recruitSize = selectedUnit.type == UnitType.Navy ? 1 : selectedUnit.recruitSize;
+                recruitSizeText.text = (recruitSizeSlider.value * recruitSize).ToString();
                 recruitCostText.text = (recruitSizeSlider.value * selectedUnit.recruitCost).ToString();
                 recruitSizeSlider.minValue = 0;
                 recruitSizeSlider.maxValue = Mathf.Clamp(Mathf.Min(GameInfo.PlayerCountry.gold / selectedUnit.recruitCost,
-                    GameInfo.PlayerCountry.manpower / selectedUnit.recruitSize), 0, int.MaxValue);
+                    GameInfo.PlayerCountry.manpower / recruitSize), 0, int.MaxValue);
             }
         }
 

@@ -153,12 +153,12 @@ namespace EuropeanWars.Core.Country {
             diplomats.Add(new Diplomat("Diplomat2", "", 1609, 1700, this, GameInfo.gfx["Person-2"], 0.4f));
             spies.Add(new Spy("Spy1", "", 1609, 1700, this, GameInfo.gfx["Person-3"], 2));
             spies.Add(new Spy("Spy2", "", 1609, 1700, this, GameInfo.gfx["Person-4"], 2));
-            generals.Add(new General("General1", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
-            generals.Add(new General("General2", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
-            generals.Add(new General("General3", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
-            generals.Add(new General("General4", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
-            generals.Add(new General("General5", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
-            generals.Add(new General("General6", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[4] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General1", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General2", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General3", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General4", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General5", "", 1609, 1800, this, GameInfo.gfx["Person-3"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
+            generals.Add(new General("General6", "", 1609, 1800, this, GameInfo.gfx["Person-4"], new float[5] { GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f, GameInfo.random.Next(-20, 100) / 100.0f }));
         }
         public void UpdateLanguage() {
             Name = LanguageDictionary.language["CountryName-" + id.ToString()];
@@ -374,9 +374,10 @@ namespace EuropeanWars.Core.Country {
 
         #region Recrutation
         public void EnqueueUnitToRecruit(UnitInfo info, ProvinceInfo province, int count) {
+            int recruitSize = info.type == UnitType.Navy ? 1 : info.recruitSize;
             if (count > 0
                 && province.Country == this
-                && manpower >= info.recruitSize * count
+                && manpower >= recruitSize * count
                 && gold >= info.recruitCost * count
                 && province.buildings.Contains(info.recruitBuilding)
                 && claimedProvinces.Contains(province)) {
@@ -398,7 +399,7 @@ namespace EuropeanWars.Core.Country {
                     }
                 }
 
-                manpower -= info.recruitSize * count;
+                manpower -= recruitSize * count;
                 gold -= info.recruitCost * count;
             }
         }
