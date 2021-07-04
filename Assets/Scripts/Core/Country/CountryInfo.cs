@@ -67,6 +67,7 @@ namespace EuropeanWars.Core.Country {
         public float armySpeedModifier;
         public List<UnitToRecruit> toRecruit = new List<UnitToRecruit>();
         public List<ArmyInfo> armies = new List<ArmyInfo>();
+        public List<Mercenaries> mercenaries = new List<Mercenaries>();
 
         //Diplomacy
         public int prestige;

@@ -28,7 +28,8 @@ namespace EuropeanWars.Core.Army {
         public int MaxSize => maxUnits.Values.Sum();
         public int Artilleries => GetArtilleries();
         public float AverageSpeed => (units.Sum(t => t.Key.speed * t.Value) * GameStatistics.armySpeedModifier) / (Size > 0 ? Size : 1) * Country.armySpeedModifier;
-        public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value));
+        public float maintenanceModifier = 1.0f;
+        public int Maintenance => Mathf.RoundToInt(units.Sum(t => t.Key.maintenance * t.Value) * maintenanceModifier);
         public int FoodPerMonth => units.Sum(t => t.Key.foodPerMonth * t.Value / t.Key.recruitSize);
 
         public int NavyCapacity => units.Sum(t => t.Key.type == UnitType.Navy ? t.Key.recruitSize : 0);
@@ -42,18 +43,20 @@ namespace EuropeanWars.Core.Army {
         public CountryInfo Country { get; private set; }
         public ProvinceInfo Province { get; private set; }
         public ArmyObject ArmyObject { get; private set; }
+        public Mercenaries Mercenaries {get; private set; }
         public bool BlackStatus { get; private set; }
 
         public General General { get; private set; }
 
         public Queue<ProvinceInfo> route = new Queue<ProvinceInfo>();
 
-        public ArmyInfo(ProvinceInfo province, CountryInfo country, UnitInfo unit, int count, int maxCount, bool selectAsMovingArmy = false) {
+        public ArmyInfo(ProvinceInfo province, CountryInfo country, UnitInfo unit, int count, int maxCount, bool selectAsMovingArmy = false, Mercenaries mercenaries = null) {
             isNavy = unit.type == UnitType.Navy;
             units.Add(unit, count);
             maxUnits.Add(unit, maxCount);
             Country = country;
             Province = province;
+            Mercenaries = mercenaries;
             Country.armies.Add(this);
             Province.armies.Add(this);
             id = nextId;
@@ -235,6 +238,7 @@ namespace EuropeanWars.Core.Army {
             GameInfo.armies.Remove(id);
             Country.armies.Remove(this);
             Province.armies.Remove(this);
+            Country.mercenaries.Remove(Mercenaries);
             if (General != null) {
                 General.army = null;
             }
