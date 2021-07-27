@@ -29,7 +29,7 @@ namespace EuropeanWars.Core.Army {
             killedAttackers = 0;
 
             int attackersAttack = Mathf.RoundToInt(attackers.Sum(t => t.Key.attack * t.Value
-            * attackersAttackModifier[(int)t.Key.type]) / attackers.Sum(t => t.Value) * GameStatistics.armyAverageAttackModifier);
+                    * attackersAttackModifier[(int)t.Key.type]) / attackers.Sum(t => t.Value) * GameStatistics.armyAverageAttackModifier);
             int defendersAttack = Mathf.RoundToInt(defenders.Sum(t => t.Key.attack * t.Value
             * defendersAttackModifier[(int)t.Key.type]) / defenders.Sum(t => t.Value) * GameStatistics.armyAverageAttackModifier);
 
