@@ -90,6 +90,7 @@ namespace EuropeanWars.Core.Data {
             gameData.countries = JsonConvert.DeserializeObject<CountryData[]>(File.ReadAllText(path + "/countries.json"));
             gameData.provinces = JsonConvert.DeserializeObject<ProvinceData[]>(File.ReadAllText(path + "/provinces.json"));
             gameData.units = JsonConvert.DeserializeObject<UnitData[]>(File.ReadAllText(path + "/units.json"));
+            gameData.mercenaries = JsonConvert.DeserializeObject<MercenariesData[]>(File.ReadAllText(path + "/mercenaries.json"));
             gameData.armies = JsonConvert.DeserializeObject<ArmyData[]>(File.ReadAllText(path + "/armies.json"));
             gameData.map = File.ReadAllText(path + "/map");
             File.WriteAllText(path + "/gameData", DataConverter.ToString(gameData));
@@ -103,6 +104,7 @@ namespace EuropeanWars.Core.Data {
             File.WriteAllText(path + "/countries.json", JsonConvert.SerializeObject(gameData.countries));
             File.WriteAllText(path + "/provinces.json", JsonConvert.SerializeObject(gameData.provinces));
             File.WriteAllText(path + "/units.json", JsonConvert.SerializeObject(gameData.units));
+            File.WriteAllText(path + "/mercenaries.json", JsonConvert.SerializeObject(gameData.mercenaries));
             File.WriteAllText(path + "/armies.json", JsonConvert.SerializeObject(gameData.armies));
         }
     }

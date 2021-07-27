@@ -422,6 +422,15 @@ namespace EuropeanWars.Network {
 
             GameInfo.armies[armyId].SetGeneral(generalId == -1 ? null : (General)GameInfo.persons[generalId]);
         }
+
+        [Command(2055)]
+        public static void RecruitMercenaries(NetIncomingMessage message) {
+            int mercenariesInfo = message.ReadInt32();
+            int country = message.ReadInt32();
+            int province = message.ReadInt32();
+
+            new Mercenaries(GameInfo.mercenaries[mercenariesInfo], GameInfo.countries[country], GameInfo.provinces[province]);
+        }
         #endregion
     }
 }

@@ -35,6 +35,7 @@ namespace EuropeanWars.Core {
         public static Dictionary<int, Person> persons = new Dictionary<int, Person>();
 
         public static Dictionary<int, ArmyInfo> armies = new Dictionary<int, ArmyInfo>();
+        public static Dictionary<int, MercenariesInfo> mercenaries = new Dictionary<int, MercenariesInfo>();
 
         public static Dictionary<CountryInfo, CountryAI> countryAIs = new Dictionary<CountryInfo, CountryAI>();
 
@@ -64,6 +65,9 @@ namespace EuropeanWars.Core {
             foreach (var item in units) {
                 item.Value.Initialize();
             }
+            foreach (var item in mercenaries) {
+                item.Value.Initialize();
+            }
 
             ChangeLanguage(0);
         }
@@ -87,6 +91,9 @@ namespace EuropeanWars.Core {
                 item.Value.UpdateLanguage();
             }
             foreach (var item in units) {
+                item.Value.UpdateLanguage();
+            }
+            foreach (var item in mercenaries) {
                 item.Value.UpdateLanguage();
             }
 

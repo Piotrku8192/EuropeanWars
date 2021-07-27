@@ -461,6 +461,20 @@ namespace EuropeanWars.Network {
             msg.Write(generalId);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+
+        [Command(2055)]
+        public static void RecruitMercenaries(NetIncomingMessage message) {
+            int mercenariesInfo = message.ReadInt32();
+            int country = message.ReadInt32();
+            int province = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2055);
+            msg.Write(mercenariesInfo);
+            msg.Write(country);
+            msg.Write(province);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
     }
 }

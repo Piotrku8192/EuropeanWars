@@ -19,6 +19,7 @@ namespace EuropeanWars.Core.Data {
         public CultureData[] cultures;
         public BuildingData[] buildings;
         public UnitData[] units;
+        public MercenariesData[] mercenaries;
         public ArmyData[] armies;
         public string map;
 
@@ -51,6 +52,10 @@ namespace EuropeanWars.Core.Data {
 
             foreach (var item in units) {
                 GameInfo.units.Add(item.id, new UnitInfo(item));
+            }
+
+            foreach (var item in mercenaries) {
+                GameInfo.mercenaries.Add(item.id, new MercenariesInfo(item));
             }
         }
     }

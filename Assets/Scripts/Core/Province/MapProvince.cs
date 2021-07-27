@@ -30,6 +30,10 @@ namespace EuropeanWars.Province {
                     RecruitRegularArmy();
                     return;
                 }
+                else if (MapPainter.mapMode == MapMode.MercenariesRecrutation) {
+                    RecruitMercenaries();
+                    return;
+                }
                 else if (MapPainter.mapMode == MapMode.Peace) {
                     foreach (var item in PeaceDealWindow.Singleton.senderElements) {
                         if (item.Key is ProvincePeaceDealElement p) {
@@ -177,6 +181,15 @@ namespace EuropeanWars.Province {
                 msg.Write(Mathf.RoundToInt(ArmyWindow.Singleton.recrutationWindow.recruitSizeSlider.value));
                 Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
             }
+        }
+
+        public void RecruitMercenaries() {
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2055);
+            msg.Write(ArmyWindow.Singleton.recrutationWindow.selectedMercenaries.id);
+            msg.Write(GameInfo.PlayerCountry.id);
+            msg.Write(provinceInfo.id);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }

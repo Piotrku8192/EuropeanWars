@@ -14,6 +14,7 @@ namespace EuropeanWars.UI.Windows {
         public UnitButton unitButtonPrefab;
 
         [Header("UnitInfo")]
+        public GameObject unitInfoWindow;
         public UnitInfo selectedUnit;
         public Text unitName;
         public Image unitImage;
@@ -32,6 +33,17 @@ namespace EuropeanWars.UI.Windows {
         public Transform recruitingUnitsListContent;
         public RecruitingUnitProgressWindow recruitingUnitProgressWindowPrefab;
 
+        public List<MercenariesButton> mercenaries = new List<MercenariesButton>();
+        public Transform mercenariesContent;
+        public MercenariesButton mercenariesButtonPrefab;
+
+        [Header("MercenariesInfo")]
+        public GameObject mercenariesInfoWindow;
+        public MercenariesInfo selectedMercenaries;
+        public Text mercenariesName;
+        public Image mercenariesImage;
+        public Text mercenariesRecruitCostText;
+
         public void OnDisable() {
             if (MapPainter.mapMode == MapMode.Recrutation) {
                 MapPainter.PaintMap(MapMode.Countries);
@@ -45,6 +57,12 @@ namespace EuropeanWars.UI.Windows {
                 units.Add(b);
             }
             units.FirstOrDefault().OnClick();
+
+            foreach (var item in GameInfo.mercenaries) {
+                MercenariesButton b = Instantiate(mercenariesButtonPrefab, mercenariesContent);
+                b.SetMercenaries(item.Value);
+                mercenaries.Add(b);
+            }
         }
 
         public void Update() {
@@ -59,6 +77,8 @@ namespace EuropeanWars.UI.Windows {
         }
 
         public void SelectUnit(UnitInfo unit) {
+            unitInfoWindow.SetActive(true);
+            mercenariesInfoWindow.SetActive(false);
             if (unit != null) {
                 selectedUnit = unit;
                 unitName.text = unit.name;
@@ -72,9 +92,24 @@ namespace EuropeanWars.UI.Windows {
             }
         }
 
+        public void SelectMercenaries(MercenariesInfo mercenaries) {
+            unitInfoWindow.SetActive(false);
+            mercenariesInfoWindow.SetActive(true);
+            selectedMercenaries = mercenaries;
+            mercenariesName.text = selectedMercenaries.name;
+            mercenariesImage.sprite = selectedMercenaries.image;
+            mercenariesRecruitCostText.text = selectedMercenaries.cost.ToString();
+        } 
+
         public void ShowRecrutationMap() {
             if (selectedUnit != null) {
                 MapPainter.PaintMap(MapMode.Recrutation);
+            }
+        }
+
+        public void ShowMercenariesRecrutationMap() {
+            if (selectedMercenaries != null) {
+                MapPainter.PaintMap(MapMode.MercenariesRecrutation);
             }
         }
 

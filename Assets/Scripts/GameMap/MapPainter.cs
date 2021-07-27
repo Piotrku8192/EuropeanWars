@@ -16,6 +16,7 @@ namespace EuropeanWars.GameMap {
         Trade,
         Terrain,
         Recrutation,
+        MercenariesRecrutation,
         Peace,
         Relations,
         Diplomatic
@@ -66,11 +67,14 @@ namespace EuropeanWars.GameMap {
                     break;
                 case MapMode.Terrain:
                     break;
-                case MapMode.Recrutation:
+                case MapMode.Recrutation:                
                     color = province.claimators.Contains(GameInfo.PlayerCountry)
                         && province.buildings.Contains(ArmyWindow.Singleton.recrutationWindow.selectedUnit?.recruitBuilding)
                         && province.Country == GameInfo.PlayerCountry ? Color.green
                         : province.Country == GameInfo.PlayerCountry ? Color.gray : Color.black;
+                    break;
+                case MapMode.MercenariesRecrutation:
+                    color = province.Country == GameInfo.PlayerCountry ? Color.green : Color.gray;
                     break;
                 case MapMode.Peace:
                     PeaceDeal peaceDeal = PeaceDealWindow.Singleton.peaceDeal;
