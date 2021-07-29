@@ -1,14 +1,68 @@
 [
     {
         "id": 0,
-        "cost": 10,
-        "units": [ 1, 2, 3 ],
-        "unitsCount": [ 3, 2, 1 ]
+        "cost": 3000,
+        "units": [ 13, 71, 72 ],
+        "unitsCount": [ 20, 20, 10 ]
     },
     {
         "id": 1,
-        "cost": 12,
-        "units": [ 2, 2, 3 ],
-        "unitsCount": [ 3, 5, 1 ]
+        "cost": 280,
+        "units": [ 35, 72 ],
+        "unitsCount": [ 10, 10 ]
+    },
+    {
+        "id": 2,
+        "cost": 5500,
+        "units": [ 11, 12, 13, 72 ],
+        "unitsCount": [ 2, 20, 16, 10 ]
+    },
+    {
+        "id": 3,
+        "cost": 1250,
+        "units": [ 12, 13, 72 ],
+        "unitsCount": [ 7, 2, 10 ]
+    },
+    {
+        "id": 4,
+        "cost": 7800,
+        "units": [ 64, 65, 72 ],
+        "unitsCount": [ 33, 60, 10 ]
+    },
+    {
+        "id": 5,
+        "cost": 1580,
+        "units": [ 12, 13, 72 ],
+        "unitsCount": [ 2, 6, 10 ]
+    },
+    {
+        "id": 6,
+        "cost": 4500,
+        "units": [ 52, 6, 72 ],
+        "unitsCount": [ 17, 6, 10 ]
+    },
+    {
+        "id": 7,
+        "cost": 6000,
+        "units": [ 13, 69, 72 ],
+        "unitsCount": [ 32, 5, 10 ]
+    },
+    {
+        "id": 8,
+        "cost": 520,
+        "units": [ 45, 72 ],
+        "unitsCount": [ 6, 10 ]
+    },
+    {
+        "id": 9,
+        "cost": 1430,
+        "units": [ 10, 5, 72 ],
+        "unitsCount": [ 9, 6, 10 ]
+    },
+    {
+        "id": 10,
+        "cost": 4600,
+        "units": [ 29, 72 ],
+        "unitsCount": [ 48, 10 ]
     }
 ]

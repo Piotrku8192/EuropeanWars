@@ -8,10 +8,10 @@ namespace EuropeanWars.Core.Army {
 
         public Mercenaries(MercenariesInfo info, CountryInfo country, ProvinceInfo province) {
             this.info = info;
-            army = new ArmyInfo(province, country, info.units[0], info.unitsCount[0], info.unitsCount[0]);
+            army = new ArmyInfo(province, country, info.units[0], info.unitsCount[0] * info.units[0].recruitSize, info.unitsCount[0] * info.units[0].recruitSize);
             
             for (int i = 1; i < info.units.Length; i++) {
-                army.AddUnit(info.units[i], info.unitsCount[i], info.unitsCount[i]);
+                army.AddUnit(info.units[i], info.unitsCount[i] * info.units[i].recruitSize, info.unitsCount[i] * info.units[i].recruitSize);
             }
             army.maintenanceModifier = 3;
 
