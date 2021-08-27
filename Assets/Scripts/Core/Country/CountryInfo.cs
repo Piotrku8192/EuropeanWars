@@ -68,7 +68,10 @@ namespace EuropeanWars.Core.Country {
         public List<UnitToRecruit> toRecruit = new List<UnitToRecruit>();
         public List<ArmyInfo> armies = new List<ArmyInfo>();
         public List<Mercenaries> mercenaries = new List<Mercenaries>();
-
+        
+        public UnitInfo commonArmyUnit;
+        public List<ArmyInfo> commonArmies = new List<ArmyInfo>();
+        
         //Diplomacy
         public int prestige;
         public List<CountryInfo> friends = new List<CountryInfo>();
@@ -118,6 +121,7 @@ namespace EuropeanWars.Core.Country {
             Crest = GameInfo.gfx["Country-" + id];
             religion = GameInfo.religions[data.religion];
             buildings = GameInfo.buildings.Values.ToList();
+            commonArmyUnit = GameInfo.units[data.commonArmyUnit];
             TimeManager.onDayElapsed += OnDayElapsed;
             TimeManager.onMonthElapsed += OnMonthElapsed;
             TimeManager.onYearElapsed += OnYearElapsed;
@@ -168,6 +172,7 @@ namespace EuropeanWars.Core.Country {
         public void OnDayElapsed() {
             TryRecruitUnits();
             TryFabricateClaim();
+            ClearCommonArmy();
         }
         public void OnMonthElapsed() {
             CalculateEconomy();
@@ -413,6 +418,30 @@ namespace EuropeanWars.Core.Country {
                     toRecruit.Remove(unit);
                 }
             }
+        }
+
+
+        public bool CanRecruitCommonArmy() => commonArmyUnit != null && wars.Count > 0 && commonArmies.Count == 0;
+        public bool RecruitCommonArmy() {
+            if (!CanRecruitCommonArmy()) {
+                return false;
+            }
+            foreach (ProvinceInfo province in provinces) {
+                commonArmies.Add(new ArmyInfo(province, this, commonArmyUnit, province.taxation / 8, province.taxation / 8));
+            } 
+
+            return true;
+        }
+
+        private void ClearCommonArmy() {
+            if (wars.Count > 0) {
+                return;
+            }
+
+            foreach (ArmyInfo army in commonArmies) {
+                army.DeleteLocal();
+            }
+            commonArmies.Clear();
         }
         #endregion
 

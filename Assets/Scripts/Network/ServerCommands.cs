@@ -475,6 +475,16 @@ namespace EuropeanWars.Network {
             msg.Write(province);
             Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
         }
+        
+        [Command(2056)]
+        public static void RecruitCommonArmy(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+
+            NetOutgoingMessage msg = Server.Singleton.s.CreateMessage();
+            msg.Write((ushort)2056);
+            msg.Write(country);
+            Server.Singleton.s.SendToAll(msg, NetDeliveryMethod.ReliableOrdered);
+        }
         #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace EuropeanWars.Core.Data {
         public int gold, manpower, prestige, technologyPoints;
         public int[] buildings;
         public int[] squads;
-        public int commonUprising;
+        public int commonArmyUnit;
         public int minUprisingProvinceTax;
         public float taxationIncomeModifier;
         public float buildingsIncomeModifier;

@@ -431,6 +431,12 @@ namespace EuropeanWars.Network {
 
             new Mercenaries(GameInfo.mercenaries[mercenariesInfo], GameInfo.countries[country], GameInfo.provinces[province]);
         }
+        
+        [Command(2056)]
+        public static void RecruitCommonArmy(NetIncomingMessage message) {
+            int country = message.ReadInt32();
+            GameInfo.countries[country].RecruitCommonArmy();
+        }
         #endregion
     }
 }

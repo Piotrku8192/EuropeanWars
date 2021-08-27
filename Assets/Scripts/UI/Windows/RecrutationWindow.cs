@@ -6,6 +6,8 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using EuropeanWars.Network;
+using Lidgren.Network;
 
 namespace EuropeanWars.UI.Windows {
     public class RecrutationWindow : MonoBehaviour {
@@ -44,6 +46,8 @@ namespace EuropeanWars.UI.Windows {
         public Image mercenariesImage;
         public Text mercenariesRecruitCostText;
 
+        [Header("CommonArmy")] public Button commonArmyButton;
+
         public void OnDisable() {
             if (MapPainter.mapMode == MapMode.Recrutation) {
                 MapPainter.PaintMap(MapMode.Countries);
@@ -74,6 +78,8 @@ namespace EuropeanWars.UI.Windows {
                 recruitSizeSlider.maxValue = Mathf.Clamp(Mathf.Min(GameInfo.PlayerCountry.gold / selectedUnit.recruitCost,
                     GameInfo.PlayerCountry.manpower / recruitSize), 0, int.MaxValue);
             }
+
+            commonArmyButton.interactable = GameInfo.PlayerCountry.CanRecruitCommonArmy();
         }
 
         public void SelectUnit(UnitInfo unit) {
@@ -116,6 +122,17 @@ namespace EuropeanWars.UI.Windows {
         public void AddRecruitingUnit(UnitToRecruit unit) {
             RecruitingUnitProgressWindow window = Instantiate(recruitingUnitProgressWindowPrefab, recruitingUnitsListContent);
             window.SetUnit(unit);
+        }
+
+        public void RecruitCommonArmy() {
+            if (!GameInfo.PlayerCountry.CanRecruitCommonArmy()) {
+                return;
+            }
+            
+            NetOutgoingMessage msg = Client.Singleton.c.CreateMessage();
+            msg.Write((ushort)2056);
+            msg.Write(GameInfo.PlayerCountry.id);
+            Client.Singleton.c.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }
